@@ -1,0 +1,14 @@
+dist: xenial
+language: python
+python:
+- '3.7'
+sudo: required
+branches:
+  only:
+  - source
+install:
+- pip install -r requirements.txt
+script:
+- make publish github
+dd:
+  secure: KTtPuPtLEUx75QlMH2MBwSsltu3xPmx1hZtll4bL0XmzZko5U5KEUXvVdZVz/SjGMXb2K10S+A+ah4fuo1rwFdaTSgVBZAkqno06HwfRzD1fbch4VC777JqgwT+fapa0QZ7Lt+m5IU+/ujSWyv89AEPUe3QF7JqkyOpb+Lp3fCk2sRE4DCMYLjWjZ+5f4IpdrFOBOOJbFoHr70bWXRGoWJ20tOYofqnc2IXn/Jm2D7lRdwwbFVruvRMnTnM1splrWXi47a4/1uqUdoM8aGCVD08Oz8NwXeqS461mvcrD9DMq0Z5xz4kYDjCNjrB7bmrkgqiYc1ndtGENK8eimYwL/cJt2CMyYLjJmi7L2wEwz1/HAUWKdq+v1CisMk8pEW4OsgDLDr6i9yqtaCzXc+svv6kCjkIEguK0QXEw6oj66hr+yUs3gsaNDrubdN3Tu/8WUsPIVRAILpNaooXkMVYMULRg7Pj/257bQ3l9wg8f0il/5/eEyeT6GRBLmGlcqGAUdDD6qfRAX8fT/RN6W+VxcD/piLBFYXikIGME+BKRWvYI3yKhhtNdWOmgZI7fV0JjmAh+JKr0KpC+RTW1256iWA6pSna7cazqqTuC3zyaAaI1j0/9l6g1hCQApyWqBpX5ARGthrm6f/tp4XOBhvxfu5H/kHNWihZDsElzlDWIj2k=
