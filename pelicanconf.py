@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = 'Alexander'
 SITENAME = 'Scrambld Notations'
-SITEURL = ''
+SITEURL = 'https://scrambldchannel.github.io/'
 
 PATH = 'content'
 
@@ -33,7 +33,7 @@ DEFAULT_PAGINATION = 10
 
 # Theming
 THEME = 'themes/nice-blog'
-THEME_COLOR = 'cyan'
+THEME_COLOR = 'olive'
 
 SIDEBAR_DISPLAY = ['about', 'tags']
 SIDEBAR_ABOUT = "Random musings on things like TM1, Python, data and stuff"
