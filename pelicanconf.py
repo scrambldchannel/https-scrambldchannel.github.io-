@@ -27,7 +27,7 @@ DEFAULT_PAGINATION = 10
 
 # Theming
 THEME = 'themes/nice-blog'
-THEME_COLOR = 'cyan'
+THEME_COLOR = 'gray'
 
 SIDEBAR_DISPLAY = ['about', 'tags']
 SIDEBAR_ABOUT = "Random musings on things like TM1, Python, data and stuff"
