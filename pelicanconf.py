@@ -6,10 +6,10 @@ SITENAME = 'Scrambld Notation'
 SITETITLE = 'Scrambld Notations'
 SITESUBTITLE = 'Feverish scribblings on all things TM1, Python and data'
 SITEDESCRIPTION = 'Feverish scribblings on all things TM1, Python and data'
-SITELOGO = ''
+SITELOGO = '/images/profile.png'
 FAVICON = '/images/favicon.ico'
 BROWSER_COLOR = '#333333'
-#PYGMENTS_STYLE = 'monokai'
+PYGMENTS_STYLE = 'perldoc'
 
 ROBOTS = 'index, follow'
 
@@ -61,7 +61,7 @@ DEFAULT_PAGINATION = 10
 #DISQUS_SITENAME = "flex-pelican"
 #ADD_THIS_ID = 'ra-55adbb025d4f7e55'
 
-#STATIC_PATHS = ['images', 'extra']
+STATIC_PATHS = ['images', 'extra']
 
 CUSTOM_CSS = 'static/custom.css'
 
