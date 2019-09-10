@@ -1,42 +1,67 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*- #
-from __future__ import unicode_literals
+from datetime import datetime
 
-AUTHOR = 'Alexander'
-SITENAME = 'Scrambld Notations'
+AUTHOR = 'Alexander Sutcliffe'
 SITEURL = 'https://scrambldchannel.github.io'
+SITENAME = 'Alexander''s Blog'
+SITETITLE = 'Scrambld Notations'
+SITESUBTITLE = 'Feverish scribblings on all things TM1, Python and data'
+SITEDESCRIPTION = 'Feverish scribblings on all things TM1, Python and data'
+SITELOGO = ''
+FAVICON = '/images/favicon.ico'
+BROWSER_COLOR = '#333333'
+#PYGMENTS_STYLE = 'monokai'
 
+ROBOTS = 'index, follow'
+
+THEME = 'pelican-themes/Flex'
 PATH = 'content'
-
+#OUTPUT_PATH = 'blog/'
 TIMEZONE = 'Europe/Berlin'
 
+#I18N_TEMPLATES_LANG = 'en'
 DEFAULT_LANG = 'en'
+OG_LOCALE = 'en_UK'
+LOCALE = 'en_UK'
 
-# Feed generation is usually not desired when developing
+#DATE_FORMATS = {
+#    'en': '%B %d, %Y',
+#}
+
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-# Blogroll
-LINKS = [('Pelican', 'http://getpelican.com/')]
-# Social widget
+USE_FOLDER_AS_CATEGORY = False
+MAIN_MENU = True
+HOME_HIDE_TAGS = True
 
+SOCIAL = [ 
+    ('github', 'https://github.com/scrambldchannel'),
+    ('linkedin', 'https://www.linkedin.com/in/alexander-sutcliffe-b56921166/'),
+]
+
+GITHUB_URL = 'https://github.com/scrambldchannel'
+
+MENUITEMS = [('Archives', '/archives.html'),
+             ('Categories', '/categories.html'),
+             ('Tags', '/tags.html'),]
+
+#CC_LICENSE = {
+#    'name': 'Creative Commons Attribution-ShareAlike',
+#    'version': '4.0',
+#    'slug': 'by-sa'
+#}
+
+COPYRIGHT_YEAR = datetime.now().year
 DEFAULT_PAGINATION = 10
 
-# Theming
-THEME = 'themes/nice-blog'
-THEME_COLOR = 'gray'
+#DISQUS_SITENAME = "flex-pelican"
+#ADD_THIS_ID = 'ra-55adbb025d4f7e55'
 
-SIDEBAR_DISPLAY = ['about', 'tags']
-SIDEBAR_ABOUT = "Random musings on things like TM1, Python, data and stuff"
-COPYRIGHT = "Alexander Sutcliffe "
+#STATIC_PATHS = ['images', 'extra']
 
-# Plugins
-PLUGIN_PATHS=['pelican-plugins','plugins']
-#PLUGINS=['liquid_tags.notebook','ipynb.liquid',]
+CUSTOM_CSS = 'static/custom.css'
 
-
-# Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+USE_LESS = False
