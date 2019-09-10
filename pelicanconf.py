@@ -2,7 +2,7 @@ from datetime import datetime
 
 AUTHOR = 'Alexander Sutcliffe'
 SITEURL = 'https://scrambldchannel.github.io'
-SITENAME = 'Alexander''s Blog'
+SITENAME = 'Scrambld Notation'
 SITETITLE = 'Scrambld Notations'
 SITESUBTITLE = 'Feverish scribblings on all things TM1, Python and data'
 SITEDESCRIPTION = 'Feverish scribblings on all things TM1, Python and data'
@@ -40,6 +40,7 @@ HOME_HIDE_TAGS = True
 SOCIAL = [ 
     ('github', 'https://github.com/scrambldchannel'),
     ('linkedin', 'https://www.linkedin.com/in/alexander-sutcliffe-b56921166/'),
+    ('twitter', 'https://twitter.com/scrambldchannel')
 ]
 
 GITHUB_URL = 'https://github.com/scrambldchannel'
