@@ -18,6 +18,11 @@ PATH = 'content'
 #OUTPUT_PATH = 'blog/'
 TIMEZONE = 'Europe/Berlin'
 
+MARKUP = ('md', 'ipynb')
+PLUGIN_PATHS = ['pelican-plugins']
+PLUGINS = ['pelican-ipynb.markup']
+IGNORE_FILES = [".ipynb_checkpoints"]  
+
 #I18N_TEMPLATES_LANG = 'en'
 DEFAULT_LANG = 'en'
 OG_LOCALE = 'en_UK'
