@@ -6,9 +6,11 @@ slug: jupyter-cheatsheet
 Authors: Alexander
 Summary: Trying to document a semi sensible workflow for Conda environments and kernels for Jupyter Notebook projects
 
-A bit annoyed at finding myself having to re-learn a good workflow for setting up dev environments for Jupyter projects, I thought I'd try to list my workflow as is and update as I improve so I can refer back after a hiatus. This is a work in progress!
-
 > **WARNING**: This is a work in progress
+
+# Introduction
+
+A bit annoyed at finding myself having to re-learn a good workflow for setting up dev environments for Jupyter projects, I thought I'd try to list my workflow as is and update as I improve so I can refer back after a hiatus. This is a work in progress!
 
 ## Using Conda
 
@@ -127,7 +129,7 @@ $ conda install nb_conda_kernels
 (notebook) $ jupyter notebook
 ```
 
-## Open the notebook base url in your browser
+### Open the notebook base url in your browser
 
 Eg navigate to [http://localhost:8888](http://localhost:8888 "your (probable) local server url")
 
