@@ -1,14 +1,15 @@
 from datetime import datetime
 
 AUTHOR = 'Alexander Sutcliffe'
-SITEURL = 'https://scrambldchannel.github.io'
-SITENAME = 'Scrambld Notation'
+SITEURL = 'https://scrambldchannel.github.io/'
+SITENAME = 'Scrambld Notations'
 SITETITLE = 'Scrambld Notations'
 SITESUBTITLE = 'Feverish scribblings on all things TM1, Python and data'
 SITEDESCRIPTION = 'Feverish scribblings on all things TM1, Python and data'
 SITELOGO = '/images/profile.png'
 FAVICON = '/images/favicon.ico'
-BROWSER_COLOR = '#333333'
+BROWSER_COLOR = '#363636'
+# Is this working?
 PYGMENTS_STYLE = 'perldoc'
 
 ROBOTS = 'index, follow'
@@ -23,7 +24,7 @@ PLUGIN_PATHS = ['pelican-plugins']
 PLUGINS = ['pelican-ipynb.markup']
 IGNORE_FILES = [".ipynb_checkpoints"]  
 
-#I18N_TEMPLATES_LANG = 'en'
+I18N_TEMPLATES_LANG = 'en'
 DEFAULT_LANG = 'en'
 OG_LOCALE = 'en_UK'
 LOCALE = 'en_UK'
