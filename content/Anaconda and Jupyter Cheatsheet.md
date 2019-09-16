@@ -10,11 +10,11 @@ Summary: Trying to document a semi sensible workflow for Conda environments and 
 
 # Introduction
 
-A bit annoyed at finding myself having to re-learn a good workflow for setting up dev environments for Jupyter projects, I thought I'd try to list my workflow as is and update as I improve so I can refer back after a hiatus. This is a work in progress!
+A bit annoyed at finding myself having to re-learn a good workflow for setting up dev environments for Jupyter projects, I thought I'd try to list my workflow as is and update as I improve so I can refer back after a hiatus.
 
 ## Which Conda? Or no Conda at all?
 
-Honestly, I fell into using Anaconda via a group project I joined a while back. I've used it sporadically since for stuff I want to do in Jupyter Notebooks mostly. I've never really looked at alternatives (ie other Condas, or using pipenv). For now, it's been nice to have a GUI but increasingly I'm trying to do things from the command line. That said, it's mostly meant I haven't had to think too much about 
+Honestly, I fell into using Anaconda via a group project I joined a while back. I've used it sporadically since for stuff I want to do in Jupyter Notebooks mostly. I've never really looked at alternatives (ie other Condas, or using pipenv). For now, it's been nice to have a GUI, particularly on Windows, but increasingly I'm trying to do things from the command line. That said, it's mostly meant I haven't had to think too much about it which has helped me get up and running. I will need to revisit the subject properly. 
 
 ### Installing Anaconda
 
@@ -26,7 +26,7 @@ Eg using Linux, wherever you've downloaded the installer(obviously full filename
 $ source ./Anaconda3-2019.07-Linux-x86_64.sh
 ```
 
-I generall y install it in the default location, i.e. an anaconda directory in ~/
+I generally install it in the default location, i.e. an anaconda directory in ~/
 
 ### Managing Environments
 
@@ -172,12 +172,73 @@ You should now be able to create a new notebook using a kernel from your new env
 
 A few notes on use of notebooks themselves.
 
-### Where to save them
+### Useful key bindings
+
+Ones I most for navigation.
+
+#### Command Mode
+
+|Action |Binding |
+|:------------ |:------------ |
+|Enter |enter edit mode |
+|Shift-Enter |run, select below |
+|Ctrl-Enter |run |
+|Alt-Enter |run, insert below |
+|Y |to code |
+|M |to markdown |
+
+
+#### Edit Mode
+
+|Action |Binding |
+|:------------ |:------------ |
+|Esc |Enter command mode |
+|Shift-Enter |run, select below |
+|Ctrl-Enter |run |
+|Alt-Enter |run, insert below |
+|Ctrl-S |Save and checkpoint |
+
+
+### Using with Git
+
+#### Repo setup
 
 I created a new empty repo on Github and cloned that locally and work there on notebook projects, committing completed projects back to Github and potentially moving bigger projects into their own repo or publishing certain notebooks to this blog.
 
-### Useful key bindings
+#### Gitignore
 
-|Action|Binding|
-|------------|------------|
-| Shift + Enter| Run Active Cell|
+I include this to ensure no checkpoints are included, useful if you iterate on the notebooks in the repo and don't want to inadvertently push private details back to Github.
+
+```
+.ipynb_checkpoints
+```
+
+### Securing private info
+
+I.e. don't include things like private API keys as declared variables in any notebooks you end up publishing on Github.
+
+#### Read from a config file
+
+Perhaps this isn't the best approach but it works ok for now. I create a simple notebook_config.json file containing something like this:
+
+```json
+{
+  "SECRET_API_KEY" : "verysecret"
+}
+```
+
+I can then read it in from the notebook:
+
+```python
+import json
+
+with open('notebook_config.json') as config_file:
+    data = json.load(config_file)
+
+key = data['SECRET_API_KEY']
+```
+
+Add this to .gitignore
+```
+notebook_config.json
+```

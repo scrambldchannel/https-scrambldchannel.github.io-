@@ -131,3 +131,5 @@ output
 
 # jupyter notebook checkpoints
 .ipynb_checkpoints
+# config for notebooks
+notebook_config.json

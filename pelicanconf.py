@@ -1,7 +1,7 @@
 from datetime import datetime
 
 AUTHOR = 'Alexander Sutcliffe'
-SITEURL = 'https://scrambldchannel.github.io'
+SITEURL = 'http://localhost:8000'
 SITENAME = 'Scrambld Notations'
 SITETITLE = 'Scrambld Notations'
 SITESUBTITLE = 'Feverish scribblings on all things TM1, Python and data'
