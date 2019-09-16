@@ -178,3 +178,6 @@ I created a new empty repo on Github and cloned that locally and work there on n
 
 ### Useful key bindings
 
+|Action|Binding|
+|------------|------------|
+| Shift + Enter| Run Active Cell|
