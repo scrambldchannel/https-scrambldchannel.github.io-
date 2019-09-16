@@ -1,7 +1,7 @@
 from datetime import datetime
 
 AUTHOR = 'Alexander Sutcliffe'
-SITEURL = 'https://scrambldchannel.github.io/'
+SITEURL = 'https://scrambldchannel.github.io'
 SITENAME = 'Scrambld Notations'
 SITETITLE = 'Scrambld Notations'
 SITESUBTITLE = 'Feverish scribblings on all things TM1, Python and data'
@@ -26,8 +26,8 @@ IGNORE_FILES = [".ipynb_checkpoints"]
 
 I18N_TEMPLATES_LANG = 'en'
 DEFAULT_LANG = 'en'
-OG_LOCALE = 'en_UK'
-LOCALE = 'en_UK'
+OG_LOCALE = 'en_GB'
+LOCALE = 'en_GB'
 
 #DATE_FORMATS = {
 #    'en': '%B %d, %Y',
