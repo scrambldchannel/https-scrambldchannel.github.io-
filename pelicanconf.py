@@ -49,7 +49,7 @@ SOCIAL = [
     ('twitter', 'https://twitter.com/scrambldchannel')
 ]
 
-#GITHUB_URL = 'https://github.com/scrambldchannel'
+GITHUB_URL = 'https://github.com/scrambldchannel'
 
 MENUITEMS = [('Archives', '/archives.html'),
              ('Categories', '/categories.html'),
