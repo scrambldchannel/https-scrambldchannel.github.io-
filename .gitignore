@@ -125,3 +125,6 @@ dmypy.json
 
 # vscode settings
 .vscode/settings.json
+
+# pelican output
+output
