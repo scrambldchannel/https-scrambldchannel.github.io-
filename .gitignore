@@ -128,3 +128,6 @@ dmypy.json
 
 # pelican output
 output
+
+# jupyter notebook checkpoints
+.ipynb_checkpoints
