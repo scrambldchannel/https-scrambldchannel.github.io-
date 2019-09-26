@@ -51,7 +51,7 @@ SOCIAL = [
 
 GITHUB_URL = 'https://github.com/scrambldchannel'
 
-MENUITEMS = [('About', '/about.html'),
+MENUITEMS = [('About', '/pages/about.html'),
              ('Tags', '/tags.html'),]
 
 #CC_LICENSE = {
