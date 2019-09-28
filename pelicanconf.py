@@ -7,7 +7,7 @@ SITETITLE = 'Scrambld Notations'
 SITESUBTITLE = 'Feverish scribblings on all things TM1, Python and data'
 SITEDESCRIPTION = 'Feverish scribblings on all things TM1, Python and data'
 SITELOGO = '/images/profile.png'
-FAVICON = '/images/favicon.ico'
+FAVICON = '/images/favicon.png'
 BROWSER_COLOR = '#363636'
 # Is this working?
 PYGMENTS_STYLE = 'perldoc'
