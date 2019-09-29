@@ -1,4 +1,4 @@
-Title: Cricket data sources
+Title: Cricket Data Sources and Python
 Date: 2019-09-28 16:24
 Category: docs
 Tags: cricket, python, data, api
@@ -6,8 +6,6 @@ slug: python-cricket-data
 Authors: Alexander
 Summary: Looking at ways to access cricket data using Python
 
-# Cricket Statistics and Python 
- 
 Inspired by an enthralling Ashes series, I wanted to play around with cricket data available from various free and commercial sources out there.. Despite a bit of trawling, I couldn't really find a single document detailing what was available. 
  
 ## So what sources are there? 

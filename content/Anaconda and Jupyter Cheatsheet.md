@@ -6,10 +6,6 @@ slug: jupyter-cheatsheet
 Authors: Alexander
 Summary: Trying to document a semi sensible workflow for Conda environments and kernels for Jupyter Notebook projects
 
-> **WARNING**: This is a work in progress
-
-# Introduction
-
 A bit annoyed at finding myself having to re-learn a good workflow for setting up dev environments for Jupyter projects, I thought I'd try to list my workflow as is and update as I improve so I can refer back after a hiatus.
 
 ## Which Conda? Or no Conda at all?
@@ -207,7 +203,8 @@ I created a new empty repo on Github and cloned that locally and work there on n
 
 #### Gitignore
 
-I include this to ensure no checkpoints are included, useful if you iterate on the notebooks in the repo and don't want to inadvertently push private details back to Github.
+I include this to ensure no checkpoints are included, useful if you iterate on the notebooks in the repo and don't want to inadvertently push private details back to Github. If you use the standard Python .gitignore from Github this will be included automatically.
+
 
 ```
 .ipynb_checkpoints
@@ -241,4 +238,13 @@ key = data['SECRET_API_KEY']
 Add this to .gitignore
 ```
 notebook_config.json
+```
+
+#### Reading in local data
+
+I find it helps to create a folder for datasets and load them in a standard(ish) way. For example:
+
+```python
+dataset_path = "../datasets/"
+gdf = gpd.read_file(dataset_path + 'Berlin_AL9-AL9.shp', encoding='utf-8')
 ```
