@@ -1,4 +1,4 @@
-Title: SQL cheat sheet
+Title: SQL Cheatsheet
 Date: 2019-10-16 11:59
 Category: docs
 Tags: sql, postgres
