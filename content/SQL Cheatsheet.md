@@ -4,7 +4,7 @@ Category: docs
 Tags: sql, postgres
 slug: sql-cheatsheet
 Authors: Alexander
-Summary: Documenting common SQL queries and variations between flavours
+Summary: Documenting common SQL queries using the Pagila example database
 
 ## Queries
 
@@ -76,6 +76,11 @@ FROM actor
 GROUP BY first_name
 HAVING count(*) > 2
 ORDER BY count ASC
+
+/* Use a window function to get a cumulative amount */
+SELECT payment_date, sum(amount) OVER (ORDER BY payment_date) AS cumulative_amount
+FROM   payment_p2017_01
+ORDER  BY payment_date
 ```
 
 ### Joins
