@@ -4,7 +4,7 @@ Category: docs
 Tags: sql, postgres
 slug: sql-cheatsheet
 Authors: Alexander
-gSummary: Documenting common SQL queries using the Pagila example database
+Summary: Documenting common SQL queries using the Pagila example database
 
 ## Queries
 
