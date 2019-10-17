@@ -49,7 +49,13 @@ I haven't really taken a look at this yet but it does seem to have been updated 
  
 <https://github.com/codophobia/pycricbuzz>
  
- 
+### Cricsheet
+
+Cricsheet is an effort to create freely accessible ball-by-ball datasets for cricket matches. It took its inspiration from a project called Retrosheet, which attempts to do the same for MLB. It offers free to download and use data for a large subset of historical matches using YAML as well as a few other formats. It's an excellent resource for people wanting to churn through stats. 
+
+<https://cricsheet.org/>
+
+
 ### Cricapi
  
 This is a freemium API offering a free key that grants you 100 calls per day. It gives useful info about current matches and individual player stats but is probably more geared toward app developers than people just wanting to do analysis.
