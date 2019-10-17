@@ -4,7 +4,7 @@ Category: docs
 Tags: sql, postgres
 slug: sql-cheatsheet
 Authors: Alexander
-Summary: Documenting common SQL queries using the Pagila example database
+gSummary: Documenting common SQL queries using the Pagila example database
 
 ## Queries
 
@@ -76,6 +76,11 @@ FROM actor
 GROUP BY first_name
 HAVING count(*) > 2
 ORDER BY count ASC
+
+/* Use a window function to get a cumulative amount */
+SELECT payment_date, sum(amount) OVER (ORDER BY payment_date) AS cumulative_amount
+FROM   payment_p2017_01
+ORDER  BY payment_date
 
 /* Use a window function to get a cumulative amount */
 SELECT payment_date, sum(amount) OVER (ORDER BY payment_date) AS cumulative_amount
@@ -215,3 +220,28 @@ WHERE f.film_id = fa.film_id
 AND fa.actor_id = a.actor_id
 AND a.first_name = 'JENNIFER'
 ```
+
+### Nested queries and CTEs
+
+```SQL
+/* Subquery example */
+SELECT film, revenue, avg(revenue) OVER () AS average_revenue
+FROM(
+    SELECT f.title AS film, sum(p.amount) AS revenue
+    FROM payment_p2017_01 p, rental r, inventory i, film f
+    WHERE p.rental_id = r.rental_id
+    AND r.inventory_id = i.inventory_id
+    AND i.film_id = f.film_id
+    GROUP BY film) AS total_revenue_by_film
+
+/* Equivalent query using CTE */
+WITH temp (film, revenue) AS (
+    SELECT f.title AS film, sum(p.amount) AS revenue
+    FROM payment_p2017_01 p, rental r, inventory i, film f
+    WHERE p.rental_id = r.rental_id
+    AND r.inventory_id = i.inventory_id
+    AND i.film_id = f.film_id
+    GROUP BY film
+)
+SELECT temp.film, temp.revenue, avg(revenue) OVER () AS average_revenue
+FROM temp
