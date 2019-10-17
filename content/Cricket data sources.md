@@ -55,6 +55,9 @@ Cricsheet is an effort to create freely accessible ball-by-ball datasets for cri
 
 <https://cricsheet.org/>
 
+#### Yorkpy
+
+This is a python module, available on PyPi
 
 ### Cricapi
  
