@@ -57,7 +57,9 @@ Cricsheet is an effort to create freely accessible ball-by-ball datasets for cri
 
 #### Yorkpy
 
-This is a python module, available on PyPi
+This is a python module, available on PyPi. I haven't actually played with it yet but it seems to be based on an R package of the same name and focussed on T20s. I'm currently more interested in Test Match data but this will probabably be a useful starting point or one that can be enhanced.
+
+<https://github.com/tvganesh/yorkpy>
 
 ### Cricapi
  
@@ -103,3 +105,13 @@ Sportmonks is another service providing APIs for all sorts of sports. They offer
 I found this which is another premium service but without any option for a free trial that I could see. I've not looked at it beyond that.
  
 <https://www.cricketapi.com/>
+
+### Other resources
+
+Other resources I have found but perhaps haven't explored in detail.
+
+#### Criclabs (Github organisation)
+
+Self identifies as "all open-source cricket libraries at one place" and certainly does contain forked repos of a lot of the projects I've looked at already.
+
+<https://github.com/criclabs>
