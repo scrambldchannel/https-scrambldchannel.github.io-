@@ -76,12 +76,13 @@ FROM actor
 GROUP BY first_name
 HAVING count(*) > 2
 ORDER BY count ASC
+```
 
-/* Use a window function to get a cumulative amount */
-SELECT payment_date, sum(amount) OVER (ORDER BY payment_date) AS cumulative_amount
-FROM   payment_p2017_01
-ORDER  BY payment_date
+### Analytical functions
 
+Also known as window functions, can vastly improve performance by avoiding joining tables to themselves to achieve various calculations.
+
+```SQL
 /* Use a window function to get a cumulative amount */
 SELECT payment_date, sum(amount) OVER (ORDER BY payment_date) AS cumulative_amount
 FROM   payment_p2017_01
@@ -245,3 +246,4 @@ WITH temp (film, revenue) AS (
 )
 SELECT temp.film, temp.revenue, avg(revenue) OVER () AS average_revenue
 FROM temp
+```
