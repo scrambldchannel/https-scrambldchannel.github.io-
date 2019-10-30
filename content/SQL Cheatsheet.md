@@ -83,7 +83,7 @@ ORDER BY count ASC
 Also known as window functions, can vastly improve performance by avoiding joining tables to themselves to achieve various calculations.
 
 ```SQL
-/* Use a window function to get a cumulative amount */
+/* Use an analytic function to get a cumulative amount */
 SELECT payment_date, sum(amount) OVER (ORDER BY payment_date) AS cumulative_amount
 FROM   payment_p2017_01
 ORDER  BY payment_date
