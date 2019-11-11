@@ -37,7 +37,8 @@ Provides a wealth of functions for scraping HTML pages as seems to be under acti
 This is a simpler library that uses a combination of scraping as well as leveraging some (as far as I can tell) undocumented JSON files available on Cricinfo. It doesn't seem to be under active development though and some functions have bugs and some don't work at all. That said, it gave me an interesting insight into some data I didn't realise was easily accessible. 
  
 <https://github.com/dwillis/python-espncricinfo>
- 
+
+**update** - I've been working on a couple of the bugs with this and it does give you a cool way to access ball by ball data and player profiles amongst other things.
  
 ### Cricbuzz
  
@@ -51,7 +52,7 @@ I haven't really taken a look at this yet but it does seem to have been updated 
  
 ### Cricsheet
 
-Cricsheet is an effort to create freely accessible ball-by-ball datasets for cricket matches. It took its inspiration from a project called Retrosheet, which attempts to do the same for MLB. It offers free to download and use data for a large subset of historical matches using YAML as well as a few other formats. It's an excellent resource for people wanting to churn through stats. 
+Cricsheet is an effort to create freely accessible ball-by-ball datasets for cricket matches. It took its inspiration from a project called Retrosheet, which attempts to do the same for MLB. It offers free to download and use data for a large subset of historical matches using YAML as well as a few other formats. It's a cool resource for people wanting to churn through stats without having to resort to scraping. 
 
 <https://cricsheet.org/>
 
@@ -60,6 +61,12 @@ Cricsheet is an effort to create freely accessible ball-by-ball datasets for cri
 This is a python module, available on PyPi. I haven't actually played with it yet but it seems to be based on an R package of the same name and focussed on T20s. I'm currently more interested in Test Match data but this will probabably be a useful starting point or one that can be enhanced.
 
 <https://github.com/tvganesh/yorkpy>
+
+#### pycricsheet
+
+I actually hacked this together myself after looking for a way to parse the yaml files from cricsheet and get them into Pandas. What I've put together is experimental but has been useful for my own purposes. I found that yaml was a bit of a pain to parse and maybe not the best format for this kind of data honestly. The ball by ball data also lacks the detail you can get through scraping but is still pretty comprehensive.
+
+<https://github.com/scrambldchannel/pycricsheet>
 
 ### Cricapi
  
@@ -82,7 +89,6 @@ A few things turn up when searching Rapid API but I haven't really looked at the
 This seems to offer 2500 hits per day and a relatively cheap pricing model after that. Again it's geared toward app developers rather than statisticians. 
  
 <https://rapidapi.com/dev132/api/cricket-live-scores/>
- 
  
 ### Sportradar
  
@@ -115,3 +121,9 @@ Other resources I have found but perhaps haven't explored in detail.
 Self identifies as "all open-source cricket libraries at one place" and certainly does contain forked repos of a lot of the projects I've looked at already.
 
 <https://github.com/criclabs>
+
+## Conclusions
+
+For those wanting to do analysis beyond that possible with tools like statsguru, scraping from cricinfo or cricbuzz is probably the way forward. Alternatively you can download a subset of match data from cricsheet. You may find some detail is missing though. 
+
+For app builders, there isn't really an api that you can use for free if your app scales beyond a trivial PoC (at least that I could find). The higher end offerings like sportsradar are great but not exactly cheap. Cricapi is a cheaper propsition and might offer enough for fantasy games but won't give you ball by ball type data.
