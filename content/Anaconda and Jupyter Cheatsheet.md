@@ -10,7 +10,7 @@ A bit annoyed at finding myself having to re-learn a good workflow for setting u
 
 ## Which Conda? Or no Conda at all?
 
-Honestly, I fell into using Anaconda via a group project I joined a while back. I've used it sporadically since for stuff I want to do in Jupyter Notebooks mostly. I've never really looked at alternatives (ie other Condas, or using pipenv). For now, it's been nice to have a GUI, particularly on Windows, but increasingly I'm trying to do things from the command line. That said, it's mostly meant I haven't had to think too much about it which has helped me get up and running. I will need to revisit the subject properly. 
+Honestly, I fell into using Anaconda via a group project I joined a while back. I've used it sporadically since for stuff I want to do in Jupyter Notebooks. I've never really looked at alternatives (eg Miniconda, or using pip based solutions). For now, it's been nice to have a GUI, particularly on Windows, but on Linux I prefer to do stuff from the command line. That said, it's mostly meant I haven't had to think too much about it which has helped me get up and running. There is a good write up of what Conda is and isn't [here](https://jakevdp.github.io/blog/2016/08/25/conda-myths-and-misconceptions/)
 
 ### Installing Anaconda
 
