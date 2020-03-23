@@ -14,7 +14,7 @@ PYGMENTS_STYLE = 'perldoc'
 
 ROBOTS = 'index, follow'
 
-THEME = 'pelican-themes/hyde'
+THEME = 'theme/pelican-hyde-master'
 PATH = 'content'
 #OUTPUT_PATH = 'blog/'
 TIMEZONE = 'Europe/Berlin'
