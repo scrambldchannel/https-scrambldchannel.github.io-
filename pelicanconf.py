@@ -2,19 +2,17 @@ from datetime import datetime
 
 AUTHOR = 'Alexander Sutcliffe'
 SITEURL = 'http://localhost:8000'
-SITENAME = 'Scrambld Notations'
-SITETITLE = 'Scrambld Notations'
+SITENAME = 'SC_CH'
+SITETITLE = 'ScCh'
 SITESUBTITLE = 'Feverish scribblings on all things TM1, Python and data'
 SITEDESCRIPTION = 'Feverish scribblings on all things TM1, Python and data'
-SITELOGO = '/images/profile.png'
+PROFILE_IMAGE = '/images/scrambldchannel.jpg'
 FAVICON = '/images/favicon.png'
 BROWSER_COLOR = '#363636'
-# Is this working?
-PYGMENTS_STYLE = 'perldoc'
 
 ROBOTS = 'index, follow'
 
-THEME = 'pelican-themes/hyde'
+THEME = 'theme/pelican-hyde-master'
 PATH = 'content'
 #OUTPUT_PATH = 'blog/'
 TIMEZONE = 'Europe/Berlin'
