@@ -2,15 +2,13 @@ from datetime import datetime
 
 AUTHOR = 'Alexander Sutcliffe'
 SITEURL = 'http://localhost:8000'
-SITENAME = 'Scrambld Notations'
-SITETITLE = 'Scrambld Notations'
+SITENAME = 'SC_CH'
+SITETITLE = 'ScCh'
 SITESUBTITLE = 'Feverish scribblings on all things TM1, Python and data'
 SITEDESCRIPTION = 'Feverish scribblings on all things TM1, Python and data'
-SITELOGO = '/images/profile.png'
+PROFILE_IMAGE = 'https://avatars1.githubusercontent.com/scrambldchannel'
 FAVICON = '/images/favicon.png'
 BROWSER_COLOR = '#363636'
-# Is this working?
-PYGMENTS_STYLE = 'perldoc'
 
 ROBOTS = 'index, follow'
 
@@ -21,7 +19,7 @@ TIMEZONE = 'Europe/Berlin'
 
 MARKUP = ('md', 'ipynb')
 PLUGIN_PATHS = ['pelican-plugins']
-PLUGINS = ['pelican-ipynb.markup', 'bootstrapify']
+#PLUGINS = ['pelican-ipynb.markup', 'bootstrapify']
 IGNORE_FILES = [".ipynb_checkpoints"]  
 
 I18N_TEMPLATES_LANG = 'en'
