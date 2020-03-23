@@ -19,7 +19,7 @@ TIMEZONE = 'Europe/Berlin'
 
 MARKUP = ('md', 'ipynb')
 PLUGIN_PATHS = ['pelican-plugins']
-PLUGINS = ['pelican-ipynb.markup', 'bootstrapify']
+#PLUGINS = ['pelican-ipynb.markup', 'bootstrapify']
 IGNORE_FILES = [".ipynb_checkpoints"]  
 
 I18N_TEMPLATES_LANG = 'en'
