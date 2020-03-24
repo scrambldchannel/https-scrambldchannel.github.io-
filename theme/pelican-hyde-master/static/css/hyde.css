@@ -98,6 +98,7 @@ html {
 /* Sidebar nav */
 .sidebar-nav {
   margin-bottom: 1rem;
+  align-content: center;
 }
 .sidebar-nav-item {
   display: block;
