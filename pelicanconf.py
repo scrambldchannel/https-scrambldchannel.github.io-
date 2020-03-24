@@ -18,7 +18,7 @@ PATH = 'content'
 TIMEZONE = 'Europe/Berlin'
 
 MARKUP = ('md', 'ipynb')
-PLUGIN_PATHS = ['pelican-plugins']
+PLUGIN_PATHS = ['plugins']
 IGNORE_FILES = [".ipynb_checkpoints"]  
 
 I18N_TEMPLATES_LANG = 'en'
