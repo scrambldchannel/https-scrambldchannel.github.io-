@@ -98,7 +98,7 @@ html {
 /* Sidebar nav */
 .sidebar-nav {
   margin-bottom: 1rem;
-  align-content: center;
+  /* I want to somehow center these items but not sure how */ 
 }
 .sidebar-nav-item {
   display: block;
