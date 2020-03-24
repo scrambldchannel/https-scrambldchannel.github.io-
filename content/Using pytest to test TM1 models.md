@@ -82,5 +82,5 @@ def test_value(tm1_dev):
 The tests can now be run from the command line with:
 
 ```sh
-$ ptest ./test_poc.py
+$ pytest ./test_poc.py
 ```
