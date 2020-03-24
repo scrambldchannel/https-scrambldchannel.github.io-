@@ -2,34 +2,29 @@ from datetime import datetime
 
 AUTHOR = 'Alexander Sutcliffe'
 SITEURL = 'http://localhost:8000'
-SITENAME = 'SC_CH'
-SITETITLE = 'ScCh'
+SITENAME = 'scrambld notes'
+SITETITLE = 'scrambld notes'
 SITESUBTITLE = 'Feverish scribblings on all things TM1, Python and data'
 SITEDESCRIPTION = 'Feverish scribblings on all things TM1, Python and data'
 PROFILE_IMAGE = 'scrambldchannel.jpg'
-FAVICON = '/images/favicon.png'
+#FAVICON = 'favicon.png'
 BROWSER_COLOR = '#363636'
 
 ROBOTS = 'index, follow'
 
 THEME = 'theme/pelican-hyde-master'
 PATH = 'content'
-#OUTPUT_PATH = 'blog/'
+
 TIMEZONE = 'Europe/Berlin'
 
 MARKUP = ('md', 'ipynb')
 PLUGIN_PATHS = ['pelican-plugins']
-#PLUGINS = ['pelican-ipynb.markup', 'bootstrapify']
 IGNORE_FILES = [".ipynb_checkpoints"]  
 
 I18N_TEMPLATES_LANG = 'en'
 DEFAULT_LANG = 'en'
 OG_LOCALE = 'en_GB'
 LOCALE = 'en_GB'
-
-#DATE_FORMATS = {
-#    'en': '%B %d, %Y',
-#}
 
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
@@ -51,12 +46,6 @@ GITHUB_URL = 'https://github.com/scrambldchannel'
 
 MENUITEMS = [('About', '/pages/about.html'),
              ('Tags', '/tags.html'),]
-
-#CC_LICENSE = {
-#    'name': 'Creative Commons Attribution-ShareAlike',
-#    'version': '4.0',
-#    'slug': 'by-sa'
-#}
 
 COPYRIGHT_YEAR = datetime.now().year
 DEFAULT_PAGINATION = 10
