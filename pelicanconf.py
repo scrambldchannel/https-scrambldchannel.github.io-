@@ -6,7 +6,7 @@ SITENAME = 'SC_CH'
 SITETITLE = 'ScCh'
 SITESUBTITLE = 'Feverish scribblings on all things TM1, Python and data'
 SITEDESCRIPTION = 'Feverish scribblings on all things TM1, Python and data'
-PROFILE_IMAGE = '/images/scrambldchannel.jpg'
+PROFILE_IMAGE = 'scrambldchannel.jpg'
 FAVICON = '/images/favicon.png'
 BROWSER_COLOR = '#363636'
 
