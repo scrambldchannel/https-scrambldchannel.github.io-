@@ -39,22 +39,24 @@ HOME_HIDE_TAGS = True
 SOCIAL = [ 
     ('github', 'https://github.com/scrambldchannel'),
     ('linkedin', 'https://www.linkedin.com/in/alexander-sutcliffe-b56921166/'),
-    ('twitter', 'https://twitter.com/scrambldchannel')
+    ('twitter', 'https://twitter.com/scrambldchannel'),
+    ('instagram', 'https://www.instagram.com/scrambledchannel/'),
+    ('flickr', 'https://www.flickr.com/bliix')
 ]
 
 GITHUB_URL = 'https://github.com/scrambldchannel'
 
-MENUITEMS = [('About', '/pages/about.html'),
-             ('Tags', '/tags.html'),]
+# Need to build support for this in theme
+#MENUITEMS = [('About', '/pages/about.html'),
+#             ('Tags', '/tags.html'),]
 
+# Need to check whether these are relevant
 COPYRIGHT_YEAR = datetime.now().year
 DEFAULT_PAGINATION = 10
 
 #DISQUS_SITENAME = "flex-pelican"
 #ADD_THIS_ID = 'ra-55adbb025d4f7e55'
 
-STATIC_PATHS = ['images', 'extra']
-
-CUSTOM_CSS = 'static/custom.css'
+STATIC_PATHS = ['images']
 
 USE_LESS = False
