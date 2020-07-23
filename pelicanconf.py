@@ -2,9 +2,9 @@ from datetime import datetime
 
 AUTHOR = 'Alexander Sutcliffe'
 SITEURL = 'http://localhost:8000'
-SITENAME = 'scrambld notes'
-SITETITLE = 'scrambld notes'
-SITESUBTITLE = 'Feverish scribblings on all things TM1, Python and data'
+SITENAME = "Code and Cricket"
+SITETITLE = "Code and Cricket"
+SITESUBTITLE = 'Feverish scribblings on things like TM1, Python and cricket stats'
 SITELOGO = SITEURL + "/images/scrambldchannel.jpg"
 #FAVICON = 'favicon.png'
 BROWSER_COLOR = '#333'
