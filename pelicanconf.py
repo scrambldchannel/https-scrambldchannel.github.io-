@@ -12,7 +12,7 @@ BROWSER_COLOR = '#363636'
 
 ROBOTS = 'index, follow'
 
-THEME = 'theme/pelican-hyde-master'
+THEME = 'theme/Flex-master'
 PATH = 'content'
 
 TIMEZONE = 'Europe/Berlin'
@@ -40,8 +40,6 @@ SOCIAL = [
     ('github', 'https://github.com/scrambldchannel'),
     ('linkedin', 'https://www.linkedin.com/in/alexander-sutcliffe-b56921166/'),
     ('twitter', 'https://twitter.com/scrambldchannel'),
-    ('instagram', 'https://www.instagram.com/scrambledchannel/'),
-    ('flickr', 'https://www.flickr.com/bliix')
 ]
 
 GITHUB_URL = 'https://github.com/scrambldchannel'
