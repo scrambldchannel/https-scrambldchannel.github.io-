@@ -5,10 +5,15 @@ SITEURL = 'http://localhost:8000'
 SITENAME = 'scrambld notes'
 SITETITLE = 'scrambld notes'
 SITESUBTITLE = 'Feverish scribblings on all things TM1, Python and data'
-BIO = 'Feverish scribblings on all things TM1, Python and data'
-PROFILE_IMAGE = 'scrambldchannel.jpg'
+SITELOGO = SITEURL + "/images/scrambldchannel.jpg"
 #FAVICON = 'favicon.png'
-BROWSER_COLOR = '#363636'
+BROWSER_COLOR = '#333'
+
+CC_LICENSE = {
+    "name": "Creative Commons Attribution-ShareAlike",
+    "version": "4.0",
+    "slug": "by-sa"
+}
 
 ROBOTS = 'index, follow'
 
@@ -36,24 +41,18 @@ USE_FOLDER_AS_CATEGORY = True
 MAIN_MENU = True
 HOME_HIDE_TAGS = True
 
+MENUITEMS = [('About', '/pages/about.html'),
+             ('Tags', '/tags.html'),]
+
+
 SOCIAL = [ 
     ('github', 'https://github.com/scrambldchannel'),
     ('linkedin', 'https://www.linkedin.com/in/alexander-sutcliffe-b56921166/'),
     ('twitter', 'https://twitter.com/scrambldchannel'),
 ]
 
-GITHUB_URL = 'https://github.com/scrambldchannel'
-
-# Need to build support for this in theme
-#MENUITEMS = [('About', '/pages/about.html'),
-#             ('Tags', '/tags.html'),]
-
-# Need to check whether these are relevant
 COPYRIGHT_YEAR = datetime.now().year
 DEFAULT_PAGINATION = 10
-
-#DISQUS_SITENAME = "flex-pelican"
-#ADD_THIS_ID = 'ra-55adbb025d4f7e55'
 
 GOOGLE_ANALYTICS = 'UA-161901975-1'
 
