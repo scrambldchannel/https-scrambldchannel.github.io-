@@ -13,7 +13,7 @@ The biggest change is localization support.
 Yes, Flex now can be translated into your language.
 You can read about [here](https://github.com/alexandrevicenzi/Flex/wiki/Translations).
 
-The biggest challege was to create a way to translate without breaking old versions.
+The biggest challenge was to create a way to translate without breaking old versions.
 If you use English it changes nothing for you.
 But if you want to use translation you need to add new lines to your pelican configuration file.
 

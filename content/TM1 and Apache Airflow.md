@@ -18,7 +18,7 @@ In [their words](https://airflow.apache.org/), "Airflow is a platform created by
 
 ### Did it work? 
 
-Yes! At least in the limited use cases I was targetting. I set out to achieve the following as a minimum:
+Yes! At least in the limited use cases I was targeting. I set out to achieve the following as a minimum:
 
 * Extract the data from a cube view and write this as a csv to an S3 bucket
 * Trigger a TI processes
@@ -41,7 +41,7 @@ Note that it depends on Airflow so will bring in a pretty hefty list of dependen
 
 #### Usage
 
-As of today, the library provides a hook, a couple of operators to run TI processes and chores and a couple of sensors to detect whether or not an element exists in a dimension or the value in a given cell meets a given criteria. The advantage of using the hook is that it allows you to store your connection information (ip address, username, password etc) in Airflow's connections rather than embedding it in the code of your DAG. Once initiliased and the connection established, the hook gives you access to an instance of [TM1py's](https://github.com/cubewise-code/tm1py) TM1Service object from which you can do pretty much anything you want.
+As of today, the library provides a hook, a couple of operators to run TI processes and chores and a couple of sensors to detect whether or not an element exists in a dimension or the value in a given cell meets a given criteria. The advantage of using the hook is that it allows you to store your connection information (ip address, username, password etc) in Airflow's connections rather than embedding it in the code of your DAG. Once initialiased and the connection established, the hook gives you access to an instance of [TM1py's](https://github.com/cubewise-code/tm1py) TM1Service object from which you can do pretty much anything you want.
 
 ##### Using the Hook
 

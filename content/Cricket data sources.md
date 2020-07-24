@@ -58,7 +58,7 @@ Cricsheet is an effort to create freely accessible ball-by-ball datasets for cri
 
 #### Yorkpy
 
-This is a python module, available on PyPi. I haven't actually played with it yet but it seems to be based on an R package of the same name and focussed on T20s. I'm currently more interested in Test Match data but this will probabably be a useful starting point or one that can be enhanced.
+This is a python module, available on PyPi. I haven't actually played with it yet but it seems to be based on an R package of the same name and focused on T20s. I'm currently more interested in Test Match data but this will probabably be a useful starting point or one that can be enhanced.
 
 <https://github.com/tvganesh/yorkpy>
 

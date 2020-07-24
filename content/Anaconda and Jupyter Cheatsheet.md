@@ -43,7 +43,7 @@ $
 
 #### Create
 
-You probably want to create a new environment for a new project and install any releveant libraries within it.
+You probably want to create a new environment for a new project and install any relevant libraries within it.
 
 ```shell
 $ conda create -n testenv python=3.7 anaconda
@@ -131,7 +131,7 @@ This makes a kernel based on this environment available for environments running
 
 ### Create the notebook env
 
-To launch our notebook server, we want to create a seperate env.
+To launch our notebook server, we want to create a separate env.
 
 ```shell
 $ conda create -n notebook python=3.7 anaconda
