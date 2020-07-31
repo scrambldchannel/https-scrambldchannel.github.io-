@@ -14,7 +14,7 @@ I've worked on many projects where TM1 was used to create a dataset (eg a foreca
 
 ### So what is it?
 
-In [their words](https://airflow.apache.org/), "Airflow is a platform created by the community to programmatically author, schedule and monitor workflows". Most commonly, it gets used to orchestrate data pipelines. It is written in Python but can be used to schedule all sorts of tasks. It also provides built in "hooks" for connecting to a wide range of third party systems, particularly in the cloud/big data space. One thing it doesn't do out of the box is to connect to TM1 but it's pretty easy to extend it with Python which then allows to leverage the power of TM1py.
+In [their words](https://airflow.apache.org/), "Airflow is a platform created by the community to programmatically author, schedule and monitor workflows". Most commonly, it gets used to orchestrate data pipelines. It is written in Python but can be used to schedule all sorts of tasks. It also provides built in "hooks" for connecting to a wide range of third party systems, particularly in the cloud/big data space. One thing it doesn't do out of the box is to connect to TM1 but it's pretty easy to extend it with Python which then allows to leverage the power of [TM1py](https://github.com/cubewise-code/tm1py).
 
 ### Did it work? 
 
