@@ -6,15 +6,15 @@ slug: airflow-tm1
 Authors: Alexander
 Summary: Initial takeaways from trying to use Apache Airflow to schedule ETL tasks involving TM1 
 
-I've been enjoying a bit of down time recently which, as well as exploring the lakes of Berlin and Brandenburg, gave me a chance to check out the excellent talks during the [Airflow Summit 2020](https://airflowsummit.org/). They are all still available and I'd recommend checking them out for those interested in learning more. I've worked with Airflow before but never tried to use it with TM1 up until now, even though I've felt it might be useful in some cases. So I thought I'd try to create a simple PoC for a project I was working on.
+I've been enjoying a bit of down time recently which, as well as exploring the lakes of Berlin and Brandenburg, gave me a chance to check out the excellent talks during the [Airflow Summit 2020](https://airflowsummit.org/). They are all still available and I'd recommend them for those interested in learning more about what [Airflow](https://airflow.apache.org/) can do. I've worked with it before but haven't tried to use it with TM1, even though I've felt it might have been useful in some cases. So I decided to create a simple PoC to see how feasible it would be.
 
 ### But why? 
 
-I've worked on many projects where TM1 was used to create a dataset (eg a forecast) but that ultimately the data, once finalised, needed to get somewhere else. This can be particularly prevalent in organisations where tools like Tableau are (with good reason) thought to be better options for creating dashboards and visualisations but also just arise from a desire to see their forecast numbers somewhere else, such as their ERP system. Developers not familiar with TM1 often just expect they can easily connect via ODBC or similar only to realise it's not that simple. I've seen numerous solutions to this problem, ("The Good, the Bad and the Ugly" springs to mind, given Ennio Morricone's recent passing). People love re-inventing the wheel and I am no different but I did think, particularly for organisations already using Airflow, this might be an interesting option to explore when they need to extract data from TM1.
+I've worked on many projects where TM1 was used to create a dataset (eg a forecast) but that ultimately the data, once finalised, needed to get somewhere else. This can be particularly prevalent in organisations where tools like Tableau are (with good reason) thought to be better options for creating dashboards and visualisations but also just arise from a desire to see their forecast numbers somewhere else, such as their ERP system. Developers not familiar with TM1 often just expect they can easily connect via ODBC or similar only to realise it's not that simple. I've seen numerous solutions over the years, most end up involving multiple tasks triggered and managed in different tools by different teams. None of the moving parts are particularly complicated but the end to end process can be difficult to debug and it never seems to result in a particularly reusable solution. I felt using Airflow to manage these tasks end to end might avoid some of these issues.
 
 ### So what is it?
 
-In [their words](https://airflow.apache.org/), "Airflow is a platform created by the community to programmatically author, schedule and monitor workflows". Most commonly, it gets used to orchestrate data pipelines. It is written in Python but can be used to schedule all sorts of tasks. It also provides built in "hooks" for connecting to a wide range of third party systems, particularly in the cloud/big data space. One thing it doesn't do out of the box is to connect to TM1 but it's pretty easy to extend it with Python which then allows to leverage the power of [TM1py](https://github.com/cubewise-code/tm1py).
+In their words, "Airflow is a platform created by the community to programmatically author, schedule and monitor workflows". Most commonly, it gets used to orchestrate data pipelines. It was written in Python but can be used to schedule tasks that are written in other languages. It also provides built in "hooks" for connecting to a wide range of third party systems, particularly in the cloud/big data space. This allows you to manage and monitor all of your ETL pipelines in a single place. The jobs themselves are written in code which means they can be version controlled and tested. One thing it doesn't do out of the box is to connect to TM1 but it's pretty easy to extend it with Python which then allows to leverage the power of [TM1py](https://github.com/cubewise-code/tm1py). 
 
 ### Did it work? 
 
@@ -24,7 +24,9 @@ Yes! At least in the limited use cases I was targeting. I set out to achieve the
 * Trigger a TI processes
 * Create a sensor to detect whether an element existed in a dimension
 
-Extracting the data from a cube and writing it somewhere was of the most interest to me initially. I chose S3 because of it's widespread use but the same concept could easily be applied to writing to any other system. My first iteration just used the PythonOperator and PythonSensor classes but I thought it would be cleaner to create my own custom hook, operators and sensors. Having spent a bit of time looking at the Airflow codebase, I found this surprisingly easy. I've released the resulting code as [airflow-tm1](https://github.com/scrambldchannel/airflow-tm1) on Github and published it to [PyPi](https://pypi.org/project/airflow-tm1/). I've only tested it on a fairly narrow set of use cases but it does what I need it to do, maybe someone out there will find it useful.
+Extracting the data from a cube and writing it somewhere was of the most interest to me initially. I chose S3 because of it's widespread use but the same concept could easily be applied to writing to any other system. I was able to create an Airflow DAG that did this pretty easily. My first iteration just used the PythonOperator class to pull the data via TM1py then write it to a csv file on the S3 bucket using Airflow's built in S3Hook. Likewise, triggering a TI process was easy once a connection to TM1 was established. The sensor part was a little more fiddly, but I was able to create a PythonSensor that worked. 
+
+I had the basic building blocks working but the code was starting to bloat a bit, particular that managing the connection to TM1. So I thought it would be cleaner to create my own custom hook, operators and sensors. Having spent a bit of time looking at the Airflow codebase, I found this surprisingly straightforward. I've released the resulting code as [airflow-tm1](https://github.com/scrambldchannel/airflow-tm1) on Github and published it to [PyPi](https://pypi.org/project/airflow-tm1/). I've only tested it on a fairly narrow set of use cases but it does what I need it to do, maybe someone out there will find it useful.
 
 
 ### Overview of the airflow-tm1 package
@@ -41,27 +43,34 @@ Note that it depends on Airflow so will bring in a pretty hefty list of dependen
 
 #### Usage
 
-As of today, the library provides a hook, a couple of operators to run TI processes and chores and a couple of sensors to detect whether or not an element exists in a dimension or the value in a given cell meets a given criteria. The advantage of using the hook is that it allows you to store your connection information (ip address, username, password etc) in Airflow's connections rather than embedding it in the code of your DAG. Once initialiased and the connection established, the hook gives you access to an instance of [TM1py's](https://github.com/cubewise-code/tm1py) TM1Service object from which you can do pretty much anything you want.
+As of today, the library provides a hook, a couple of operators to run TI processes and chores and a couple of sensors to detect whether or not an element exists in a dimension or the value in a given cell meets a given criteria. 
 
 ##### Using the Hook
 
+Hooks manage Airflow's connections to other systems. The advantage of using the hook is that it allows you to store your connection information (ip address, username, password etc) in Airflow's connections rather than embedding it in the code of your DAG. 
 Simply import the hook object:
 
 ```python
 from airflow_tm1.hooks.tm1 import TM1Hook
 ```
 
-Then, within you code, instantiate it and create the connection (note this depends on the existence of an Airflow connection named "tm1_default"):
+Then, within you code, instantiate it and create the connection:
 
 ```python
 tm1_hook = TM1Hook(tm1_conn_id="tm1_default")
 tm1 = tm1_hook.get_conn()
 ```
 
-From then on, you'll be able to access all the methods and properties of the [TM1Service object](https://github.com/cubewise-code/tm1py/blob/master/TM1py/Services/TM1Service.py). I've used this approach to build several DAGs that accomplish tasks such as:
+*Note* that this depends on the existence of an Airflow connection, in this case "tm1_default, with at least the following populated:
 
+* Host
+* Login
+* Port
+* Extras
+* * ssl
 
-Moving data to and from S3 just happened to be what I needed to achieve but there is no reason you couldn't use this to orchestrate pulling data out of TM1 and pushing it to any sort of data(base/warehouse/lake).
+Once initialiased and the connection established, the hook gives you access to an instance of [TM1py's TM1Service object](https://github.com/cubewise-code/tm1py) from which you can do pretty much anything you want.
+
 
 ##### Using the Operators
 
