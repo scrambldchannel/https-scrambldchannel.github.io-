@@ -108,9 +108,11 @@ task_value_sensor = TM1CellValueSensor(
             cube="GL",
             value = 0,
             elements="RF,2021,Sales,Amount",
-            op=gt, 
+            op=gt, # apply the greater than operator 
             dag=dag)
 ```
+
+My only concern with using sensors, or trying to make lots of REST calls generally, is performance degradation. Users often say they want the data in real time, so it might be tempting to have tasks scheduled to run every few seconds but this isn't likely to be feasible, particularly if the system is in heavy use. Optimally designing a DAG would obviously depend on a good understanding of TM1 and the model itself, which may also need to be augmented. The same applies in designing any ETL around involving TM1 though. 
 
 #### Next Steps
 
