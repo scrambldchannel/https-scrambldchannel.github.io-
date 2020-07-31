@@ -74,9 +74,28 @@ Once initialiased and the connection established, the hook gives you access to a
 
 ##### Using the Operators
 
-I'm in two minds about how useful custom operators actually are in a TM1 context. I did toy with the idea of writing one to pull data from a named cube view and write it to S3 but felt this was so specific given how different every TM1 model is. In the end I felt it was probably more useful to use the TM1Hook while taking advantage of the flexibility of a PythonOperator. I did build a couple of operators for triggering TIs and Chores though as this seemed quite a generic requirement. The idea is that rather than triggering these via the hook directly, they can be run in a uniform way with consistent exception handling and logging when wrapped up as a custom operator.
+Operators are used to perform actions. Tasks in Airflow shouldn't pass data between them so an operator should create some data or copy some data, not just read it. I'm in two minds about how useful custom operators actually are in a TM1 context. I did toy with the idea of writing one to pull data from a named cube view and write it to S3 but felt this was so specific given how different every TM1 model is. In the end I felt it was probably more useful to use the TM1Hook while taking advantage of the flexibility of a PythonOperator.
 
-For example, you could create a task in your DAG such as the following which triggers a TI process "Refresh Feeders" with a parameter specifying the cube name:
+```python
+def cube_view_to_s3(cube, view, key, bucket, **kwargs):
+
+    tm1_hook = TM1Hook(tm1_conn_id="tm1_default")
+    tm1 = tm1_hook.get_conn()
+    view_data = tm1.cubes.cells.execute_view_csv(cube_name=cube, view_name=view, private=False)
+    
+    s3_hook = S3Hook(aws_conn_id="s3_default")
+    s3_hook.load_string(string_data=view_data, key=key, bucket_name=bucket, replace=True)
+
+t1 = PythonOperator(
+    task_id="read_from_TM1",
+    python_callable=cube_view_to_s3,
+    op_kwargs = {"cube":"Revenue", "view":"zExport Data", "key":"Revenue.csv", "bucket":"airflowtest" },
+    dag=dag,
+)
+
+```
+
+I did build a couple of operators for triggering TIs and Chores as this seemed quite a generic requirement. The idea is that rather than triggering these via the hook directly, they can be run in a uniform way with consistent exception handling and logging when wrapped up as a custom operator. For example, you could create a task in your DAG such as the following which triggers a TI process "Refresh Feeders" with a parameter specifying the cube name:
 
 ```python
 task_run_ti = TM1RunTIOperator(
@@ -88,7 +107,7 @@ task_run_ti = TM1RunTIOperator(
 
 ```
 
-I can see this also being as useful for data exports where writing a large set of data to a file via TI will likely be much more performant than trying to pull the same through the REST API. It would be interesting to do some benchmarking though. One could create a task that triggers the process, one that checks that the file has been written and one that then loads it into the desired destination. I've worked on implementations where these same three steps (or similar) were run but no one team had end to end visibility of the process. Doing it in Airflow would give you that transparency and debugging a lot easier.
+I can see this also being as useful for data exports where writing a large set of data to a file via TI will likely be much more performant than trying to pull the same through the REST API. It would be interesting to do some benchmarking though. One could create a task that triggers the process, one that checks that the file has been written and one that then loads it into the desired destination.
 
 
 ##### Using the Sensors
