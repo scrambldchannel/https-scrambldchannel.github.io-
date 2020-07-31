@@ -67,7 +67,7 @@ tm1 = tm1_hook.get_conn()
 * Login
 * Port
 * Extras
-* * ssl
+    * ssl
 
 Once initialiased and the connection established, the hook gives you access to an instance of [TM1py's TM1Service object](https://github.com/cubewise-code/tm1py) from which you can do pretty much anything you want.
 
