@@ -14,7 +14,7 @@ I've worked on many projects where TM1 was used to create a dataset (eg a foreca
 
 ### So what is it?
 
-In their words, "Airflow is a platform created by the community to programmatically author, schedule and monitor workflows". Most commonly, it gets used to orchestrate data pipelines. It was written in Python but can be used to schedule tasks that are written in other languages. It also provides built in "hooks" for connecting to a wide range of third party systems, particularly in the cloud/big data space. This allows you to manage and monitor all of your ETL pipelines in a single place. The jobs themselves are written in code which means they can be version controlled and tested. One thing it doesn't do out of the box is to connect to TM1 but it's pretty easy to extend it with Python which then allows to leverage the power of [TM1py](https://github.com/cubewise-code/tm1py). 
+In their words, "Airflow is a platform created by the community to programmatically author, schedule and monitor workflows". Most commonly, it gets used to orchestrate data pipelines. It was written in Python but can be used to schedule tasks that are written in other languages. It also provides built in "hooks" for connecting to a wide range of third party systems, particularly in the cloud/big data space. This allows you to manage and monitor all of your ETL pipelines in a single place. The jobs themselves are written in code which means they can be version controlled and tested. The [Airflow docs](https://gtoonstra.github.io/etl-with-airflow/principles.html) lists the principles they try to follow. One thing it doesn't do out of the box is to connect to TM1 but it's easy to extend it with Python which then allows to leverage the power of [TM1py](https://github.com/cubewise-code/tm1py).
 
 ### Did it work? 
 
@@ -39,7 +39,7 @@ Via pip:
 pip install airflow-tm1
 ```
 
-Note that it depends on Airflow so will bring in a pretty hefty list of dependencies if you're not installing it in an existing Airflow environment. In this case, you probably want to go back and start at [the beginning](https://airflow.apache.org/docs/stable/start.html).
+Note that it depends on Airflow so will bring in a pretty hefty list of dependencies if you're not installing it in an existing Airflow environment. In this case, you probably want to go back and start at [the beginning](https://airflow.apache.org/docs/stable/start.html) to get an understanding of how Airflow works.
 
 #### Usage
 
@@ -54,7 +54,7 @@ Simply import the hook object:
 from airflow_tm1.hooks.tm1 import TM1Hook
 ```
 
-Then, within you code, instantiate it and create the connection:
+Then, within you code task code, instantiate it and create the connection:
 
 ```python
 tm1_hook = TM1Hook(tm1_conn_id="tm1_default")
