@@ -87,7 +87,7 @@ def cube_view_to_s3(cube, view, key, bucket, **kwargs):
     s3_hook.load_string(string_data=view_data, key=key, bucket_name=bucket, replace=True)
 
 t1 = PythonOperator(
-    task_id="read_from_TM1",
+    task_id="extract_from_TM1",
     python_callable=cube_view_to_s3,
     op_kwargs = {"cube":"Revenue", "view":"zExport Data", "key":"Revenue.csv", "bucket":"airflowtest" },
     dag=dag,
