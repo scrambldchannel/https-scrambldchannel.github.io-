@@ -10,7 +10,7 @@ I've been enjoying a bit of down time recently which, as well as exploring the l
 
 ### But why? 
 
-I've worked on many projects in the past where TM1 was used to create a dataset (eg a forecast) but that ultimately the data, once finalised, needed to get somewhere else. This can be particularly prevalent in organisations where tools like Tableau and Power BI are thought to be better options for creating dashboards and visualisations but also just arise from a desire to their forecast numbers within their ERP system. Developers not familiar with TM1 often just expect they can easily connect via ODBC or similar only to realise it's not that simple. I've seen numerous solutions to this problem, ("The Good, the Bad and the Ugly" springs to mind, given Ennio Morricone's recent passing), people love re-inventing the wheel. I am no different but I did genuinely feel that for organisations already using Airflow, this might be an interesting option to explore when they need to extract data from their TM1 database.
+I've worked on many projects where TM1 was used to create a dataset (eg a forecast) but that ultimately the data, once finalised, needed to get somewhere else. This can be particularly prevalent in organisations where tools like Tableau are (with good reason) thought to be better options for creating dashboards and visualisations but also just arise from a desire to see their forecast numbers somewhere else, such as their ERP system. Developers not familiar with TM1 often just expect they can easily connect via ODBC or similar only to realise it's not that simple. I've seen numerous solutions to this problem, ("The Good, the Bad and the Ugly" springs to mind, given Ennio Morricone's recent passing). People love re-inventing the wheel and I am no different but I did think, particularly for organisations already using Airflow, this might be an interesting option to explore when they need to extract data from TM1.
 
 ### So what is it?
 
@@ -114,4 +114,4 @@ task_value_sensor = TM1CellValueSensor(
 
 #### Next Steps
 
-I don't have a live project that is using this currently but I would like to extend it a bit further and think about a few more use cases. I aim to add a few example DAGS to Github soon and flesh out the documentation generally. I also need to think more about the best approach for exception handling and logging.  
+I don't have a live project that is using this currently but I would like to extend it a bit further and think about a few more use cases. I aim to illustrate these by adding a set of example DAGS to Github soon and to flesh out the documentation generally. I also need to think more about the best approach for exception handling and logging. I'd also like to know whether anyone else has tried Airflow with TM1.
