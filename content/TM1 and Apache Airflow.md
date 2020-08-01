@@ -10,15 +10,15 @@ I've been enjoying a bit of down time recently which, as well as exploring the l
 
 ### But why? 
 
-I've worked on many projects where TM1 was used to create a dataset (eg a forecast) but that ultimately the data, once finalised, needed to get somewhere else. This can be particularly prevalent in organisations where tools like Tableau are (with good reason) thought to be better options for creating dashboards and visualisations but also just arise from a desire to see their forecast numbers somewhere else, such as their ERP system. Developers not familiar with TM1 often just expect they can easily connect via ODBC or similar only to realise it's not that simple.
+I've worked on many projects where TM1 was used to create a dataset (eg a forecast) but that ultimately, the data needed to get somewhere else. This can be particularly prevalent in organisations where tools like Tableau are (with good reason) thought to be better options for creating visualisations but also arise from a desire to be able to view forecast numbers somewhere else, such as the ERP systems. Developers not familiar with TM1 may expect they can easily connect via ODBC or similar only to realise it's not that simple.
 
-I've seen numerous solutions over the years, most end up involving multiple tasks triggered and managed in different tools by different teams. None of the moving parts are particularly complicated but the end to end process can be difficult to debug and it never seems to result in a particularly reusable solution. I felt using Airflow to manage these tasks end to end might avoid some of these issues.
+I've seen numerous solutions over the years, most end up involving multiple tasks triggered and managed in different tools by different teams. None of the moving parts are particularly complicated but the end to end process can be difficult to debug and it never seems to result in a particularly reusable solution. The introduction of the REST API and development of [TM1py](https://github.com/cubewise-code/tm1py) have increased the options. I thought it might be interesting to see how Airflow might be used to manage ETL with TM1.
 
 ### So what is it?
 
 In their words, "Airflow is a platform created by the community to programmatically author, schedule and monitor workflows". Most commonly, it gets used to orchestrate data pipelines. It was written in Python but can be used to schedule tasks that are written in other languages. It also provides built in "hooks" for connecting to a wide range of third party systems, particularly in the cloud/big data space. This allows you to manage and monitor all of your ETL pipelines in a single place.
 
-The jobs themselves are written in code which means they can be version controlled and tested. The [Airflow docs](https://gtoonstra.github.io/etl-with-airflow/principles.html) lists the principles they try to follow. One thing it doesn't do out of the box is to connect to TM1 but it's easy to extend it with Python which then allows to leverage the power of [TM1py](https://github.com/cubewise-code/tm1py).
+The jobs themselves are written in code which means they can be version controlled and tested. The [Airflow docs](https://gtoonstra.github.io/etl-with-airflow/principles.html) lists the principles they try to follow. One thing it doesn't do out of the box is to connect to TM1 but it's easy to extend it with Python which then allows to leverage the power of TM1py.
 
 ### Did it work? 
 
@@ -32,15 +32,16 @@ Yes! At least in the basic use cases I identified:
 
 Extracting the data from a cube and writing it somewhere was of the most interest to me initially. I chose S3 because of it's widespread use but the same concept could easily be applied to writing to any other system. I was able to create an Airflow DAG that did this pretty easily. To simplify the management of the connection to TM1, I created a library that extends Airflow's base functionality. I've released the resulting code as [airflow-tm1](https://github.com/scrambldchannel/airflow-tm1) on Github and published it to [PyPi](https://pypi.org/project/airflow-tm1/).
 
-*Note* This depends on having a working Airflow environment with support for S3 and airflow_tm1. Read more in [the docs](https://airflow.apache.org/docs/stable/start.html) if you want to get started. 
+*Note* This depends on having the following:
 
-*Note* this also depends on having connections set up for TM1 and S3. Read more about managing [Airflow connections](https://airflow.apache.org/docs/stable/howto/connection/index.html) for details. The [TM1Hook](https://github.com/scrambldchannel/airflow-tm1/blob/master/airflow_tm1/hooks/tm1.py) requires at least the following to be specified:
-
-* Host
-* Login
-* Port
-* Extras
-    * ssl
+* a working Airflow environment with support for S3 and airflow_tm1. Read more in [the docs](https://airflow.apache.org/docs/stable/start.html) if you want to get started. 
+* connections createdfor TM1 and S3. Read more about managing [Airflow connections](https://airflow.apache.org/docs/stable/howto/connection/index.html) for details.
+* The [TM1Hook](https://github.com/scrambldchannel/airflow-tm1/blob/master/airflow_tm1/hooks/tm1.py) requires at least the following to be specified:
+    * Host
+    * Login
+    * Port
+    * Extras
+        * ssl
 
 The trick here is that ```ssl``` needs to defined in the json string in the ```Extras``` field:
 
@@ -178,7 +179,7 @@ with DAG(dag_id="example_run_ti", default_args=default_args, schedule_interval="
 
 #### Custom Sensors
 
-Sensors are used to control flow in a DAG. In this DAG, an instance of the [TM1CellValueSensor](https://github.com/scrambldchannel/airflow-tm1/blob/fef460219bca80203119dd794716ddef8e58fe20/airflow_tm1/sensors/tm1_cell_value.py#L10) checks that a value in a 
+Sensors are used to control flow in a DAG. In this DAG, an instance of the [TM1CellValueSensor](https://github.com/scrambldchannel/airflow-tm1/blob/fef460219bca80203119dd794716ddef8e58fe20/airflow_tm1/sensors/tm1_cell_value.py#L10) checks that a value in a control cube indicates that there is at least a draft submission available for OPEX for the entire company. In this DAG, it just triggers a dummy task but could be used to trigger an export of the OPEX data for example.
 
 
 ##### A DAG using a Custom Operator
@@ -221,3 +222,10 @@ with DAG(dag_id="example_value_sensor", default_args=default_args) as dag:
     t1 >> t2
 
 ```
+
+The ```t1 >> t2``` specifies that task ```t1``` will run before ```t2```. That is, the second won't be triggered until the condition on the sensor task has returned a value of ```true```.
+
+
+### Going further
+
+This obviously just scratches at the surface of what could be done. I've started working on some [example DAGS](https://github.com/scrambldchannel/airflow-tm1/tree/master/example_dags) and will try to come up with a more realistic example.
