@@ -10,58 +10,31 @@ I've been enjoying a bit of down time recently which, as well as exploring the l
 
 ### But why? 
 
-I've worked on many projects where TM1 was used to create a dataset (eg a forecast) but that ultimately the data, once finalised, needed to get somewhere else. This can be particularly prevalent in organisations where tools like Tableau are (with good reason) thought to be better options for creating dashboards and visualisations but also just arise from a desire to see their forecast numbers somewhere else, such as their ERP system. Developers not familiar with TM1 often just expect they can easily connect via ODBC or similar only to realise it's not that simple. I've seen numerous solutions over the years, most end up involving multiple tasks triggered and managed in different tools by different teams. None of the moving parts are particularly complicated but the end to end process can be difficult to debug and it never seems to result in a particularly reusable solution. I felt using Airflow to manage these tasks end to end might avoid some of these issues.
+I've worked on many projects where TM1 was used to create a dataset (eg a forecast) but that ultimately the data, once finalised, needed to get somewhere else. This can be particularly prevalent in organisations where tools like Tableau are (with good reason) thought to be better options for creating dashboards and visualisations but also just arise from a desire to see their forecast numbers somewhere else, such as their ERP system. Developers not familiar with TM1 often just expect they can easily connect via ODBC or similar only to realise it's not that simple.
+
+I've seen numerous solutions over the years, most end up involving multiple tasks triggered and managed in different tools by different teams. None of the moving parts are particularly complicated but the end to end process can be difficult to debug and it never seems to result in a particularly reusable solution. I felt using Airflow to manage these tasks end to end might avoid some of these issues.
 
 ### So what is it?
 
-In their words, "Airflow is a platform created by the community to programmatically author, schedule and monitor workflows". Most commonly, it gets used to orchestrate data pipelines. It was written in Python but can be used to schedule tasks that are written in other languages. It also provides built in "hooks" for connecting to a wide range of third party systems, particularly in the cloud/big data space. This allows you to manage and monitor all of your ETL pipelines in a single place. The jobs themselves are written in code which means they can be version controlled and tested. The [Airflow docs](https://gtoonstra.github.io/etl-with-airflow/principles.html) lists the principles they try to follow. One thing it doesn't do out of the box is to connect to TM1 but it's easy to extend it with Python which then allows to leverage the power of [TM1py](https://github.com/cubewise-code/tm1py).
+In their words, "Airflow is a platform created by the community to programmatically author, schedule and monitor workflows". Most commonly, it gets used to orchestrate data pipelines. It was written in Python but can be used to schedule tasks that are written in other languages. It also provides built in "hooks" for connecting to a wide range of third party systems, particularly in the cloud/big data space. This allows you to manage and monitor all of your ETL pipelines in a single place.
+
+The jobs themselves are written in code which means they can be version controlled and tested. The [Airflow docs](https://gtoonstra.github.io/etl-with-airflow/principles.html) lists the principles they try to follow. One thing it doesn't do out of the box is to connect to TM1 but it's easy to extend it with Python which then allows to leverage the power of [TM1py](https://github.com/cubewise-code/tm1py).
 
 ### Did it work? 
 
-Yes! At least in the limited use cases I was targeting. I set out to achieve the following as a minimum:
+Yes! At least in the basic use cases I identified:
 
 * Extract the data from a cube view and write this as a csv to an S3 bucket
-* Trigger a TI processes
-* Create a sensor to detect whether an element existed in a dimension
+* Run a TI processes
+* Detect whether a value in a cell met a certain condition
 
-Extracting the data from a cube and writing it somewhere was of the most interest to me initially. I chose S3 because of it's widespread use but the same concept could easily be applied to writing to any other system. I was able to create an Airflow DAG that did this pretty easily. My first iteration just used the PythonOperator class to pull the data via TM1py then write it to a csv file on the S3 bucket using Airflow's built in S3Hook. Likewise, triggering a TI process was easy once a connection to TM1 was established. The sensor part was a little more fiddly, but I was able to create a PythonSensor that worked. 
+### Putting it to the test
 
-I had the basic building blocks working but the code was starting to bloat a bit, particular that managing the connection to TM1. So I thought it would be cleaner to create my own custom hook, operators and sensors. Having spent a bit of time looking at the Airflow codebase, I found this surprisingly straightforward. I've released the resulting code as [airflow-tm1](https://github.com/scrambldchannel/airflow-tm1) on Github and published it to [PyPi](https://pypi.org/project/airflow-tm1/). I've only tested it on a fairly narrow set of use cases but it does what I need it to do, maybe someone out there will find it useful.
+Extracting the data from a cube and writing it somewhere was of the most interest to me initially. I chose S3 because of it's widespread use but the same concept could easily be applied to writing to any other system. I was able to create an Airflow DAG that did this pretty easily. To simplify the management of the connection to TM1, I created a library that extends Airflow's base functionality. I've released the resulting code as [airflow-tm1](https://github.com/scrambldchannel/airflow-tm1) on Github and published it to [PyPi](https://pypi.org/project/airflow-tm1/).
 
+*Note* This depends on having a working Airflow environment with support for S3 and airflow_tm1. Read more in [the docs](https://airflow.apache.org/docs/stable/start.html) if you want to get started. 
 
-### Overview of the airflow-tm1 package
-
-#### Installation
-
-Via pip:
-
-```sh
-pip install airflow-tm1
-```
-
-Note that it depends on Airflow so will bring in a pretty hefty list of dependencies if you're not installing it in an existing Airflow environment. In this case, you probably want to go back and start at [the beginning](https://airflow.apache.org/docs/stable/start.html) to get an understanding of how Airflow works.
-
-#### Usage
-
-As of today, the library provides a hook, a couple of operators to run TI processes and chores and a couple of sensors to detect whether or not an element exists in a dimension or the value in a given cell meets a given criteria. 
-
-##### Using the Hook
-
-Hooks manage Airflow's connections to other systems. The advantage of using the hook is that it allows you to store your connection information (ip address, username, password etc) in Airflow's connections rather than embedding it in the code of your DAG. 
-Simply import the hook object:
-
-```python
-from airflow_tm1.hooks.tm1 import TM1Hook
-```
-
-Then, within you code task code, instantiate it and create the connection:
-
-```python
-tm1_hook = TM1Hook(tm1_conn_id="tm1_default")
-tm1 = tm1_hook.get_conn()
-```
-
-*Note* that this depends on the existence of an Airflow connection, in this case "tm1_default, with at least the following populated:
+*Note* this also depends on having connections set up for TM1 and S3. Read more about managing [Airflow connections](https://airflow.apache.org/docs/stable/howto/connection/index.html) for details. The [TM1Hook](https://github.com/scrambldchannel/airflow-tm1/blob/master/airflow_tm1/hooks/tm1.py) requires at least the following to be specified:
 
 * Host
 * Login
@@ -69,79 +42,100 @@ tm1 = tm1_hook.get_conn()
 * Extras
     * ssl
 
-Once initialiased and the connection established, the hook gives you access to an instance of [TM1py's TM1Service object](https://github.com/cubewise-code/tm1py) from which you can do pretty much anything you want.
+The trick here is that ```ssl``` needs to defined in the json string in the ```Extras``` field:
 
+```json
+{"ssl": false}
+```
 
-##### Using the Operators
+#### Creating a DAG
 
-Operators are used to perform actions. Tasks in Airflow shouldn't pass data between them so an operator should create some data or copy some data, not just read it. I'm in two minds about how useful custom operators actually are in a TM1 context. I did toy with the idea of writing one to pull data from a named cube view and write it to S3 but felt this was so specific given how different every TM1 model is. In the end I felt it was probably more useful to use the TM1Hook while taking advantage of the flexibility of a PythonOperator.
+Airflow uses DAGs to manage ETL jobs and [the project team](https://airflow.apache.org/docs/stable/concepts.html#core-ideas) are much better at explaining what they are than I am. In short, a DAG can be thought of a list of tasks defined together in a Python script. The fundamental components of a DAG are hooks, which manage connections to other systems; operators, which complete an independent task; and sensors, which check whether a condition is true.
+
+Here is the simple DAG I created to pull data from a cube and write it to S3. It uses the TM1Hook from airflow-tm1 to manage the connection to TM1py and transfers the data using a Python operator that leverages TM1py. I created it with the name
+
+##### Import the necessary libraries
+
+You can use this import any other modules you want to use in your DAGs.
 
 ```python
-def cube_view_to_s3(cube, view, key, bucket, **kwargs):
+from airflow import DAG
+from airflow.hooks.S3_hook import S3Hook
+from airflow.operators.python_operator import PythonOperator
+from airflow.utils.dates import days_ago, timedelta
 
+from airflow_tm1.hooks.tm1 import TM1Hook
+```
+
+##### Set defaults
+
+These can be overwritten on a task by task basis. 
+
+```python
+# set defaults that DAG will pass to each task
+default_args = {
+    "owner": "Airflow",
+    "start_date": days_ago(2),
+    "depends_on_past": False,
+    "email_on_failure": False,
+    "email_on_retry": False,
+    "email": "you@somewhere.com",
+    "retries": 1
+}
+```
+
+##### Define the Python function the task will use
+
+This gets run by our task in the DAG and manages the end to end transfer of the data from TM1 to S3.
+
+
+```python
+def cube_view_to_s3(cube, view, bucket, key, **kwargs):
+
+    # instantiate our TM1Hook using the "tm1_default" connection
     tm1_hook = TM1Hook(tm1_conn_id="tm1_default")
+    # return an instance of the TM1Service from TM1py
     tm1 = tm1_hook.get_conn()
-    view_data = tm1.cubes.cells.execute_view_csv(cube_name=cube, view_name=view, private=False)
-    
+
+    # pull data in csv format from specified cube view
+    view_data = tm1.cubes.cells.execute_view_csv(
+        cube_name=cube, view_name=view, private=False)
+
+    # instantiate S3Hook using the "s3_default" connection
     s3_hook = S3Hook(aws_conn_id="s3_default")
-    s3_hook.load_string(string_data=view_data, key=key, bucket_name=bucket, replace=True)
-
-t1 = PythonOperator(
-    task_id="extract_from_TM1",
-    python_callable=cube_view_to_s3,
-    op_kwargs = {"cube":"Revenue", "view":"zExport Data", "key":"Revenue.csv", "bucket":"airflowtest" },
-    dag=dag,
-)
-
+    # write the data to a key in the bucket specified
+    s3_hook.load_string(string_data=view_data, key=key,
+        bucket_name=bucket, replace=True)
 ```
 
-I did build a couple of operators for triggering TIs and Chores as this seemed quite a generic requirement. The idea is that rather than triggering these via the hook directly, they can be run in a uniform way with consistent exception handling and logging when wrapped up as a custom operator. For example, you could create a task in your DAG such as the following which triggers a TI process "Refresh Feeders" with a parameter specifying the cube name:
+##### Create the DAG and a single task
+
+This DAG only has a single task ```t1``` but will usually contain several more and manage how they depend on one another.
 
 ```python
-task_run_ti = TM1RunTIOperator(
-    task_id="refresh_feeders_of_gl_cube",
-    process_name="Refresh Feeders",
-    parameters =  { "pCube" : "GL"},
-    dag=dag,
-)
+with DAG(dag_id="example_tm1_to_s3", schedule_interval="@daily", default_args=default_args) as dag:
 
+    t1 = PythonOperator(
+        task_id="view_to_S3",
+        # specifies the function we want to call
+        python_callable=cube_view_to_s3,
+        # and the arguments to pass it
+        op_kwargs={"cube": "Income Statement Reporting", "view": "Income Statement - Management",
+            "key": 'airflow-test/{{ ds_nodash }}.csv', "bucket": "scrambldbucket"},
+        dag=dag,
+    )
+
+    t1
 ```
 
-I can see this also being as useful for data exports where writing a large set of data to a file via TI will likely be much more performant than trying to pull the same through the REST API. It would be interesting to do some benchmarking though. One could create a task that triggers the process, one that checks that the file has been written and one that then loads it into the desired destination.
+##### Running the DAG
 
+DAGS need to be saved in Airflow's DAG folder as ```*.py``` files. Airflow has a built in [web UI](https://airflow.apache.org/docs/stable/ui.html) that can manage DAGs. They can also be managed from a [cli](https://airflow.apache.org/docs/stable/usage-cli.html) which can be useful for testing purposes.
 
-##### Using the Sensors
-
-I can see the usefulness of custom sensors a bit more clearly. For example, the TM1ElementSensor as used below will wake up every 30 minutes and check for the existence of a specific element in a dimension. I thought this might be useful in situations where a new version of a forecast was created and this would signal that a new dataset should be exported. 
-
-```python
-task_element_sensor = TM1ElementSensor(
-            task_id='tm1_element_sensor_task',
-            poke_interval=60 * 30, # (seconds); checking file every half an hour
-            timeout=60 * 60 * 12, # timeout in 12 hours
-            tm1_conn_id = "tm1_default",
-            element="my new version",
-            dimension="Version",
-            dag=dag)
+```sh
+airflow trigger_dag example_tm1_to_s3
 ```
 
-The value sensor can be used to check that the value of a specific cell meets a criteria. For example, the task below would check every fifteen minutes to see if the sale figure for a given year was greater than zero. This might imply that the new sales rolling forecast for 2021 was available and that it should be extracted to then be loaded downstream. 
+#### Using Operators
 
-```python
-task_value_sensor = TM1CellValueSensor(
-            task_id='tm1_value_sensor_task',
-            poke_interval=60 * 15, # check every 15 minutes 
-            timeout=60 * 60 * 12, # timeout in 12 hours
-            tm1_conn_id = "tm1_default",
-            cube="GL",
-            value = 0,
-            elements="RF,2021,Sales,Amount",
-            op=gt, # apply the greater than operator 
-            dag=dag)
-```
-
-My only concern with using sensors, or trying to make lots of REST calls generally, is performance degradation. Users often say they want the data in real time, so it might be tempting to have tasks scheduled to run every few seconds but this isn't likely to be feasible, particularly if the system is in heavy use. Optimally designing a DAG would obviously depend on a good understanding of TM1 and the model itself, which may also need to be augmented. The same applies in designing any ETL around involving TM1 though. 
-
-#### Next Steps
-
-I don't have a live project that is using this currently but I would like to extend it a bit further and think about a few more use cases. I aim to illustrate these by adding a set of example DAGS to Github soon and to flesh out the documentation generally. I also need to think more about the best approach for exception handling and logging. I'd also like to know whether anyone else has tried Airflow with TM1.
+The DAG above uses the ```PythonOperator``` to call a custom function. 
