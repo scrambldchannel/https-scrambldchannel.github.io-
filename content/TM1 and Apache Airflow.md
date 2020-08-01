@@ -136,6 +136,43 @@ DAGS need to be saved in Airflow's DAG folder as ```*.py``` files. Airflow has a
 airflow trigger_dag example_tm1_to_s3
 ```
 
+##### Results
+
+I tested on small views, running both TM1 and Airflow locally with an OK internet connection. I was able to transfer small datasets (<10mb) relatively quickly but I've not done any serious testing and, obviously, scalability would be a concern. For pulling large volumes of data, a good understanding of TM1, and the model itself, would be required to develop a sensible strategy. That said, it should work for in some cases such as where summary data is required for a Tableau dashboard. Additionally, I'd expect exporting cube data via TI first would prove faster in many cases. 
+
 #### Using Operators
 
-The DAG above uses the ```PythonOperator``` to call a custom function. 
+The DAG above uses the ```PythonOperator``` to call a custom function. For tasks that are likely to be used repeatedly, it's possible to create custom operators than can provide a useful abstraction to tasks. There's no reason one couldn't create a custom operator that would replicate the function I used above, but I thought I'd start with something simpler. I created custom operators to trigger TI processes and Chores. 
+
+##### A DAG using a custom operator
+
+Using the [TM1RunTIOperator](https://github.com/scrambldchannel/airflow-tm1/blob/master/airflow_tm1/operators/tm1_run_ti.py) the task can be written in just a few lines of code specifying the process to run and their parameters. This specific task triggers a feeders refresh in a specific cube but could be used to run anything best handled by TI.
+
+```python
+from airflow import DAG
+from airflow.utils.dates import days_ago, timedelta
+
+from airflow_tm1.operators.tm1_run_ti import TM1RunTIOperator
+
+default_args = {
+    "owner": "Airflow",
+    "start_date": days_ago(2),
+    "depends_on_past": False,
+    "email_on_failure": False,
+    "email_on_retry": False,
+    "email": "you@somewhere.com",
+    "retries": 1
+}
+
+with DAG(dag_id="example_run_ti", default_args=default_args, schedule_interval="@daily") as dag:
+
+    t1 = TM1RunTIOperator(
+        task_id="run_ti",
+        process_name="Refresh Feeders",
+        parameters={"pCube": "Capital"},
+        dag=dag,
+    )
+
+    t1
+```
+
