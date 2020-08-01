@@ -140,11 +140,11 @@ airflow trigger_dag example_tm1_to_s3
 
 I tested on small views, running both TM1 and Airflow locally with an OK internet connection. I was able to transfer small datasets (<10mb) relatively quickly but I've not done any serious testing and, obviously, scalability would be a concern. For pulling large volumes of data, a good understanding of TM1, and the model itself, would be required to develop a sensible strategy. That said, it should work for in some cases such as where summary data is required for a Tableau dashboard. Additionally, I'd expect exporting cube data via TI first would prove faster in many cases. 
 
-#### Using Operators
+#### Custom Operators
 
 The DAG above uses the ```PythonOperator``` to call a custom function. For tasks that are likely to be used repeatedly, it's possible to create custom operators than can provide a useful abstraction to tasks. There's no reason one couldn't create a custom operator that would replicate the function I used above, but I thought I'd start with something simpler. I created custom operators to trigger TI processes and Chores. 
 
-##### A DAG using a custom operator
+##### A DAG using a Custom Operator
 
 Using the [TM1RunTIOperator](https://github.com/scrambldchannel/airflow-tm1/blob/master/airflow_tm1/operators/tm1_run_ti.py) the task can be written in just a few lines of code specifying the process to run and their parameters. This specific task triggers a feeders refresh in a specific cube but could be used to run anything best handled by TI.
 
@@ -176,3 +176,48 @@ with DAG(dag_id="example_run_ti", default_args=default_args, schedule_interval="
     t1
 ```
 
+#### Custom Sensors
+
+Sensors are used to control flow in a DAG. In this DAG, an instance of the [TM1CellValueSensor](https://github.com/scrambldchannel/airflow-tm1/blob/fef460219bca80203119dd794716ddef8e58fe20/airflow_tm1/sensors/tm1_cell_value.py#L10) checks that a value in a 
+
+
+##### A DAG using a Custom Operator
+
+```python
+from operator import eq, ge, gt, le, lt, ne
+
+from airflow import DAG
+from airflow.operators.dummy_operator import DummyOperator
+from airflow.utils.dates import days_ago, timedelta
+
+from airflow_tm1.sensors.tm1_cell_value import TM1CellValueSensor
+
+default_args = {
+    "owner": "airflow",
+    "depends_on_past": False,
+    "start_date": days_ago(2),
+    "retries": 0,
+    "retry_delay": timedelta(minutes=5),
+}
+
+with DAG(dag_id="example_value_sensor", default_args=default_args) as dag:
+
+    t1 = TM1CellValueSensor(
+        task_id='check_value',
+        # check every 15 minutes
+        poke_interval=60 * 15,
+        # timeout in 12 hours
+        timeout=60 * 60 * 12,
+        tm1_conn_id="tm1_default",
+        cube="Task Workflow",
+        value=1,
+        elements="OPEX,Total Company,Complete",
+        # apply the greater than operator
+        op=gt,
+    )
+
+    t2 = DummyOperator(task_id='do_nothing')
+
+    t1 >> t2
+
+```
