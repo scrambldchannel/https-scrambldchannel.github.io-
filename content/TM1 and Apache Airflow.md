@@ -182,7 +182,7 @@ with DAG(dag_id="example_run_ti", default_args=default_args, schedule_interval="
 Sensors are used to control flow in a DAG. In this DAG, an instance of the [TM1CellValueSensor](https://github.com/scrambldchannel/airflow-tm1/blob/fef460219bca80203119dd794716ddef8e58fe20/airflow_tm1/sensors/tm1_cell_value.py#L10) checks that a value in a control cube indicates that there is at least a draft submission available for OPEX for the entire company. In this DAG, it just triggers a dummy task but could be used to trigger an export of the OPEX data for example.
 
 
-##### A DAG using a Custom Operator
+##### A DAG using a Custom Sensor
 
 ```python
 from operator import eq, ge, gt, le, lt, ne
