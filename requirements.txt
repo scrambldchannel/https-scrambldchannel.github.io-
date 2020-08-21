@@ -29,6 +29,7 @@ notebook==6.0.0
 pandocfilters==1.4.2
 parso==0.5.1
 pelican==4.1.0
+pelican-jupyter==0.10.0
 pexpect==4.7.0
 pickleshare==0.7.5
 prometheus-client==0.7.1
