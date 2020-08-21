@@ -1,4 +1,5 @@
 from datetime import datetime
+from pelican_jupyter import markup as nb_markup
 
 AUTHOR = 'Alexander Sutcliffe'
 SITEURL = 'http://localhost:8000'
@@ -23,8 +24,11 @@ PATH = 'content'
 TIMEZONE = 'Europe/Berlin'
 
 MARKUP = ('md', 'ipynb')
-PLUGIN_PATHS = ['plugins']
 IGNORE_FILES = [".ipynb_checkpoints"]  
+
+PLUGIN_PATHS = ['plugins']
+PLUGINS = [nb_markup]
+IPYNB_MARKUP_USE_FIRST_CELL = True
 
 I18N_TEMPLATES_LANG = 'en'
 DEFAULT_LANG = 'en'
