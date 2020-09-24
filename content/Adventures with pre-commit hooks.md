@@ -141,7 +141,9 @@ max-line-length = 120
 
 I suspect as time goes on I might add a few more codes to that ignore list. Setting the max length to 100 means I get _really_ long lines that black doesn't re-format flagged up but others get through.
 
-**Note:** I did look at using pylint instead but it complained about so many things I didn't care about that I didn't persevere. I'll maybe revisit this later. From the reading I did it's recommended to use it as a local hook as [documented here]().
+Another option here is to use the ominously named [flakehell](https://github.com/life4/flakehell) instead which does offer ```pyproject.toml``` support as well as a number of other options on top of flake8. I'll certainly keep an eye on it.
+
+I did look at using pylint instead but it complained about so many things I didn't care about that I didn't persevere. I'll maybe revisit this later. From the reading I did it's recommended to use it as a local hook as [documented here]().
 
 ## Running the checks
 
