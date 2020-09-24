@@ -46,7 +46,7 @@ The yaml above is fairly easy to understand, it has a link to a repo where the h
 
 The sample config includes a couple of useful tools but pre-commit can leverage a lot more power than that. I want to code re-formatting, linting and type checking to my Python projects by default.
 
-**Note**, I'm using it here for a Python project but it can be used for projects in all sorts of languages, you'd just need to take advantage of different hooks. Take a look at the [list here](https://pre-commit.com/hooks.html) to get an idea of what is possible.
+**Note:** I'm using it here for a Python project but it can be used for projects in all sorts of languages, you'd just need to take advantage of different hooks. Take a look at the [list here](https://pre-commit.com/hooks.html) to get an idea of what is possible.
 
 ### Using isort to arrange imports
 
