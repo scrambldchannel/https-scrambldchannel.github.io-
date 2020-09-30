@@ -45,9 +45,9 @@ USE_FOLDER_AS_CATEGORY = False
 MAIN_MENU = True
 HOME_HIDE_TAGS = True
 
-MENUITEMS = [('About', '/pages/about.html'),
-             ('Tags', '/tags.html'),]
+MENUITEMS = [('About', '/pages/about.html'),]
 
+SIDEBARITEMS = [('About', '/pages/about.html'),]
 
 SOCIAL = [ 
     ('github', 'https://github.com/scrambldchannel'),
