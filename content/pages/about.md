@@ -1,7 +1,7 @@
 Title: About
 Date: 2019-09-26 10:02
 
-<img style="padding-left: 10px;  float: right;" src="/images/me_staring_into_the_trees.jpg">
+<img style="padding-left: 10px; padding-bottom: 10px; float: right;" src="/images/me_staring_into_the_trees.jpg">
 
 I'm a BI/data analyst/developer with over fifteen years of experience across many different industries. I've  worked a lot on systems that enable financial planning and analysis as well as processes across the wider finance space. I'm pretty accomplished at developing fast, scalable IBM Cognos TM1 / Planning Analytics implementations but am also comfortable with a wide variety of other database, ETL, reporting and BI/data visualisation technologies.
 
