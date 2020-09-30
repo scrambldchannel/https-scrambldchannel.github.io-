@@ -2,7 +2,7 @@ Title: Alexander Sutcliffe
 slug: cv
 ----
 
-> Business Intelligence Analyst and Developer with over 15 years of experience
+#### Business Intelligence Analyst and Developer with over 15 years of experience
 
 ----
 
