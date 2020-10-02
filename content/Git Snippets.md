@@ -65,6 +65,14 @@ git checkout master
 git merge features/my_new_feature
 ```
 
+### Delete a branch
+
+Once your changes have been merged into master, you can delete the branch you used to develop the feature:
+
+```sh
+git branch -D features/my_new_feature
+```
+
 ### Push local changes to remote
 
 When working on a project hosted remotely (e.g. on Github) you will eventually want to push your changes up to the remote git repository. If the branch you're working on already exists, you can push changes with this command:
@@ -104,3 +112,11 @@ git rebase upstream/master
 ```
 
 In this case, I can then push my changes up to my remote fork so it is tracking upstream.
+
+### Checkout a remote branch
+
+Sometimes someone will create a new fork in the upstream repository that I wish to clone locally. Or pehaps I want to checkout a branch I've pushed to my remote fork repository from a different development environment.
+
+```sh
+
+```
