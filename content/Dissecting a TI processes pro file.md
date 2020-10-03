@@ -19,7 +19,7 @@ The process is pretty straightforward, it takes a cube, or list of cubes, and a 
 602,"}bedrock.cube.rule.processfeeders"
 ```
 
-These first couple of lines specify the version and the name of the process. How do I know this? Wim pointed me in the direction of the codes in the TM1 docs, notably the file at ```tm1_64/TM1JavaApiDocs/constant-values.html``` which contains a list of constants in the docs for the old Java API. It turns out that these correspond to the codes that start each line in the pro file.
+These first couple of lines specify the version and the name of the process. How do I know this? Wim pointed me in the direction of the codes in the TM1 docs, notably the file at ```tm1_64/TM1JavaApiDocs/constant-values.html``` which contains a list of constants in the docs for the old Java API. It turns out that these correspond to the codes that start each line in the pro file. I've scraped the codes and there is full [table detailing them](#table-of-codes) at the end of this post.
 
 As it goes on, you can see, each line is simply a code and either a numeric value or a string. I'm not sure why ```C:\TM1Data\Bedrock3\Data\Excel.RUX``` is there, it doesn't seem relevant in the context of what this process is doing. Looking at the codes, those are the settings for the ```datasourcename``` and ```datasourcenameforserver```. So I reckon they can actually go. 
 
@@ -199,3 +199,92 @@ There's still a bit at the end to cut through, but at least that's an overview o
 ```
 
 I'm going to check whether the list of codes is consistent across all pro files, using Bedrock as a test bed. Parsing the file shouldn't be that hard but analysing the codes could prove a bit annoying, let's see if I find time but it seems a nice little feature.
+
+### All Codes:
+
+Multiline field is a draft at this stage.
+
+| Code | Name    | Multiline |
+|------|---------|-----------|
+|601| ProcessFileVersionNumber||
+|602| ProcessName||
+|562| ProcessDataSourceType||
+|586| ProcessDataSourceNameForServer||
+|585| ProcessDataSourceNameForClient||
+|564| ProcessDataSourceUserName||
+|565| ProcessDataSourcePassword||
+|559| ProcessODBCInterfaceUsesUnicode||
+|928| ProcessTargetActiveSandbox||
+|593| ProcessDataSourceODBOProvider||
+|594| ProcessDataSourceODBOLocatioN||
+|595| ProcessDataSourceODBOCatalog||
+|597| ProcessDataSourceODBOSAPClientID||
+|598| ProcessDataSourceODBOSAPClientLanguage||
+|596| ProcessDataSourceODBOConnectionString||
+|800| ProcessDataSourceODBOHierarchyName||
+|801| ProcessDataSourceODBOCubeName||
+|566| ProcessDataSourceQuery||
+|567| ProcessDataSourceASCIIDelimiter||
+|588| ProcessDataSourceASCIIDecimalSeparator||
+|589| ProcessDataSourceASCIIThousandSeparator||
+|568| ProcessDataSourceASCIIQuoteCharacter||
+|570| ProcessDataSourceCubeView||
+|571| ProcessDataSourceDimensionSubset||
+|569| ProcessDataSourceASCIIHeaderRecords||
+|592| ProcessOnMinorErrorDoItemSkip||
+|599| ProcessMinorErrorLogFileMax||
+|560| ProcessParametersNames|Yes|
+|561| ProcessParametersTypes|Yes|
+|590| ProcessParametersDefaultValues|Yes|
+|637| ProcessParametersPromptStrings|Yes|
+|577| ProcessVariablesNames|Yes|
+|578| ProcessVariablesTypes|Yes|
+|579| ProcessVariablesPositions|?|
+|580| ProcessVariablesStartingBytes|?|
+|581| ProcessVariablesEndingBytes|?|
+|582| ProcessVariablesUIData||
+|603| ProcessVariablesUIDataEx||
+|572| ProcessPrologProcedure|Yes|
+|573| ProcessMetaDataProcedure|Yes|
+|574| ProcessDataProcedure|Yes|
+|575| ProcessEpilogProcedure|Yes|
+|576| ProcessUIData||
+|930| ProcessUIDataMore||
+|638| ProcessComplete||
+|804| ProcessDataSourceUseCallerProcessConnection||
+|1217| ProcessGrantSecurityAccess||
+|900| ProcessDataSourceSapClientId||
+|901| ProcessDataSourceSapLanguage||
+|902| ProcessDataSourceSapAddConnParams||
+|938| ProcessDataSourceSapConnectionType||
+|937| ProcessDataSourceSapCurrencyFrom||
+|936| ProcessDataSourceSapSystemNumber||
+|935| ProcessDataSourceSapRouterString||
+|934| ProcessDataSourceSapCodepage||
+|932| ProcessDataSourceSapInfoCubeThreadCount||
+|933| ProcessDataSourceSapInfoCubeThreadingCharacteristics||
+|903| ProcessDataSourceSapInfoCubeName||
+|906| ProcessDataSourceSapCharacteristicName||
+|929| ProcessDataSourceTopProcessName||
+|907| ProcessDataSourceSapHierarchyName||
+|908| ProcessDataSourceSapHierarchyVersion||
+|904| ProcessDataSourceSapInfoCubeCharacteristics||
+|905| ProcessDataSourceSapInfoCubeKeyFigures||
+|909| ProcessDataSourceSapCharacteristicAttributes||
+|911| ProcessDataSourceSapUserFilter||
+|912| ProcessDataSourceSapRoleFilter||
+|913| ProcessDataSourceSapTableName||
+|914| ProcessDataSourceSapExchangeType||
+|915| ProcessDataSourceSapCurrencyFrom||
+|916| ProcessDataSourceSapCurrencyTo||
+|917| ProcessDataSourceSapUsingRoleAuths||
+|918| ProcessDataSourceSapUsingTexts||
+|919| ProcessDataSourceSapInfocubeRestrictions||
+|920| ProcessSapPacketSize||
+|921| ProcessDataSourceSapMaxDateFrom||
+|922| ProcessDataSourceSapMinDateTo||
+|923| ProcessDataSourceSapCharactHierProps||
+|924| ProcessDataSourceSapCharactAttrMaxDateFrom||
+|925| ProcessDataSourceSapCharactAttrMinDateTo||
+|926| ProcessDataSourceSapCharactTextsMaxDateFrom||
+|927| ProcessDataSourceSapCharactTextsMinDateTo||
