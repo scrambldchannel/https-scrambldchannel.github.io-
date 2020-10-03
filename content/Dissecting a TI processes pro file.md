@@ -198,11 +198,56 @@ There's still a bit at the end to cut through, but at least that's an overview o
 927,""
 ```
 
-I'm going to check whether the list of codes is consistent across all pro files, using Bedrock as a test bed. Parsing the file shouldn't be that hard but analysing the codes could prove a bit annoying, let's see if I find time but it seems a nice little feature.
+I had a quick go at parsing a pro file. This is rough and buggy (doesn't deal with "," for example) but enabled me to do some quick analysis of all the Bedrock files as well as an empty process I created via Architect.
+
+```python
+import pathlib
+
+# codes that indicate a multiline value
+multiline_codes = ['560', '561', '637', '590', '572', '573', '574', '575', '577', '578', '579', '580', '581', '582']
+
+pro_files = pathlib.Path().glob("*.pro")
+
+for file in pro_files:
+    codes = []
+    with open(file, encoding='utf-8-sig') as f:
+        process_dict = {}
+        in_multiline = False
+        for line in f:
+            if not in_multiline:
+                fields = line.split(',')
+                code = fields[0]
+                codes.append(code)
+                if code in multiline_codes:
+                    lines = int(fields[1])
+                    if lines > 0:
+                        in_multiline = True
+                    process_dict[code] = []
+                else:
+                    process_dict[code] = ''.join(fields[1:]).rstrip()
+            else:
+                process_dict[code].append(line.rstrip())
+                lines = lines - 1
+                if lines == 0:
+                    in_multiline = False
+
+codes = set(codes)
+
+```
+
+This creates a list of all the codes present and a list of dictionaries of the codes and values for each process. I tinkered around with this code and managed to identify all the multiline codes in all the Bedrock processes but there may be some more lurking, particularly in the codes that cover connection configurations which aren't covered in Bedrock.
+
+In theory, it should be then possible to create an instance of a TM1py ```Process``` object from the information grabbed for each process.
+
+```
+
+```
+
+
 
 ### All Codes:
 
-Multiline field is a draft at this stage.
+Listed in the order they seem to appear in the pro files. 
 
 | Code | Name    | Multiline |
 |------|---------|-----------|
@@ -239,10 +284,10 @@ Multiline field is a draft at this stage.
 |637| ProcessParametersPromptStrings|Yes|
 |577| ProcessVariablesNames|Yes|
 |578| ProcessVariablesTypes|Yes|
-|579| ProcessVariablesPositions|?|
-|580| ProcessVariablesStartingBytes|?|
-|581| ProcessVariablesEndingBytes|?|
-|582| ProcessVariablesUIData||
+|579| ProcessVariablesPositions|Yes|
+|580| ProcessVariablesStartingBytes|Yes|
+|581| ProcessVariablesEndingBytes|Yes|
+|582| ProcessVariablesUIData|Yes|
 |603| ProcessVariablesUIDataEx||
 |572| ProcessPrologProcedure|Yes|
 |573| ProcessMetaDataProcedure|Yes|
