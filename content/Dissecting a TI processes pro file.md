@@ -9,17 +9,18 @@ Status: draft
 
 An [issue](https://github.com/cubewise-code/tm1py/issues/383) raised over at the TM1py project asked for a feature to add hot promotion of TM1 processes saved as pro files. The API allows creation of TI processes and TM1py provides some useful wrapper functions that can achieve this. However the fiddly part was parsing a pro file to get the relevant information out to allow us to create an instance of the TM1py Process object.
 
+### Exploring the pro file format
+
 Pro files are saved as text so are human readable. As well as containing the code defined in the different tabs (prolog, metadata, data and epilog) the file contains metadata providing additional details about the file. For this example, I'm taking apart the [process to refresh feeders](https://github.com/cubewise-code/bedrock/blob/master/main/%7Dbedrock.cube.rule.processfeeders.pro) from the [Bedrock project](https://github.com/cubewise-code/bedrock).
 
 The process is pretty straightforward, it takes a cube, or list of cubes, and a few other general parameters and does what it says on the tin - i.e. each specified cube will have its feeders refreshed. This is what it looks like on file:
-
 
 ```text
 601,100
 602,"}bedrock.cube.rule.processfeeders"
 ```
 
-These first couple of lines specify the version and the name of the process. How do I know this? Wim pointed me in the direction of the codes in the TM1 docs, notably the file at ```tm1_64/TM1JavaApiDocs/constant-values.html``` which contains a list of constants in the docs for the old Java API. It turns out that these correspond to the codes that start each line in the pro file. I've scraped the codes and there is full [table detailing them](#table-of-codes) at the end of this post.
+These first couple of lines specify the version and the name of the process. How do I know this? Wim pointed me in the direction of the codes in the TM1 docs, notably the file at ```tm1_64/TM1JavaApiDocs/constant-values.html``` which contains a list of constants in the docs for the old Java API. It turns out that these correspond to the codes that start each line in the pro file. I've scraped the codes and there is full table detailing them at the end of this post.
 
 As it goes on, you can see, each line is simply a code and either a numeric value or a string. I'm not sure why ```C:\TM1Data\Bedrock3\Data\Excel.RUX``` is there, it doesn't seem relevant in the context of what this process is doing. Looking at the codes, those are the settings for the ```datasourcename``` and ```datasourcenameforserver```. So I reckon they can actually go. 
 
@@ -56,6 +57,8 @@ A lot of these values are blank and a cursory read of the manual suggests they a
 599,1000
 ```
 
+### Multiline codes
+
 This is a bit different though. For those familiar with TI processes, it's simple enough to work out what's going on. These are the names of the parameters of the process. The ```4``` after ```560``` indicates that there are four parameters specified.
 
 ```text
@@ -76,7 +79,9 @@ This is a bit more opaque but next come the parameter types. These define the ty
 2
 ```
 
-To round it off, we see the default values and the hint the TI process editor provides:
+### Multiline codes with key value pairs
+
+We then see the default values and the hint the TI process editor provides. Note it gets a bit fiddly. Instead of just the value, the lines are prefixed by name of the parameter. So these lines need to be handled a bit differently when being parsed. The default values and prompts for a process are optional. The Bedrock processes are pretty thorough hence I think both prompts and default values are set for each process. I wasn't sure this would always be the case so I created a fresh process, with all the different permutations of parameter settings. I turned out there's always the full list of parameters and they're always in the same order. So the first field seems a bit redundant.
 
 ```text
 590,4
@@ -103,7 +108,9 @@ Next we get a whole lot of codes I haven't yet looked up that obviously don't ha
 603,0
 ```
 
-Now we get into the TI code itself. This section defines the prolog. Most of it is just Bedrock boilerplate so I'm not showing the whole thing. You'll have to trust me when I tell you it's 133 lines in total.
+### The actual TI code
+
+Now we get into the TI code itself. It is defined like any other multiline option. This section defines the prolog. Most of it is just Bedrock boilerplate so I'm not showing the whole thing. You'll have to trust me when I tell you it's 133 lines in total.
 
 ```text
 572,133
@@ -153,7 +160,9 @@ While the epilog is again mostly boilerplate:
 ### End Epilog ###
 ```
 
-There's still a bit at the end to cut through, but at least that's an overview of how it all works.
+### Wait, there's more
+
+There's still a bit at the end to cut through, but at least that's an overview of how it all works. Option ```576``` a bit more complicated but everything else seems pretty straightforward. Looking through the names of the codes, there are lots I think represent things that can't be created through the endpoint that allows a process to be created. For example, ```900``` to ```927``` all seem to pertain to settings for the SAP connector. 
 
 ```text
 576,CubeAction=1511DataAction=1503CubeLogChanges=0
@@ -198,13 +207,13 @@ There's still a bit at the end to cut through, but at least that's an overview o
 927,""
 ```
 
+### Parsing it in Python
+
 I had a quick go at parsing a pro file. This is rough and buggy (doesn't deal with "," for example) but enabled me to do some quick analysis of all the Bedrock files as well as an empty process I created via Architect.
 
 ```python
-import pathlib
-
 # codes that indicate a multiline value
-multiline_codes = ['560', '561', '637', '590', '572', '573', '574', '575', '577', '578', '579', '580', '581', '582']
+multiline_codes = ['560', '561', '637', '590', '572', '573', '574', '575', '577', '578', '579', '580', '581', '582', '566']
 
 pro_files = pathlib.Path().glob("*.pro")
 
@@ -239,97 +248,3 @@ This creates a list of all the codes present and a list of dictionaries of the c
 
 In theory, it should be then possible to create an instance of a TM1py ```Process``` object from the information grabbed for each process.
 
-```
-
-```
-
-
-
-### All Codes:
-
-Listed in the order they seem to appear in the pro files. 
-
-| Code | Name    | Multiline |
-|------|---------|-----------|
-|601| ProcessFileVersionNumber||
-|602| ProcessName||
-|562| ProcessDataSourceType||
-|586| ProcessDataSourceNameForServer||
-|585| ProcessDataSourceNameForClient||
-|564| ProcessDataSourceUserName||
-|565| ProcessDataSourcePassword||
-|559| ProcessODBCInterfaceUsesUnicode||
-|928| ProcessTargetActiveSandbox||
-|593| ProcessDataSourceODBOProvider||
-|594| ProcessDataSourceODBOLocatioN||
-|595| ProcessDataSourceODBOCatalog||
-|597| ProcessDataSourceODBOSAPClientID||
-|598| ProcessDataSourceODBOSAPClientLanguage||
-|596| ProcessDataSourceODBOConnectionString||
-|800| ProcessDataSourceODBOHierarchyName||
-|801| ProcessDataSourceODBOCubeName||
-|566| ProcessDataSourceQuery||
-|567| ProcessDataSourceASCIIDelimiter||
-|588| ProcessDataSourceASCIIDecimalSeparator||
-|589| ProcessDataSourceASCIIThousandSeparator||
-|568| ProcessDataSourceASCIIQuoteCharacter||
-|570| ProcessDataSourceCubeView||
-|571| ProcessDataSourceDimensionSubset||
-|569| ProcessDataSourceASCIIHeaderRecords||
-|592| ProcessOnMinorErrorDoItemSkip||
-|599| ProcessMinorErrorLogFileMax||
-|560| ProcessParametersNames|Yes|
-|561| ProcessParametersTypes|Yes|
-|590| ProcessParametersDefaultValues|Yes|
-|637| ProcessParametersPromptStrings|Yes|
-|577| ProcessVariablesNames|Yes|
-|578| ProcessVariablesTypes|Yes|
-|579| ProcessVariablesPositions|Yes|
-|580| ProcessVariablesStartingBytes|Yes|
-|581| ProcessVariablesEndingBytes|Yes|
-|582| ProcessVariablesUIData|Yes|
-|603| ProcessVariablesUIDataEx||
-|572| ProcessPrologProcedure|Yes|
-|573| ProcessMetaDataProcedure|Yes|
-|574| ProcessDataProcedure|Yes|
-|575| ProcessEpilogProcedure|Yes|
-|576| ProcessUIData||
-|930| ProcessUIDataMore||
-|638| ProcessComplete||
-|804| ProcessDataSourceUseCallerProcessConnection||
-|1217| ProcessGrantSecurityAccess||
-|900| ProcessDataSourceSapClientId||
-|901| ProcessDataSourceSapLanguage||
-|902| ProcessDataSourceSapAddConnParams||
-|938| ProcessDataSourceSapConnectionType||
-|937| ProcessDataSourceSapCurrencyFrom||
-|936| ProcessDataSourceSapSystemNumber||
-|935| ProcessDataSourceSapRouterString||
-|934| ProcessDataSourceSapCodepage||
-|932| ProcessDataSourceSapInfoCubeThreadCount||
-|933| ProcessDataSourceSapInfoCubeThreadingCharacteristics||
-|903| ProcessDataSourceSapInfoCubeName||
-|906| ProcessDataSourceSapCharacteristicName||
-|929| ProcessDataSourceTopProcessName||
-|907| ProcessDataSourceSapHierarchyName||
-|908| ProcessDataSourceSapHierarchyVersion||
-|904| ProcessDataSourceSapInfoCubeCharacteristics||
-|905| ProcessDataSourceSapInfoCubeKeyFigures||
-|909| ProcessDataSourceSapCharacteristicAttributes||
-|911| ProcessDataSourceSapUserFilter||
-|912| ProcessDataSourceSapRoleFilter||
-|913| ProcessDataSourceSapTableName||
-|914| ProcessDataSourceSapExchangeType||
-|915| ProcessDataSourceSapCurrencyFrom||
-|916| ProcessDataSourceSapCurrencyTo||
-|917| ProcessDataSourceSapUsingRoleAuths||
-|918| ProcessDataSourceSapUsingTexts||
-|919| ProcessDataSourceSapInfocubeRestrictions||
-|920| ProcessSapPacketSize||
-|921| ProcessDataSourceSapMaxDateFrom||
-|922| ProcessDataSourceSapMinDateTo||
-|923| ProcessDataSourceSapCharactHierProps||
-|924| ProcessDataSourceSapCharactAttrMaxDateFrom||
-|925| ProcessDataSourceSapCharactAttrMinDateTo||
-|926| ProcessDataSourceSapCharactTextsMaxDateFrom||
-|927| ProcessDataSourceSapCharactTextsMinDateTo||
