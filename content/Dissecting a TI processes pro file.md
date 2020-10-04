@@ -147,7 +147,7 @@ The metadata and data tabs are unsurprisingly empty, as again, there's no data s
 #****End: Generated Statements****
 ```
 
-While the epilog is again mostly boilerplate: 
+While the epilog is again mostly boilerplate.
 
 ```text
 575,24
@@ -211,7 +211,7 @@ There's still a bit at the end to cut through, but at least that's an overview o
 
 I had a go at parsing a pro file. This is rough and a bit buggy but I got a PoC working. I tinkered around with this code and managed to identify all the multiline codes in all the Bedrock processes but there may be some more lurking, particularly in the codes that cover connection configurations which aren't covered in Bedrock.
 
-This first part reads the file and creates a dictionary of the codes and values. :
+This first part reads the file and creates a dictionary of the codes and values:
 
 ```python
 with open(file, encoding='utf-8-sig') as f:
@@ -317,7 +317,7 @@ for index, item in enumerate(pro_to_load['577']):
 
 ### Add to server
 
-With a valid process object we should be able to create the process on the server.
+With a valid process object we should be able to create the process on the server:
 
 ```python
 # tm1 is an instance of the TM1Service class
