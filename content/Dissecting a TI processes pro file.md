@@ -1,5 +1,5 @@
 Title: Dissecting a TM1 pro file
-Date: 2020-09-24 11:01
+Date: 2020-10-04 11:01
 Category: tm1
 Tags: tm1, cognos, ibm, ti
 slug: dissecting-a-tm1-pro-file
