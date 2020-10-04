@@ -209,42 +209,122 @@ There's still a bit at the end to cut through, but at least that's an overview o
 
 ### Parsing it in Python
 
-I had a quick go at parsing a pro file. This is rough and buggy (doesn't deal with "," for example) but enabled me to do some quick analysis of all the Bedrock files as well as an empty process I created via Architect.
+I had a go at parsing a pro file. This is rough and a bit buggy but I got a PoC working. I tinkered around with this code and managed to identify all the multiline codes in all the Bedrock processes but there may be some more lurking, particularly in the codes that cover connection configurations which aren't covered in Bedrock.
+
+This first part reads the file and creates a dictionary of the codes and values. :
 
 ```python
-# codes that indicate a multiline value
-multiline_codes = ['560', '561', '637', '590', '572', '573', '574', '575', '577', '578', '579', '580', '581', '582', '566']
+with open(file, encoding='utf-8-sig') as f:
 
-pro_files = pathlib.Path().glob("*.pro")
+    process_dict = {}
+    in_multiline = False
+    in_multiline_with_key = False
+    code = ''
 
-for file in pro_files:
-    codes = []
-    with open(file, encoding='utf-8-sig') as f:
-        process_dict = {}
-        in_multiline = False
-        for line in f:
-            if not in_multiline:
-                fields = line.split(',')
-                code = fields[0]
-                codes.append(code)
-                if code in multiline_codes:
-                    lines = int(fields[1])
-                    if lines > 0:
-                        in_multiline = True
-                    process_dict[code] = []
-                else:
-                    process_dict[code] = ''.join(fields[1:]).rstrip()
+    for line in f:
+        if in_multiline:
+            process_dict[code].append(line.replace('"', '').rstrip())
+            lines = lines - 1
+            if lines == 0:
+                in_multiline = False
+        elif in_multiline_with_key:
+            fields = line.split(',')
+            process_dict[code].append(fields[1].replace('"', '').rstrip())
+            lines = lines - 1
+            if lines == 0:
+                in_multiline_with_key = False
+        else:
+            fields = line.split(',')
+            code = fields[0]
+            if code in multiline_codes:
+                lines = int(fields[1])
+                if lines > 0:
+                    in_multiline = True
+                process_dict[code] = []
+            elif code in multiline_codes_with_key:
+                lines = int(fields[1])
+                if lines > 0:
+                    in_multiline_with_key = True
+                process_dict[code] = []
             else:
-                process_dict[code].append(line.rstrip())
-                lines = lines - 1
-                if lines == 0:
-                    in_multiline = False
+                process_dict[code] = ''.join(fields[1:]).replace('"', '').rstrip()
+```
 
-codes = set(codes)
+### Create an instance of the Process class
+
+From there, it's possible to create an instance of a TM1py ```Process``` object from the information grabbed for each process. I found it easier to use the built in methods to create the parameters and variables. 
+
+```python
+variables = []
+variables_ui = []
+
+my_new_process = TM1py.Objects.Process(
+    name=pro_to_load['602'],
+    has_security_access=(True if pro_to_load['1217'] == 'True' else False),
+    ui_data=pro_to_load['576'],
+    prolog_procedure="\n".join(pro_to_load['572']),
+    metadata_procedure="\n".join(pro_to_load['573']),
+    data_procedure="\n".join(pro_to_load['574']),
+    epilog_procedure="\n".join(pro_to_load['575']),
+    datasource_type='None',
+    datasource_ascii_decimal_separator=pro_to_load['588'],
+    datasource_ascii_delimiter_char=pro_to_load['567'],
+    datasource_ascii_delimiter_type='Character', # doesn't seem to have a corresponding code
+    datasource_ascii_header_records=pro_to_load['569'],
+    datasource_ascii_quote_character=pro_to_load['568'],
+    datasource_ascii_thousand_separator=pro_to_load['589'],
+    datasource_data_source_name_for_client=pro_to_load['585'],
+    datasource_data_source_name_for_server=pro_to_load['586'],
+    datasource_password=pro_to_load['565'],
+    datasource_user_name=pro_to_load['564'],
+    datasource_query=pro_to_load['566'],
+    datasource_uses_unicode=pro_to_load['559'],
+    datasource_view=pro_to_load['570'],
+    datasource_subset=pro_to_load['571']
+)
+
+# now add parameters and variables
+    
+for index, item in enumerate(pro_to_load['560']):
+    
+    if pro_to_load['561'][index] == "2":
+        parameter_type = "String"
+        value = pro_to_load['590'][index]
+    else:
+        parameter_type = "Numeric"
+        if pro_to_load['590'][index] == "":
+            value = 0
+        else:
+            value = float(pro_to_load['590'][index])
+    
+    my_new_process.add_parameter(
+        name=item,
+        prompt=pro_to_load['637'][index],
+        value=value,
+        parameter_type=parameter_type
+    )
+
+for index, item in enumerate(pro_to_load['577']):
+
+    variable_type = "String" if pro_to_load['578'][index] == "2" else "Numeric"        
+    
+    my_new_process.add_variable(
+        name=item,
+        variable_type=variable_type
+    )
 
 ```
 
-This creates a list of all the codes present and a list of dictionaries of the codes and values for each process. I tinkered around with this code and managed to identify all the multiline codes in all the Bedrock processes but there may be some more lurking, particularly in the codes that cover connection configurations which aren't covered in Bedrock.
+### Add to server
 
-In theory, it should be then possible to create an instance of a TM1py ```Process``` object from the information grabbed for each process.
+With a valid process object we should be able to create the process on the server.
 
+```python
+# tm1 is an instance of the TM1Service class
+
+tm1.processes.create(value)
+```
+
+### Known issues
+
+Not every detail in the file is actually used to construct the new process so it's very likely that some legacy processes can't be created this way. Processes created with wizard probably won't work as well those using the old SAP connector. I also haven't tested it on with processes with ODBC data sources and think it might need to be tweaked to support them, not sure if it will be possible to set the password correctly either. 
