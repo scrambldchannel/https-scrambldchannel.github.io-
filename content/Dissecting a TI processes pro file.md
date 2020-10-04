@@ -4,7 +4,8 @@ Category: tm1
 Tags: tm1, cognos, ibm, ti
 slug: hot-promotion-of-tm1-pro-file
 Authors: Alexander
-Summary: Ever wondered what's going on in your .pro files? I did so I tried to take one apart with Python and re-create it via the TM1 API
+Cover: images/diff_of_pro_files.png
+Summary: Ever wondered what's going on in your .pro files? I did so I tried to take one apart with Python and re-create it with TM1py
 
 An [issue](https://github.com/cubewise-code/tm1py/issues/383) raised over at the TM1py project asked for a feature to add hot promotion of TM1 processes saved as pro files. The API allows creation of TI processes and TM1py provides some useful wrapper functions that can achieve this. However, the fiddly part was parsing a pro file to get the relevant information out to allow us to create an instance of the TM1py Process object.
 
