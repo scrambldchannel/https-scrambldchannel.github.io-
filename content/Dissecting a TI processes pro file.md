@@ -353,4 +353,15 @@ The parameters are intact and seem to have the right types and defaults:
 
 ### Testing and known issues
 
-So far, as a PoC, it seems successful. I was able to import all the latest Bedrock pro files and create them on the server. I have tested a few in simple use cases and they seem to work as expected but I haven't checked in depth. Not every detail in the file is used to construct the new process so it's very likely that some legacy processes can't be created this way such as those created with the wizard or using the SAP connector. I also haven't tested it on with processes with ODBC data sources and think they might be problematic as I'm assuming there might be some more multiline options I haven't handled properly. Still, it certainly proves it's possible.
+I did notice one a couple of issues once I'd done a diff of the source file and the pro file created afterwards. Multiline parameters containing commas get truncated.
+
+More seriously, in this code block, my pretty naive parsing hasn't handled nested quotes. A robust solution would probably require using regular expressions for parsing:
+
+<img style="padding-top: 10px; padding-bottom: 10px;" src="/images/diff_of_pro_files.png">
+
+Note, the process ran successfully for a single cube but does fail when trying to use wildcards with the following showing up in the logs indicating the MDX isn't parsing (which makes sense):
+
+```text
+7292   [2]   ERROR   2020-10-04 16:05:58.936   TM1.Mdx.Interface   Syntax error at or near: ')}', character position 50
+```
+So far, as a PoC, it shows that it can be done but needs some tweaking. I was able to import all the latest Bedrock pro files and create them on the server but haven't actually tested them in depth. Not every detail in the file is used to construct the new process so it's very likely that some legacy processes can't be created this way such as those created with the wizard or using the SAP connector. I also haven't tested it on with processes with ODBC data sources and think they might be problematic as I'm assuming there might be some more multiline options I haven't handled properly.
