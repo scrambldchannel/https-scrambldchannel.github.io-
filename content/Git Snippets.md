@@ -7,7 +7,7 @@ Authors: Alexander
 Summary: My git cheatsheet
 Status: draft
 
-This is a list of common git commands I tend to use, aimed at a relative newbie. I actually used it to give an intro to git presentation to my team a few years ago but it's still a nice reminder of basic usage.
+This is a list of common git commands I tend to use, aimed at a relative newbie. I actually used it to give an intro to git presentation to my team a few years ago but it's still a nice reminder of basic usage. I'll tweak it as I go along.
 
 ### Clone a repo
 
@@ -118,5 +118,5 @@ In this case, I can then push my changes up to my remote fork so it is tracking 
 Sometimes someone will create a new fork in the upstream repository that I wish to clone locally. Or pehaps I want to checkout a branch I've pushed to my remote fork repository from a different development environment.
 
 ```sh
-
+git checkout --track upstream/issue/cube-get-last-data-update
 ```
