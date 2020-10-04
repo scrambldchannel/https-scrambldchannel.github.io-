@@ -214,6 +214,9 @@ I had a go at parsing a pro file. This is rough and a bit buggy but I got a PoC 
 This first part reads the file and creates a dictionary of the codes and values:
 
 ```python
+multiline_codes = ['560', '561', '572', '573', '574', '575', '577', '578', '579', '580', '581', '582', '566']
+multiline_codes_with_key = ['590','637']
+
 with open(file, encoding='utf-8-sig') as f:
 
     process_dict = {}
