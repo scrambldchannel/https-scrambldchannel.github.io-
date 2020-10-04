@@ -3,6 +3,7 @@ Date: 2020-07-23 08:56
 Category: tm1
 Tags: tm1, python, airflow
 slug: airflow-tm1
+featured_image: images/tm1_airflow.png
 Authors: Alexander
 Summary: I've seen numerous solutions for handling data integration where data needs to be extracted form TM1. Most end up involving multiple tasks triggered and managed in different tools by different teams. None of the moving parts are particularly complicated but the end to end process can be difficult to debug and it never seems to result in a particularly reusable solution. The introduction of the REST API and development of [TM1py](https://github.com/cubewise-code/tm1py) have increased the options. I thought it might be interesting to see how Airflow might be used to manage pipelines need data from TM1.
 
