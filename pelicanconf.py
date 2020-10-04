@@ -6,7 +6,7 @@ SITEURL = 'http://localhost:8000'
 SITENAME = "Code and Cricket"
 SITETITLE = "Code and Cricket"
 SITESUBTITLE = 'Feverish scribblings on things like TM1, Python and cricket stats'
-SITELOGO = SITEURL + "/images/scrambldchannel.jpg"
+SITELOGO = SITEURL + "/images/me_staring_into_the_trees.jpg"
 #FAVICON = 'favicon.png'
 BROWSER_COLOR = '#333'
 
