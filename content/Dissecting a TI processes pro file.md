@@ -213,6 +213,11 @@ I had a go at parsing a pro file. This is rough and a bit buggy but I got a PoC 
 This first part reads the file and creates a dictionary of the codes and values:
 
 ```python
+# location of pro file to load
+
+file = "}bedrock.cube.rule.processfeeders.pro"
+
+# codes to treat differently
 multiline_codes = ['560', '561', '572', '573', '574', '575', '577', '578', '579', '580', '581', '582', '566']
 multiline_codes_with_key = ['590','637']
 
@@ -257,64 +262,62 @@ with open(file, encoding='utf-8-sig') as f:
 From there, it's possible to create an instance of a TM1py ```Process``` object from the information grabbed for each process. I found it easier to use the built-in methods to create the parameters and variables. 
 
 ```python
-variables = []
-variables_ui = []
+import TM1py
 
 my_new_process = TM1py.Objects.Process(
-    name=pro_to_load['602'],
-    has_security_access=(True if pro_to_load['1217'] == 'True' else False),
-    ui_data=pro_to_load['576'],
-    prolog_procedure="\n".join(pro_to_load['572']),
-    metadata_procedure="\n".join(pro_to_load['573']),
-    data_procedure="\n".join(pro_to_load['574']),
-    epilog_procedure="\n".join(pro_to_load['575']),
+    name=process_dict['602'],
+    has_security_access=(True if process_dict['1217'] == 'True' else False),
+    ui_data=process_dict['576'],
+    prolog_procedure="\n".join(process_dict['572']),
+    metadata_procedure="\n".join(process_dict['573']),
+    data_procedure="\n".join(process_dict['574']),
+    epilog_procedure="\n".join(process_dict['575']),
     datasource_type='None',
-    datasource_ascii_decimal_separator=pro_to_load['588'],
-    datasource_ascii_delimiter_char=pro_to_load['567'],
+    datasource_ascii_decimal_separator=process_dict['588'],
+    datasource_ascii_delimiter_char=process_dict['567'],
     datasource_ascii_delimiter_type='Character', # doesn't seem to have a corresponding code
-    datasource_ascii_header_records=pro_to_load['569'],
-    datasource_ascii_quote_character=pro_to_load['568'],
-    datasource_ascii_thousand_separator=pro_to_load['589'],
-    datasource_data_source_name_for_client=pro_to_load['585'],
-    datasource_data_source_name_for_server=pro_to_load['586'],
-    datasource_password=pro_to_load['565'],
-    datasource_user_name=pro_to_load['564'],
-    datasource_query=pro_to_load['566'],
-    datasource_uses_unicode=pro_to_load['559'],
-    datasource_view=pro_to_load['570'],
-    datasource_subset=pro_to_load['571']
+    datasource_ascii_header_records=process_dict['569'],
+    datasource_ascii_quote_character=process_dict['568'],
+    datasource_ascii_thousand_separator=process_dict['589'],
+    datasource_data_source_name_for_client=process_dict['585'],
+    datasource_data_source_name_for_server=process_dict['586'],
+    datasource_password=process_dict['565'],
+    datasource_user_name=process_dict['564'],
+    datasource_query=process_dict['566'],
+    datasource_uses_unicode=process_dict['559'],
+    datasource_view=process_dict['570'],
+    datasource_subset=process_dict['571']
 )
 
 # now add parameters and variables
-    
-for index, item in enumerate(pro_to_load['560']):
-    
-    if pro_to_load['561'][index] == "2":
+
+for index, item in enumerate(process_dict['560']):
+
+    if process_dict['561'][index] == "2":
         parameter_type = "String"
-        value = pro_to_load['590'][index]
+        value = process_dict['590'][index]
     else:
         parameter_type = "Numeric"
-        if pro_to_load['590'][index] == "":
+        if process_dict['590'][index] == "":
             value = 0
         else:
-            value = float(pro_to_load['590'][index])
-    
+            value = float(process_dict['590'][index])
+
     my_new_process.add_parameter(
         name=item,
-        prompt=pro_to_load['637'][index],
+        prompt=process_dict['637'][index],
         value=value,
         parameter_type=parameter_type
     )
 
-for index, item in enumerate(pro_to_load['577']):
+for index, item in enumerate(process_dict['577']):
 
-    variable_type = "String" if pro_to_load['578'][index] == "2" else "Numeric"        
-    
+    variable_type = "String" if process_dict['578'][index] == "2" else "Numeric"        
+
     my_new_process.add_variable(
         name=item,
         variable_type=variable_type
-    )
-
+    )    
 ```
 
 ### Add to server
@@ -322,9 +325,22 @@ for index, item in enumerate(pro_to_load['577']):
 With a valid process object we should be able to create the process on the server:
 
 ```python
-# tm1 is an instance of the TM1Service class
+import pathlib
+import configparser
 
-tm1.processes.create(value)
+# establish connection / how you 
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+with TM1py.Services.TM1Service(**config['tm1srv01']) as tm1:
+
+    if tm1.processes.exists(my_new_process.name):
+        tm1.processes.delete(my_new_process.name)
+
+    response = tm1.processes.create(my_new_process)
+
+    # check status of response
+    print(response.status_code)
 ```
 
 ### Known issues
