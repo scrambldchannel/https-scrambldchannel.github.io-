@@ -1,4 +1,4 @@
-Title: Creating a TI process from a "pro" file using TM1py
+Title: Creating a TI process from a .pro file using TM1py
 Date: 2020-10-04 11:01
 Category: tm1
 Tags: tm1, cognos, ibm, ti
