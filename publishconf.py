@@ -16,7 +16,9 @@ RELATIVE_URLS = False
 
 # this is breaking with one post, disabling until I get sort it out
 # FEED_ALL_ATOM = 'feeds/all.atom.xml'
+FEED_ALL_ATOM = None
 # CATEGORY_FEED_ATOM = 'feeds/{slug}.atom.xml'
+CATEGORY_FEED_ATOM = None
 
 DELETE_OUTPUT_DIRECTORY = True
 
