@@ -1,11 +1,10 @@
-Title: Git Snippets
+Title: My ever expanding list of git snippets
 Date: 2020-10-01 14:18
 Category: git
 Tags: git, github
 slug: git-snippets
 Authors: Alexander
 Summary: My git cheatsheet
-Status: draft
 
 This is a list of common git commands I tend to use, aimed at a relative newbie. I actually used it to give an intro to git presentation to my team a few years ago but it's still a nice reminder of basic usage. I'll tweak it as I go along.
 
