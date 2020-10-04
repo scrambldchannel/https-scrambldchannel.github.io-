@@ -1,7 +1,7 @@
 Title: TI Process Codes
 slug: ti-process-codes
 
-These are the codes I've found when analysing a batch of TI Process ```.pro``` files. They are listed in the order they seem to appear in the pro files. ```Multiline``` indicates that a code's values may span multiple lines and ```Multiline with keys``` is the same but with each value is prefixed with a key.
+These are the codes I've found when analysing a batch of TI Process ```.pro``` files. They are listed in the order they seem to appear in the pro files. ```Multiline``` indicates that a code's values may span multiple lines and ```Multiline with keys``` is the same but where each value is prefixed with a key containing the variable / parameter name they correspond to.
 
 | Code | Name         | Multiline        | Multiline with keys |
 |------|--------------|------------------|---------------------|
