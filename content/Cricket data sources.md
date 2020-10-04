@@ -4,7 +4,7 @@ Category: docs
 Tags: cricket, python, data, api
 slug: python-cricket-data
 Authors: Alexander
-Summary: Looking at ways to access cricket data using Python
+Summary: Inspired by an enthralling Ashes series, I wanted to play around with cricket data available from various free and commercial sources out there.. Despite a bit of trawling, I couldn't really find a single document detailing what was available. I've tried to make a start.
 
 Inspired by an enthralling Ashes series, I wanted to play around with cricket data available from various free and commercial sources out there.. Despite a bit of trawling, I couldn't really find a single document detailing what was available. 
  

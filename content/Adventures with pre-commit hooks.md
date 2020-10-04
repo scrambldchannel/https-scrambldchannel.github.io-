@@ -4,9 +4,11 @@ Category: docs
 Tags: python, git, flake8, black, isort, mypy, pre-commit
 slug: adventures-with-pre-commit
 Authors: Alexander
-Summary: Playing around with a standard pre-commit configuration for new Python projects
+Summary: I started using the [pre-commit](https://pre-commit.com/) framework a while back on my projects but only with a very basic setup on pretty simple codebases. Common uses are apply code formatters like [black](https://github.com/psf/black) or to run static type checking with [mypy](http://mypy-lang.org/). I tried to create a rough framework for my Python projects.
 
-I started using the [pre-commit](https://pre-commit.com/) framework a while back on my projects but only with a very basic setup on pretty simple codebases. Common uses are apply code formatters like [black](https://github.com/psf/black) or to run static type checking with [mypy](http://mypy-lang.org/). The cool thing about using them is that it reduces the noise in your repository by formatting your code, and flagging issues, _before_ it gets committed. I'd previously tended to run tools like black sporadically but this just creates an extra, often quite large commit, that doesn't change the functionality of the code but just adds noise.
+I started using the [pre-commit](https://pre-commit.com/) framework a while back on my projects but only with a very basic setup on pretty simple codebases. Common uses are apply code formatters like [black](https://github.com/psf/black) or to run static type checking with [mypy](http://mypy-lang.org/).
+
+The cool thing about using them is that it reduces the noise in your repository by formatting your code, and flagging issues, _before_ it gets committed. I'd previously tended to run tools like black sporadically but this just creates an extra, often quite large commit, that doesn't change the functionality of the code but just adds noise.
 
 My initial setup was pretty basic and it was only when I started working with the Airflow codebase that I dove into them in more detail. If you look at the project's [.pre-commit-config.yaml](https://github.com/apache/airflow/blob/master/.pre-commit-config.yaml) file, it uses a huge number of hooks, including quite a few that call custom scripts. While I don't need anything that complicated, it made me realise I could do a bit more so I spent a bit of time trying to create a starting template I could role into new projects. I'm still tweaking, but thought I'd scribble down this draft while the thinking behind it was fresh in my mind.
 

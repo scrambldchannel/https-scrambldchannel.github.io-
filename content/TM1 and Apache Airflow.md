@@ -4,7 +4,7 @@ Category: tm1
 Tags: tm1, python, airflow
 slug: airflow-tm1
 Authors: Alexander
-Summary: Initial takeaways from trying to use Apache Airflow to schedule ETL tasks involving TM1 
+Summary: I've seen numerous solutions for handling data integration where data needs to be extracted form TM1. Most end up involving multiple tasks triggered and managed in different tools by different teams. None of the moving parts are particularly complicated but the end to end process can be difficult to debug and it never seems to result in a particularly reusable solution. The introduction of the REST API and development of [TM1py](https://github.com/cubewise-code/tm1py) have increased the options. I thought it might be interesting to see how Airflow might be used to manage pipelines need data from TM1.
 
 I've been enjoying a bit of down time recently which, as well as exploring the lakes of Berlin and Brandenburg, gave me a chance to check out the excellent talks during the [Airflow Summit 2020](https://airflowsummit.org/). They are all still available and I'd recommend them for those interested in learning more about what [Airflow](https://airflow.apache.org/) can do. I've worked with it before but haven't tried to use it with TM1, even though I've felt it might have been useful in some cases. So I decided to create a simple PoC to see how feasible it would be.
 
