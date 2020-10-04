@@ -3,8 +3,8 @@ slug: ti-process-codes
 
 These are the codes I've found when analysing a batch of TI Process ```.pro``` files. They are listed in the order they seem to appear in the pro files. ```Multiline``` indicates that a code's values may span multiple lines and ```Multiline with keys``` is the same but with each value is prefixed with a key.
 
-| Code | Name    | Multiline | Multiline with keys |
-|------|---------|-----------|---------------------|
+| Code | Name         | Multiline        | Multiline with keys |
+|------|--------------|------------------|---------------------|
 |601| ProcessFileVersionNumber|||
 |602| ProcessName|||
 |562| ProcessDataSourceType|||
@@ -42,7 +42,7 @@ These are the codes I've found when analysing a batch of TI Process ```.pro``` f
 |580| ProcessVariablesStartingBytes|Yes||
 |581| ProcessVariablesEndingBytes|Yes||
 |582| ProcessVariablesUIData|Yes||
-|603| ProcessVariablesUIDataEx|||
+|603| ProcessVariablesUIDataEx|Yes||
 |572| ProcessPrologProcedure|Yes||
 |573| ProcessMetaDataProcedure|Yes||
 |574| ProcessDataProcedure|Yes||
