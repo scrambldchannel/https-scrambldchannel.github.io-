@@ -1,8 +1,8 @@
-Title: Dissecting a TM1 pro file
+Title: Creating a TI process from a "pro" file using TM1py
 Date: 2020-10-04 11:01
 Category: tm1
 Tags: tm1, cognos, ibm, ti
-slug: dissecting-a-tm1-pro-file
+slug: hot-promotion-of-tm1-pro-file
 Authors: Alexander
 Summary: Ever wondered what's going on in your .pro files? I did so I tried to take one apart with Python and re-create it via the TM1 API
 
@@ -343,6 +343,14 @@ with TM1py.Services.TM1Service(**config['tm1srv01']) as tm1:
     print(response.status_code)
 ```
 
-### Known issues
+This works smoothly and the process can now be found on the server:
 
-Not every detail in the file is used to construct the new process so it's very likely that some legacy processes can't be created this way. Processes created with wizard probably won't work as well those using the old SAP connector. I also haven't tested it on with processes with ODBC data sources and think it might need to be tweaked to support them, not sure if it will be possible to set the password correctly either. 
+<img style="padding-top: 10px; padding-bottom: 10px;" src="/images/process_now_appears_on_server.png">
+
+The parameters are intact and seem to have the right types and defaults:
+
+<img style="padding-top: 10px; padding-bottom: 10px;" src="/images/process_seems_intact.png">
+
+### Testing and known issues
+
+So far, as a PoC, it seems successful. I was able to import all the latest Bedrock pro files and create them on the server. I have tested a few in simple use cases and they seem to work as expected but I haven't checked in depth. Not every detail in the file is used to construct the new process so it's very likely that some legacy processes can't be created this way such as those created with the wizard or using the SAP connector. I also haven't tested it on with processes with ODBC data sources and think they might be problematic as I'm assuming there might be some more multiline options I haven't handled properly. Still, it certainly proves it's possible.
