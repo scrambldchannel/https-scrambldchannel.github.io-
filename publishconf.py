@@ -14,8 +14,9 @@ from pelicanconf import *
 SITEURL = 'https://scrambldchannel.github.io'
 RELATIVE_URLS = False
 
-FEED_ALL_ATOM = 'feeds/all.atom.xml'
-CATEGORY_FEED_ATOM = 'feeds/{slug}.atom.xml'
+# this is breaking with one post, disabling until I get sort it out
+# FEED_ALL_ATOM = 'feeds/all.atom.xml'
+# CATEGORY_FEED_ATOM = 'feeds/{slug}.atom.xml'
 
 DELETE_OUTPUT_DIRECTORY = True
 
