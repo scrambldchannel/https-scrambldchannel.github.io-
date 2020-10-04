@@ -7,7 +7,7 @@ Authors: Alexander
 Summary: Ever wondered what's going on in your .pro files? I did so I tried taking one apart
 Status: draft
 
-An [issue](https://github.com/cubewise-code/tm1py/issues/383) raised over at the TM1py project asked for a feature to add hot promotion of TM1 processes saved as pro files. The API allows creation of TI processes and TM1py provides some useful wrapper functions that can achieve this. However the fiddly part was parsing a pro file to get the relevant information out to allow us to create an instance of the TM1py Process object.
+An [issue](https://github.com/cubewise-code/tm1py/issues/383) raised over at the TM1py project asked for a feature to add hot promotion of TM1 processes saved as pro files. The API allows creation of TI processes and TM1py provides some useful wrapper functions that can achieve this. However, the fiddly part was parsing a pro file to get the relevant information out to allow us to create an instance of the TM1py Process object.
 
 ### Exploring the pro file format
 
@@ -252,7 +252,7 @@ with open(file, encoding='utf-8-sig') as f:
 
 ### Create an instance of the Process class
 
-From there, it's possible to create an instance of a TM1py ```Process``` object from the information grabbed for each process. I found it easier to use the built in methods to create the parameters and variables. 
+From there, it's possible to create an instance of a TM1py ```Process``` object from the information grabbed for each process. I found it easier to use the built-in methods to create the parameters and variables. 
 
 ```python
 variables = []
@@ -327,4 +327,4 @@ tm1.processes.create(value)
 
 ### Known issues
 
-Not every detail in the file is actually used to construct the new process so it's very likely that some legacy processes can't be created this way. Processes created with wizard probably won't work as well those using the old SAP connector. I also haven't tested it on with processes with ODBC data sources and think it might need to be tweaked to support them, not sure if it will be possible to set the password correctly either. 
+Not every detail in the file is used to construct the new process so it's very likely that some legacy processes can't be created this way. Processes created with wizard probably won't work as well those using the old SAP connector. I also haven't tested it on with processes with ODBC data sources and think it might need to be tweaked to support them, not sure if it will be possible to set the password correctly either. 
