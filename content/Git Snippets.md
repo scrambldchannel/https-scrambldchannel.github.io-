@@ -4,6 +4,7 @@ Category: git
 Tags: git, github
 slug: git-snippets
 Authors: Alexander
+featured_image: images/git_cli.png
 Summary: This is a list of common git commands I tend to use, aimed at a relative newbie. I actually used it to give an intro to git presentation to my team a few years ago but it's still a nice reminder of basic usage. I'll tweak it as I go along.
 
 This is a list of common git commands I tend to use, aimed at a relative newbie. I actually used it to give an intro to git presentation to my team a few years ago but it's still a nice reminder of basic usage. I'll tweak it as I go along.

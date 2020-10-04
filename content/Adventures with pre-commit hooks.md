@@ -4,6 +4,7 @@ Category: docs
 Tags: python, git, flake8, black, isort, mypy, pre-commit
 slug: adventures-with-pre-commit
 Authors: Alexander
+featured_image: images/pre_commit_love.png
 Summary: I started using the [pre-commit](https://pre-commit.com/) framework a while back on my projects but only with a very basic setup on pretty simple codebases. Common uses are apply code formatters like [black](https://github.com/psf/black) or to run static type checking with [mypy](http://mypy-lang.org/). I tried to create a rough framework for my Python projects.
 
 I started using the [pre-commit](https://pre-commit.com/) framework a while back on my projects but only with a very basic setup on pretty simple codebases. Common uses are apply code formatters like [black](https://github.com/psf/black) or to run static type checking with [mypy](http://mypy-lang.org/).
