@@ -1,5 +1,5 @@
 Title: Adventures with pre-commit
-Date: 2020-09-24 11:01
+Date: 2020-09-30 11:01
 Category: docs
 Tags: python, git, flake8, black, isort, mypy, pre-commit
 slug: adventures-with-pre-commit

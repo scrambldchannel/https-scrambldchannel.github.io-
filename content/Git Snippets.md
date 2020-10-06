@@ -1,5 +1,5 @@
 Title: My ever expanding list of git snippets
-Date: 2020-10-01 14:18
+Date: 2020-09-28 14:18
 Category: git
 Tags: git, github
 slug: git-snippets
