@@ -4,6 +4,7 @@ Category: tm1
 Tags: tm1, python
 slug: pytest-tm1
 Authors: Alexander
+featured_image: images/anyone_test_this.png
 Summary: I wanted an excuse to explore TM1py in more depth and had been thinking for a while about the possibilities offered by using a test framework like pytest to run automate tests of a TM1 model. This is really a quick proof of concept to gauge how feasible it might prove. 
 
 
