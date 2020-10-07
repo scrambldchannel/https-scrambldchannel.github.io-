@@ -4,6 +4,7 @@ Category: docs
 Tags: anaconda, jupyter, python, ubuntu, linux
 slug: jupyter-cheatsheet
 Authors: Alexander
+featured_image: images/taming_the_snake.png
 Summary: A bit annoyed at finding myself having to re-learn a good workflow for setting up dev environments for Jupyter projects, I thought I'd try to list my workflow as is and update as I improve so I can refer back after a hiatus.
 
 A bit annoyed at finding myself having to re-learn a good workflow for setting up dev environments for Jupyter projects, I thought I'd try to list my workflow as is and update as I improve so I can refer back after a hiatus.
