@@ -1,10 +1,10 @@
-Title: My ever expanding list of git snippets
+Title: Trying to stay on the right track with git
 Date: 2020-09-28 14:18
 Category: git
 Tags: git, github
 slug: git-snippets
 Authors: Alexander
-featured_image: images/git_cli.png
+featured_image: images/staying_on_track_with_git.png
 Summary: For when my memories are murky, this is a list of common git commands I tend to use, aimed at a relative newbie. I actually used it to give an intro to git presentation to my team a few years ago but it's still a nice reminder of basic usage.
 
 This is a list of common git commands I tend to use, aimed at a relative newbie. I actually used it to give an intro to git presentation to my team a few years ago but it's still a nice reminder of basic usage. I'll tweak it as I go along.

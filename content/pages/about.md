@@ -11,9 +11,9 @@ I'm a BI/data analyst/developer with over fifteen years of experience across man
 
 # What am I interested in?
 
-In recent years, I've focused more on brushing up my Python which I've used to automate a lot of the "boring stuff" in my professional life as well working on a few personal projects. I can also have some knowledge of scripting in both bash and powershell as well as some distant experience in PHP and Perl. 
-
 I've maintained an interest in open source software since university and can still remember the days when Debian came on seven CDs and just getting a graphical desktop took all weekend (but, even then, your soundcard still didn't work). My friends thought I was a masochist, I thought it was fun. 
+
+In recent years, I've focused more on brushing up my Python which I've used to automate a lot of the "boring stuff" in my professional life as well working on a few personal projects. I can also have some knowledge of shell scripting and have played around with several other languages. Julia has caught my eye recently....
 
 I try to contribute to open source projects when time allows but I also keep myself busy outdoors and away from screens with things like hiking, cycling and exploring my (relatively new) home in Berlin as well as the lakes of Brandenburg. I still play cricket occasionally but I'm not getting any younger and there isn't much cricket to be had in Germany anyway. I do still like to swing a tennis racquet though which keeps me a little bit sharper than I might otherwise be. 
  
