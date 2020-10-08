@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://scrambldchannel.github.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://scrambldchannel.github.io/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://scrambldchannel.github.io/theme/pygments/github.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/solid.css">
+
+
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-161901975-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333">
+
+<meta name="author" content="Alexander" />
+<meta name="description" content="For when my memories are murky, this is a list of common git commands I tend to use, aimed at a relative newbie. I actually used it to give an intro to git presentation to my team a few years ago but it&#39;s still a nice reminder of basic usage." />
+<meta name="keywords" content="git, github">
+
+
+<meta property="og:site_name" content="Code and Cricket"/>
+<meta property="og:title" content="Trying to stay on the right track with git"/>
+<meta property="og:description" content="For when my memories are murky, this is a list of common git commands I tend to use, aimed at a relative newbie. I actually used it to give an intro to git presentation to my team a few years ago but it&#39;s still a nice reminder of basic usage."/>
+<meta property="og:locale" content="en_GB"/>
+<meta property="og:url" content="https://scrambldchannel.github.io/git-snippets.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-09-28 14:18:00+02:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://scrambldchannel.github.io/author/alexander.html">
+<meta property="article:section" content="git"/>
+<meta property="article:tag" content="git"/>
+<meta property="article:tag" content="github"/>
+<meta property="og:image" content="https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg">
+
+  <title>Code and Cricket &ndash; Trying to stay on the right track with git</title>
+
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://scrambldchannel.github.io">
+        <img src="https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg" alt="Code and Cricket" title="Code and Cricket">
+      </a>
+
+      <h1>
+        <a href="https://scrambldchannel.github.io">Code and Cricket</a>
+      </h1>
+
+<p>Feverish scribblings on things like TM1, Python and cricket stats</p>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="/pages/about.html"
+                   href="/pages/about.html">
+                  About
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-github" href="https://github.com/scrambldchannel" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-linkedin" href="https://www.linkedin.com/in/alexander-sutcliffe-b56921166/" target="_blank">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/scrambldchannel" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://scrambldchannel.github.io">Home</a>
+
+      <a href="/pages/about.html">About</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="git-snippets">Trying to stay on the right track with git</h1>
+    <p>
+      Posted on Mon 28 September 2020 in <a href="https://scrambldchannel.github.io/category/git.html">git</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>This is a list of common git commands I tend to use, aimed at a relative newbie. I actually used it to give an intro to git presentation to my team a few years ago but it's still a nice reminder of basic usage. I'll tweak it as I go along.</p>
+<h3>Clone a repo</h3>
+<p>Probably one of the first operations you want to use is to clone a remote repository, e.g. one that exists on Github:</p>
+<div class="highlight"><pre><span></span>git clone https://github.com/scrambldchannel/tm1py
+</pre></div>
+
+
+<h3>Create a local branch and check it out</h3>
+<p>When you're hacking on code, you probably want to do it in a separate branch. A branch can be created and then checked out by doing the following:</p>
+<div class="highlight"><pre><span></span>git branch features/my_new_feature
+git checkout features/my_new_feature
+</pre></div>
+
+
+<p>This is fine, but I've lost count of the times I've created the branch but forgotten to check it out. This has sometimes led me to committing changes to the wrong branch and having to clean up the mess. So I generally use this command to both steps in a single line:</p>
+<div class="highlight"><pre><span></span>git checkout -b features/my_new_feature
+</pre></div>
+
+
+<h3>Stage a file</h3>
+<p>Once you've changed some files, you want to save them to the repository. This command stages changes to a file which means it will be committed to the repository on the next commit:</p>
+<div class="highlight"><pre><span></span>git stage TM1py/Objects/Process.py Tests/Process.py
+</pre></div>
+
+
+<h3>Commit staged changes</h3>
+<p>This will commit all staged changes to the repository with the commit message you provide. Note, this is the point it which it can be worth taking a deep breath and checking that you're really doing what you want.</p>
+<div class="highlight"><pre><span></span>git commit -m <span class="s2">&quot;added my cool new feature&quot;</span>
+</pre></div>
+
+
+<h3>List staged files</h3>
+<p>What you might want to do before committing is to check which files are staged:</p>
+<div class="highlight"><pre><span></span>git diff --name-only --cached
+</pre></div>
+
+
+<h3>Merge changes from a branch</h3>
+<p>Once you've committed some changes to a branch, you may want to add these changes into another branch. For example, I might want to merge the changes made in features/my_new_feature into my master branch:</p>
+<div class="highlight"><pre><span></span>git checkout master
+git merge features/my_new_feature
+</pre></div>
+
+
+<h3>Delete a branch</h3>
+<p>Once your changes have been merged into master, you can delete the branch you used to develop the feature:</p>
+<div class="highlight"><pre><span></span>git branch -D features/my_new_feature
+</pre></div>
+
+
+<h3>Push local changes to remote</h3>
+<p>When working on a project hosted remotely (e.g. on Github) you will eventually want to push your changes up to the remote git repository. If the branch you're working on already exists, you can push changes with this command:</p>
+<div class="highlight"><pre><span></span>git push
+</pre></div>
+
+
+<p>If the branch doesn't already exist on the remote repo, you can create it and push to it with this command:</p>
+<div class="highlight"><pre><span></span>git push --set-upstream origin features/my_new_feature
+</pre></div>
+
+
+<h3>Add an upstream remote</h3>
+<p>When working on projects owned by other people on Github, the workflow I follow is to create my own fork on Github, clone it locally, create a branch for what I'm working on, push it to Github and then create a PR from there. Adding an upstream allows me to receive any changes made by the owner into my fork.</p>
+<div class="highlight"><pre><span></span>git remote add upstream https://github.com/cubewise-code/tm1py.git
+</pre></div>
+
+
+<h3>Fetch changes from a remote</h3>
+<p>When changes have been made upstream, I fetch changes and rebase my local master branch before pushing it my remote fork. Changes can be fetched from upstream with this command:</p>
+<div class="highlight"><pre><span></span>git fetch upstream
+</pre></div>
+
+
+<h3>Rebase local branch on remote</h3>
+<p>I can rebase the branch I'm working on with a remote fork (in this case upstream) in order to apply any changes made there to my local fork. This is a good idea before raising a PR and ensures your PR is easier to understand.</p>
+<div class="highlight"><pre><span></span>git rebase upstream/master
+</pre></div>
+
+
+<p>In this case, I can then push my changes up to my remote fork so it is tracking upstream.</p>
+<h3>Checkout a remote branch</h3>
+<p>Sometimes someone will create a new fork in the upstream repository that I wish to clone locally. Or pehaps I want to checkout a branch I've pushed to my remote fork repository from a different development environment.</p>
+<div class="highlight"><pre><span></span>git checkout --track upstream/issue/cube-get-last-data-update
+</pre></div>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://scrambldchannel.github.io/tag/git.html">git</a>
+      <a href="https://scrambldchannel.github.io/tag/github.html">github</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://scrambldchannel.github.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Code and Cricket ",
+  "url" : "https://scrambldchannel.github.io",
+  "image": "https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg",
+  "description": ""
+}
+</script>
+
+
+</body>
+</html>

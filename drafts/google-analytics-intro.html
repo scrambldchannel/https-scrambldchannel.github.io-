@@ -1,0 +1,212 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://scrambldchannel.github.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://scrambldchannel.github.io/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://scrambldchannel.github.io/theme/pygments/github.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/solid.css">
+
+
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-161901975-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333">
+
+<meta name="author" content="Alexander" />
+<meta name="description" content="An introduction to Google Analytics and how it can help you understand traffic to your website" />
+<meta name="keywords" content="google-analytics, google">
+
+
+<meta property="og:site_name" content="Code and Cricket"/>
+<meta property="og:title" content="Introduction to Google Analytics"/>
+<meta property="og:description" content="An introduction to Google Analytics and how it can help you understand traffic to your website"/>
+<meta property="og:locale" content="en_GB"/>
+<meta property="og:url" content="https://scrambldchannel.github.io/drafts/google-analytics-intro.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-10-01 10:18:00+02:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://scrambldchannel.github.io/author/alexander.html">
+<meta property="article:section" content="google-analytics"/>
+<meta property="article:tag" content="google-analytics"/>
+<meta property="article:tag" content="google"/>
+<meta property="og:image" content="https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg">
+
+  <title>Code and Cricket &ndash; Introduction to Google Analytics</title>
+
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://scrambldchannel.github.io">
+        <img src="https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg" alt="Code and Cricket" title="Code and Cricket">
+      </a>
+
+      <h1>
+        <a href="https://scrambldchannel.github.io">Code and Cricket</a>
+      </h1>
+
+<p>Feverish scribblings on things like TM1, Python and cricket stats</p>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="/pages/about.html"
+                   href="/pages/about.html">
+                  About
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-github" href="https://github.com/scrambldchannel" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-linkedin" href="https://www.linkedin.com/in/alexander-sutcliffe-b56921166/" target="_blank">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/scrambldchannel" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://scrambldchannel.github.io">Home</a>
+
+      <a href="/pages/about.html">About</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="google-analytics-intro">Introduction to Google Analytics</h1>
+    <p>
+      Posted on Thu 01 October 2020 in <a href="https://scrambldchannel.github.io/category/google-analytics.html">google-analytics</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>Google Analytics is a way of tracking traffic to your website. Even if you're not running a website for profit, it can be fun to set it up so you can gain some insights into your traffic. After all, even if it's a purely hobbyist project, it's nice to know whether anyone is reading right? </p>
+<p>To set it up, you need to get a code I manage this blog with <a href="https://blog.getpelican.com/">Pelican</a> which is a static site renderer written in Python. I used a template called Flex which provides</p>
+<p>Goals are fun, they allow you to setup a page that you want to drive traffic too and measure this achievement directly. The simplest example might be getting people to open a certain page but you might also want set a goal of keeping people on the site for five minutes or several other things. </p>
+<p>You can then measure conversions which show how often the goals are achieved but also the steps users took to achieve them, the time it took etc. </p>
+<p>You can create simple dashboards in the tool itself.</p>
+<p>You can also set up a thing to track site search which obviously gives you insights into what people are looking for.</p>
+<p>Everything is split by things like geolocation and user agent. You can also the number of conversions by people landing on certain pages.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://scrambldchannel.github.io/tag/google-analytics.html">google-analytics</a>
+      <a href="https://scrambldchannel.github.io/tag/google.html">google</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://scrambldchannel.github.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Code and Cricket ",
+  "url" : "https://scrambldchannel.github.io",
+  "image": "https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg",
+  "description": ""
+}
+</script>
+
+
+</body>
+</html>

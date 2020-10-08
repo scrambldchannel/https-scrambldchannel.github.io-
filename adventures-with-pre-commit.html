@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://scrambldchannel.github.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://scrambldchannel.github.io/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://scrambldchannel.github.io/theme/pygments/github.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/solid.css">
+
+
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-161901975-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333">
+
+<meta name="author" content="Alexander" />
+<meta name="description" content="I started using the pre-commit framework a while back on my projects but only with a very basic setup on pretty simple codebases. Common uses are apply code formatters like black or to run static type checking with mypy. I tried to create a rough framework for my Python projects." />
+<meta name="keywords" content="python, git, flake8, black, isort, mypy, pre-commit">
+
+
+<meta property="og:site_name" content="Code and Cricket"/>
+<meta property="og:title" content="Adventures with pre-commit"/>
+<meta property="og:description" content="I started using the pre-commit framework a while back on my projects but only with a very basic setup on pretty simple codebases. Common uses are apply code formatters like black or to run static type checking with mypy. I tried to create a rough framework for my Python projects."/>
+<meta property="og:locale" content="en_GB"/>
+<meta property="og:url" content="https://scrambldchannel.github.io/adventures-with-pre-commit.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-09-30 11:01:00+02:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://scrambldchannel.github.io/author/alexander.html">
+<meta property="article:section" content="docs"/>
+<meta property="article:tag" content="python"/>
+<meta property="article:tag" content="git"/>
+<meta property="article:tag" content="flake8"/>
+<meta property="article:tag" content="black"/>
+<meta property="article:tag" content="isort"/>
+<meta property="article:tag" content="mypy"/>
+<meta property="article:tag" content="pre-commit"/>
+<meta property="og:image" content="https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg">
+
+  <title>Code and Cricket &ndash; Adventures with pre-commit</title>
+
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://scrambldchannel.github.io">
+        <img src="https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg" alt="Code and Cricket" title="Code and Cricket">
+      </a>
+
+      <h1>
+        <a href="https://scrambldchannel.github.io">Code and Cricket</a>
+      </h1>
+
+<p>Feverish scribblings on things like TM1, Python and cricket stats</p>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="/pages/about.html"
+                   href="/pages/about.html">
+                  About
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-github" href="https://github.com/scrambldchannel" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-linkedin" href="https://www.linkedin.com/in/alexander-sutcliffe-b56921166/" target="_blank">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/scrambldchannel" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://scrambldchannel.github.io">Home</a>
+
+      <a href="/pages/about.html">About</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="adventures-with-pre-commit">Adventures with pre-commit</h1>
+    <p>
+      Posted on Wed 30 September 2020 in <a href="https://scrambldchannel.github.io/category/docs.html">docs</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>I started using the <a href="https://pre-commit.com/">pre-commit</a> framework a while back on my projects but only with a very basic setup on pretty simple codebases. Common uses are apply code formatters like <a href="https://github.com/psf/black">black</a> or to run static type checking with <a href="http://mypy-lang.org/">mypy</a>.</p>
+<p>The cool thing about using them is that it reduces the noise in your repository by formatting your code, and flagging issues, <em>before</em> it gets committed. I'd previously tended to run tools like black sporadically but this just creates an extra, often quite large commit, that doesn't change the functionality of the code but just adds noise.</p>
+<p>My initial setup was pretty basic and it was only when I started working with the Airflow codebase that I dove into them in more detail. If you look at the project's <a href="https://github.com/apache/airflow/blob/master/.pre-commit-config.yaml">.pre-commit-config.yaml</a> file, it uses a huge number of hooks, including quite a few that call custom scripts. While I don't need anything that complicated, it made me realise I could do a bit more so I spent a bit of time trying to create a starting template I could role into new projects. I'm still tweaking, but thought I'd scribble down this draft while the thinking behind it was fresh in my mind.</p>
+<h2>How to setup pre-commit</h2>
+<p>Pre-commit is written in Python and can be installed using pip:</p>
+<div class="highlight"><pre><span></span>$ pip install pre-commit
+</pre></div>
+
+
+<p>To use it in a project, run it in the root of the project's git repository:</p>
+<div class="highlight"><pre><span></span>$ pre-commit install
+</pre></div>
+
+
+<p>For it to do something, you need to define a configuration in a <code>.pre-commit-config.yaml</code> file. Out of the box, there's a command to send a sample config to stdout:</p>
+<div class="highlight"><pre><span></span>$ pre-commit sample-config
+<span class="c1"># See https://pre-commit.com for more information</span>
+<span class="c1"># See https://pre-commit.com/hooks.html for more hooks</span>
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.4.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+</pre></div>
+
+
+<p>The yaml above is fairly easy to understand, it has a link to a repo where the hook code is maintained, a specific version and the list of hooks you want to run and the names are pretty self-explanatory.</p>
+<h2>Adding more hooks</h2>
+<p>The sample config includes a couple of useful tools but pre-commit can leverage a lot more power than that. I want to code re-formatting, linting and type checking to my Python projects by default.</p>
+<p><strong>Note:</strong> I'm using it here for a Python project but it can be used for projects in all sorts of languages, you'd just need to take advantage of different hooks. Take a look at the <a href="https://pre-commit.com/hooks.html">list here</a> to get an idea of what is possible.</p>
+<h3>Using isort to arrange imports</h3>
+<p>In the words of the <a href="https://github.com/PyCQA/isort">project</a> "isort your imports, so you don't have to". I like this approach, having imports arranged consistently helps with readability and this makes it easy. It can be used here as a hook by adding the following to the project's <code>.pre-commit-config.yaml</code>:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span>   <span class="nt">repo</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/pre-commit/mirrors-isort</span>
+    <span class="nt">rev</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v5.1.4</span>
+    <span class="nt">hooks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span>   <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">isort</span>
+</pre></div>
+
+
+<h3>Using black to format code</h3>
+<p>I love black, I don't have any strong opinions on code style, I mainly just care that it's consistent. I certainly don't want to waste time ever arguing about it. Running black prior to every commit means that code is clean and consistent. It can be added as a hook like this:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span>   <span class="nt">repo</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/ambv/black</span>
+    <span class="nt">rev</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">stable</span>
+    <span class="nt">hooks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">black</span>
+</pre></div>
+
+
+<p>Black ships with sensible defaults and I don't really want to change many things, or even really think about it that much. However, I do like to keep lines to a max of 80 characters. You can add configuration options for Black into your project's <code>pyproject.toml</code> file and tailored for the specific project. Here I override the line length, specify the python versions I'm targeting and exclude a few directories:</p>
+<div class="highlight"><pre><span></span><span class="k">[tool.black]</span>
+<span class="n">line-length</span> <span class="o">=</span> <span class="mi">79</span>
+<span class="n">target-version</span> <span class="o">=</span> <span class="k">[&#39;py37&#39;, &#39;py38&#39;]</span>
+<span class="n">include</span> <span class="o">=</span> <span class="s">&#39;\.pyi?$&#39;</span>
+<span class="n">exclude</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+
+<span class="s">(</span>
+<span class="s">  /(</span>
+<span class="s">      \.eggs</span>
+<span class="s">    | \.git</span>
+<span class="s">    | \.mypy_cache</span>
+<span class="s">    | _build</span>
+<span class="s">    | build</span>
+<span class="s">    | dist</span>
+<span class="s">  )</span>
+<span class="s">)</span>
+<span class="s">&#39;&#39;&#39;</span>
+</pre></div>
+
+
+<h3>Static type checking with mypy</h3>
+<p>For any new Python projects I start, I'm getting into the habit of adding type hints. On a couple of projects, I've made the mistake of not really checking them as I go and find that I have a complicated mess to unpick when I finally run mypy. Using it as a pre-commit hook means I can fix them incrementally which avoids a future headache. For simpler projects, I'd probably not bother but it makes sense to have it as default. The following snippet adds mypy as a hook:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span>   <span class="nt">repo</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://github.com/pre-commit/mirrors-mypy</span>
+    <span class="nt">rev</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">v0.782</span>
+    <span class="nt">hooks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span>   <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">mypy</span>
+</pre></div>
+
+
+<h3>Style checks and basic linting with Flake8</h3>
+<p>Although I'm using black to format the code, I've been playing around with using Flake8 in parallel for a couple of reasons. Firstly, it also does some linting of your code, flagging up unused imports for example which I find useful. I've also noticed that black doesn't seem to do anything about comment lines or long strings that breach the line length limit, flake8 will flag these. It can be added as a hook by adding the following yaml:</p>
+<div class="highlight"><pre><span></span><span class="p p-Indicator">-</span>   <span class="nt">repo</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://gitlab.com/pycqa/flake8</span>
+    <span class="nt">rev</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.7.9</span>
+    <span class="nt">hooks</span><span class="p">:</span>
+    <span class="p p-Indicator">-</span> <span class="nt">id</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">flake8</span>
+</pre></div>
+
+
+<p>One thing that black and flake8 couldn't agree on by default was whether or not to have a trailing space after the last comma in a list specified on a single line. That is, black wanted it to look like this: </p>
+<div class="highlight"><pre><span></span>    <span class="n">install_requires</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Click&quot;</span><span class="p">,],</span>
+</pre></div>
+
+
+<p>But flake8 insisted it should look this and complained:</p>
+<div class="highlight"><pre><span></span>    <span class="n">install_requires</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Click&quot;</span><span class="p">,</span> <span class="p">],</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>setup.py:7:30: E231 missing whitespace after <span class="s1">&#39;,&#39;</span>
+</pre></div>
+
+
+<p>I don't care but sided with black on this occasion. I found a bit of <a href="https://gitlab.com/pycqa/flake8/-/issues/428">chat</a> about adding support for an entry <code>pyproject.toml</code> to manage the flake8 config but I couldn't see any evidence that it worked. Instead I create a <code>.flake8</code> file with the following:</p>
+<div class="highlight"><pre><span></span><span class="k">[flake8]</span>
+<span class="na">ignore</span> <span class="o">=</span> <span class="s">E231</span>
+<span class="na">max-line-length</span> <span class="o">=</span> <span class="s">120</span>
+</pre></div>
+
+
+<p>I suspect as time goes on I might add a few more codes to that ignore list. Setting the max length to 100 means I get <em>really</em> long lines that black doesn't re-format flagged up but others get through.</p>
+<p>Another option here is to use the ominously named <a href="https://github.com/life4/flakehell">flakehell</a> instead which does offer <code>pyproject.toml</code> support as well as a number of other options on top of flake8. I'll certainly keep an eye on it.</p>
+<p>I did look at using pylint instead but it complained about so many things I didn't care about that I didn't persevere. I'll maybe revisit this later. From the reading I did it's recommended to use it as a local hook as <a href="">documented here</a>.</p>
+<h2>Running the checks</h2>
+<p>Once you've installed pre-commit in a git repo the checks will all run every time you try to commit. Hooks like isort and black will change any files as necessary and have you need to re-stage them and re-commit. Flake8 and mypy will just throw up issues and you need to fix them manually to get the commit through. One thing that is a bit fiddly is that it can be a bit fiddly to understand what checks have failed when I try to commit via vscode but I mostly commit things via the command line these days anyway.</p>
+<p>You can also run the various checks from the command line outside of a commit. This gives you finer grained control and also allows running tools like black and isort on demand from their repos without needing to install them. For example all checks can be run on all files with the following:</p>
+<div class="highlight"><pre><span></span>pre-commit run --all-files
+</pre></div>
+
+
+<p>This can be particularly useful if you're adding a set of hooks to an existing project and want to flag any issues you might run into at a later date. </p>
+<p>Or you can use the <code>--files</code> option to run hooks on a list of specific files:</p>
+<div class="highlight"><pre><span></span>pre-commit run --files app.py class.py
+</pre></div>
+
+
+<p>It's also possible to run only a specific hook. The command below will apply black to all files, irrespective of whether they are staged:</p>
+<div class="highlight"><pre><span></span>pre-commit run black --all-files
+</pre></div>
+
+
+<h2>Conclusion</h2>
+<p>I love the pre-commit framework and will use it on every new project from now on. I've dumped my setup into a <a href="https://github.com/scrambldchannel/python-pre-commit-template">repo on github</a> which I'll continue to tinker with as it evolves.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://scrambldchannel.github.io/tag/python.html">python</a>
+      <a href="https://scrambldchannel.github.io/tag/git.html">git</a>
+      <a href="https://scrambldchannel.github.io/tag/flake8.html">flake8</a>
+      <a href="https://scrambldchannel.github.io/tag/black.html">black</a>
+      <a href="https://scrambldchannel.github.io/tag/isort.html">isort</a>
+      <a href="https://scrambldchannel.github.io/tag/mypy.html">mypy</a>
+      <a href="https://scrambldchannel.github.io/tag/pre-commit.html">pre-commit</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://scrambldchannel.github.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Code and Cricket ",
+  "url" : "https://scrambldchannel.github.io",
+  "image": "https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg",
+  "description": ""
+}
+</script>
+
+
+</body>
+</html>

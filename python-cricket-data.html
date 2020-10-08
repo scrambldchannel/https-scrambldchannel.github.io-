@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://scrambldchannel.github.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://scrambldchannel.github.io/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://scrambldchannel.github.io/theme/pygments/github.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/solid.css">
+
+
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-161901975-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333">
+
+<meta name="author" content="Alexander" />
+<meta name="description" content="Inspired by an enthralling Ashes series, I wanted to play around with cricket data available from various free and commercial sources out there.. Despite a bit of trawling, I couldn&#39;t really find a single document detailing what was available. I&#39;ve tried to make a start." />
+<meta name="keywords" content="cricket, python, data, api">
+
+
+<meta property="og:site_name" content="Code and Cricket"/>
+<meta property="og:title" content="Cricket Data Sources and Python"/>
+<meta property="og:description" content="Inspired by an enthralling Ashes series, I wanted to play around with cricket data available from various free and commercial sources out there.. Despite a bit of trawling, I couldn&#39;t really find a single document detailing what was available. I&#39;ve tried to make a start."/>
+<meta property="og:locale" content="en_GB"/>
+<meta property="og:url" content="https://scrambldchannel.github.io/python-cricket-data.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-09-28 16:24:00+02:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://scrambldchannel.github.io/author/alexander.html">
+<meta property="article:section" content="docs"/>
+<meta property="article:tag" content="cricket"/>
+<meta property="article:tag" content="python"/>
+<meta property="article:tag" content="data"/>
+<meta property="article:tag" content="api"/>
+<meta property="og:image" content="https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg">
+
+  <title>Code and Cricket &ndash; Cricket Data Sources and Python</title>
+
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://scrambldchannel.github.io">
+        <img src="https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg" alt="Code and Cricket" title="Code and Cricket">
+      </a>
+
+      <h1>
+        <a href="https://scrambldchannel.github.io">Code and Cricket</a>
+      </h1>
+
+<p>Feverish scribblings on things like TM1, Python and cricket stats</p>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="/pages/about.html"
+                   href="/pages/about.html">
+                  About
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-github" href="https://github.com/scrambldchannel" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-linkedin" href="https://www.linkedin.com/in/alexander-sutcliffe-b56921166/" target="_blank">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/scrambldchannel" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://scrambldchannel.github.io">Home</a>
+
+      <a href="/pages/about.html">About</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="python-cricket-data">Cricket Data Sources and Python</h1>
+    <p>
+      Posted on Sat 28 September 2019 in <a href="https://scrambldchannel.github.io/category/docs.html">docs</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>Inspired by an enthralling Ashes series, I wanted to play around with cricket data available from various free and commercial sources out there.. Despite a bit of trawling, I couldn't really find a single document detailing what was available. </p>
+<h2>So what sources are there?</h2>
+<p>I did a bit of Googling and also looked at what some of the obvious sites offered. Additionally, I looked for existing python libraries and played around with them. I was more interested in being able to crunch stats as opposed to creating widgets showing live scores, for example, but have looked at everything.</p>
+<h3>Cricinfo</h3>
+<p>Every web literate person with even a passing interest in cricket will know Cricinfo. It's been owned by ESPN for years now and various old questions on Stack Exchange at Quora suggest they used to have an API for developers but that it was discontinued. That said, there are still some options for grabbing their data by leveraging feeds or scraping pages. </p>
+<h4>RSS Feeds</h4>
+<p>This page lists the available RSS feeds. These can be parsed to get information on current matches and recent results.   </p>
+<p><a href="http://www.espncricinfo.com/ci/content/rss/feeds_rss_cricket.html">http://www.espncricinfo.com/ci/content/rss/feeds_rss_cricket.html</a></p>
+<h4>Python libraries</h4>
+<p>Searching on Github returns <a href="https://github.com/search?l=Python&amp;q=cricinfo&amp;type=Repositories">quite a few results</a> but most are old and unloved. A couple stood out though (there are probably more of interest):</p>
+<h5>Cricpy</h5>
+<p>Provides a wealth of functions for scraping HTML pages as seems to be under active development. Has low-level functions that pull data and dump to CSV for local analysis as well as functions to create charts and perform statistical analysis. Seems geared towards people doing statistical analysis rather than creating apps. I definitely need to explore in more depth.</p>
+<p><a href="https://github.com/tvganesh/cricpy">https://github.com/tvganesh/cricpy</a></p>
+<h5>python-espncricinfo</h5>
+<p>This is a simpler library that uses a combination of scraping as well as leveraging some (as far as I can tell) undocumented JSON files available on Cricinfo. It doesn't seem to be under active development though and some functions have bugs and some don't work at all. That said, it gave me an interesting insight into some data I didn't realise was easily accessible. </p>
+<p><a href="https://github.com/dwillis/python-espncricinfo">https://github.com/dwillis/python-espncricinfo</a></p>
+<p><strong>update</strong> - I've been working on a couple of the bugs with this and it does give you a cool way to access ball by ball data and player profiles amongst other things.</p>
+<h3>Cricbuzz</h3>
+<p>I'll confess to never really looking at Cricbuzz but it is another popular site dedicated to cricket news. There is a python library for accessing it.</p>
+<h4>pycricbuzz</h4>
+<p>I haven't really taken a look at this yet but it does seem to have been updated recently and have quite a few stargazers and forks.</p>
+<p><a href="https://github.com/codophobia/pycricbuzz">https://github.com/codophobia/pycricbuzz</a></p>
+<h3>Cricsheet</h3>
+<p>Cricsheet is an effort to create freely accessible ball-by-ball datasets for cricket matches. It took its inspiration from a project called Retrosheet, which attempts to do the same for MLB. It offers free to download and use data for a large subset of historical matches using YAML as well as a few other formats. It's a cool resource for people wanting to churn through stats without having to resort to scraping. </p>
+<p><a href="https://cricsheet.org/">https://cricsheet.org/</a></p>
+<h4>Yorkpy</h4>
+<p>This is a python module, available on PyPi. I haven't actually played with it yet but it seems to be based on an R package of the same name and focused on T20s. I'm currently more interested in Test Match data but this will probabably be a useful starting point or one that can be enhanced.</p>
+<p><a href="https://github.com/tvganesh/yorkpy">https://github.com/tvganesh/yorkpy</a></p>
+<h4>pycricsheet</h4>
+<p>I actually hacked this together myself after looking for a way to parse the yaml files from cricsheet and get them into Pandas. What I've put together is experimental but has been useful for my own purposes. I found that yaml was a bit of a pain to parse and maybe not the best format for this kind of data honestly. The ball by ball data also lacks the detail you can get through scraping but is still pretty comprehensive.</p>
+<p><a href="https://github.com/scrambldchannel/pycricsheet">https://github.com/scrambldchannel/pycricsheet</a></p>
+<h3>Cricapi</h3>
+<p>This is a freemium API offering a free key that grants you 100 calls per day. It gives useful info about current matches and individual player stats but is probably more geared toward app developers than people just wanting to do analysis.</p>
+<p><a href="https://www.cricapi.com/">https://www.cricapi.com/</a></p>
+<h4>pycricapi</h4>
+<p>There is a library here that provides a basic wrapper for each endpoint.</p>
+<p><a href="https://github.com/KarthikGangadhar/pycricapi">https://github.com/KarthikGangadhar/pycricapi</a></p>
+<h3>Rapid API</h3>
+<p>A few things turn up when searching Rapid API but I haven't really looked at them so far.</p>
+<p><a href="https://rapidapi.com/search/cricket">https://rapidapi.com/search/cricket</a></p>
+<p>This seems to offer 2500 hits per day and a relatively cheap pricing model after that. Again it's geared toward app developers rather than statisticians. </p>
+<p><a href="https://rapidapi.com/dev132/api/cricket-live-scores/">https://rapidapi.com/dev132/api/cricket-live-scores/</a></p>
+<h3>Sportradar</h3>
+<p>Sportradar offers a number of different APIs for different sports. It's a premium service (ie quite expensive) but does provide some pretty useful stuff. I took advantage of their free trial and played around with a bit but I am limited to 1000 calls as part of the trial so haven't explored too much.</p>
+<h4>SportradarAPIs (python wrapper)</h4>
+<p>A wrapper already existed but didn't include a class to access the cricket endpoints so I added them. </p>
+<p><a href="https://github.com/johnwmillr/SportradarAPIs">https://github.com/johnwmillr/SportradarAPIs</a></p>
+<h3>Sportmonks</h3>
+<p>Sportmonks is another service providing APIs for all sorts of sports. They offer a free trial for 14 days but I haven't taken them up on this yet but might revisit this if I have a bit of time to make the most of it.</p>
+<p><a href="https://www.sportmonks.com/cricket-api">https://www.sportmonks.com/cricket-api</a> - 14-day trial available</p>
+<h3>Cricket API</h3>
+<p>I found this which is another premium service but without any option for a free trial that I could see. I've not looked at it beyond that.</p>
+<p><a href="https://www.cricketapi.com/">https://www.cricketapi.com/</a></p>
+<h3>Other resources</h3>
+<p>Other resources I have found but perhaps haven't explored in detail.</p>
+<h4>Criclabs (Github organisation)</h4>
+<p>Self identifies as "all open-source cricket libraries at one place" and certainly does contain forked repos of a lot of the projects I've looked at already.</p>
+<p><a href="https://github.com/criclabs">https://github.com/criclabs</a></p>
+<h2>Conclusions</h2>
+<p>For those wanting to do analysis beyond that possible with tools like statsguru, scraping from cricinfo or cricbuzz is probably the way forward. Alternatively you can download a subset of match data from cricsheet. You may find some detail is missing though. </p>
+<p>For app builders, there isn't really an api that you can use for free if your app scales beyond a trivial PoC (at least that I could find). The higher end offerings like sportsradar are great but not exactly cheap. Cricapi is a cheaper propsition and might offer enough for fantasy games but won't give you ball by ball type data.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://scrambldchannel.github.io/tag/cricket.html">cricket</a>
+      <a href="https://scrambldchannel.github.io/tag/python.html">python</a>
+      <a href="https://scrambldchannel.github.io/tag/data.html">data</a>
+      <a href="https://scrambldchannel.github.io/tag/api.html">api</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://scrambldchannel.github.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Code and Cricket ",
+  "url" : "https://scrambldchannel.github.io",
+  "image": "https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg",
+  "description": ""
+}
+</script>
+
+
+</body>
+</html>

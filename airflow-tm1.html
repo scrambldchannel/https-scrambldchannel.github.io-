@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://scrambldchannel.github.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://scrambldchannel.github.io/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://scrambldchannel.github.io/theme/pygments/github.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/solid.css">
+
+
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-161901975-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333">
+
+<meta name="author" content="Alexander" />
+<meta name="description" content="I&#39;ve seen numerous solutions for handling data integration where data needs to be extracted form TM1. Most end up involving multiple tasks triggered and managed in different tools by different teams. None of the moving parts are particularly complicated but the end to end process can be difficult to debug and it never seems to result in a particularly reusable solution. The introduction of the REST API and development of TM1py have increased the options. I thought it might be interesting to see how Airflow might be used to manage pipelines need data from TM1." />
+<meta name="keywords" content="tm1, python, airflow">
+
+
+<meta property="og:site_name" content="Code and Cricket"/>
+<meta property="og:title" content="TM1 and Apache Airflow"/>
+<meta property="og:description" content="I&#39;ve seen numerous solutions for handling data integration where data needs to be extracted form TM1. Most end up involving multiple tasks triggered and managed in different tools by different teams. None of the moving parts are particularly complicated but the end to end process can be difficult to debug and it never seems to result in a particularly reusable solution. The introduction of the REST API and development of TM1py have increased the options. I thought it might be interesting to see how Airflow might be used to manage pipelines need data from TM1."/>
+<meta property="og:locale" content="en_GB"/>
+<meta property="og:url" content="https://scrambldchannel.github.io/airflow-tm1.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-07-23 08:56:00+02:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://scrambldchannel.github.io/author/alexander.html">
+<meta property="article:section" content="tm1"/>
+<meta property="article:tag" content="tm1"/>
+<meta property="article:tag" content="python"/>
+<meta property="article:tag" content="airflow"/>
+<meta property="og:image" content="https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg">
+
+  <title>Code and Cricket &ndash; TM1 and Apache Airflow</title>
+
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://scrambldchannel.github.io">
+        <img src="https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg" alt="Code and Cricket" title="Code and Cricket">
+      </a>
+
+      <h1>
+        <a href="https://scrambldchannel.github.io">Code and Cricket</a>
+      </h1>
+
+<p>Feverish scribblings on things like TM1, Python and cricket stats</p>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="/pages/about.html"
+                   href="/pages/about.html">
+                  About
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-github" href="https://github.com/scrambldchannel" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-linkedin" href="https://www.linkedin.com/in/alexander-sutcliffe-b56921166/" target="_blank">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/scrambldchannel" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://scrambldchannel.github.io">Home</a>
+
+      <a href="/pages/about.html">About</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="airflow-tm1">TM1 and Apache Airflow</h1>
+    <p>
+      Posted on Thu 23 July 2020 in <a href="https://scrambldchannel.github.io/category/tm1.html">tm1</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>I've been enjoying a bit of down time recently which, as well as exploring the lakes of Berlin and Brandenburg, gave me a chance to check out the excellent talks during the <a href="https://airflowsummit.org/">Airflow Summit 2020</a>. They are all still available and I'd recommend them for those interested in learning more about what <a href="https://airflow.apache.org/">Airflow</a> can do. I've worked with it before but haven't tried to use it with TM1, even though I've felt it might have been useful in some cases. So I decided to create a simple PoC to see how feasible it would be.</p>
+<h3>But why?</h3>
+<p>I've worked on many projects where TM1 was used to create a dataset (eg a forecast) but that ultimately, the data needed to get somewhere else. This can be particularly prevalent in organisations where tools like Tableau are (with good reason) thought to be better options for creating visualisations but also arise from a desire to be able to view forecast numbers somewhere else, such as the ERP systems. Developers not familiar with TM1 may expect they can easily connect via ODBC or similar only to realise it's not that simple.</p>
+<p>I've seen numerous solutions over the years, most end up involving multiple tasks triggered and managed in different tools by different teams. None of the moving parts are particularly complicated but the end to end process can be difficult to debug and it never seems to result in a particularly reusable solution. The introduction of the REST API and development of <a href="https://github.com/cubewise-code/tm1py">TM1py</a> have increased the options. I thought it might be interesting to see how Airflow might be used to manage ETL with TM1.</p>
+<h3>So what is it?</h3>
+<p>In their words, "Airflow is a platform created by the community to programmatically author, schedule and monitor workflows". Most commonly, it gets used to orchestrate data pipelines. It was written in Python but can be used to schedule tasks that are written in other languages. It also provides built in "hooks" for connecting to a wide range of third party systems, particularly in the cloud/big data space. This allows you to manage and monitor all of your ETL pipelines in a single place.</p>
+<p>The jobs themselves are written in code which means they can be version controlled and tested. The <a href="https://gtoonstra.github.io/etl-with-airflow/principles.html">Airflow docs</a> lists the principles they try to follow. One thing it doesn't do out of the box is to connect to TM1 but it's easy to extend it with Python which then allows to leverage the power of TM1py.</p>
+<h3>Did it work?</h3>
+<p>Yes! At least in the basic use cases I identified:</p>
+<ul>
+<li>Extract the data from a cube view and write this as a csv to an S3 bucket</li>
+<li>Run a TI processes</li>
+<li>Detect whether a value in a cell met a certain condition</li>
+</ul>
+<h3>Putting it to the test</h3>
+<p>Extracting the data from a cube and writing it somewhere was of the most interest to me initially. I chose S3 because of it's widespread use but the same concept could easily be applied to writing to any other system. I was able to create an Airflow DAG that did this pretty easily. To simplify the management of the connection to TM1, I created a library that extends Airflow's base functionality. I've released the resulting code as <a href="https://github.com/scrambldchannel/airflow-tm1">airflow-tm1</a> on Github and published it to <a href="https://pypi.org/project/airflow-tm1/">PyPi</a>.</p>
+<p><em>Note</em> This depends on having the following:</p>
+<ul>
+<li>a working Airflow environment with support for S3 and airflow_tm1. Read more in <a href="https://airflow.apache.org/docs/stable/start.html">the docs</a> if you want to get started. </li>
+<li>connections createdfor TM1 and S3. Read more about managing <a href="https://airflow.apache.org/docs/stable/howto/connection/index.html">Airflow connections</a> for details.</li>
+<li>The <a href="https://github.com/scrambldchannel/airflow-tm1/blob/master/airflow_tm1/hooks/tm1.py">TM1Hook</a> requires at least the following to be specified:<ul>
+<li>Host</li>
+<li>Login</li>
+<li>Port</li>
+<li>Extras<ul>
+<li>ssl</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>The trick here is that <code>ssl</code> needs to defined in the json string in the <code>Extras</code> field:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;ssl&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">}</span>
+</pre></div>
+
+
+<h4>Creating a DAG</h4>
+<p>Airflow uses DAGs to manage ETL jobs and <a href="https://airflow.apache.org/docs/stable/concepts.html#core-ideas">the project team</a> are much better at explaining what they are than I am. In short, a DAG can be thought of a list of tasks defined together in a Python script. The fundamental components of a DAG are hooks, which manage connections to other systems; operators, which complete an independent task; and sensors, which check whether a condition is true.</p>
+<p>Here is the simple DAG I created to pull data from a cube and write it to S3. It uses the TM1Hook from airflow-tm1 to manage the connection to TM1py and transfers the data using a Python operator that leverages TM1py. I created it with the name</p>
+<h5>Import the necessary libraries</h5>
+<p>You can use this import any other modules you want to use in your DAGs.</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span>
+<span class="kn">from</span> <span class="nn">airflow.hooks.S3_hook</span> <span class="kn">import</span> <span class="n">S3Hook</span>
+<span class="kn">from</span> <span class="nn">airflow.operators.python_operator</span> <span class="kn">import</span> <span class="n">PythonOperator</span>
+<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="kn">from</span> <span class="nn">airflow_tm1.hooks.tm1</span> <span class="kn">import</span> <span class="n">TM1Hook</span>
+</pre></div>
+
+
+<h5>Set defaults</h5>
+<p>These can be overwritten on a task by task basis. </p>
+<div class="highlight"><pre><span></span><span class="c1"># set defaults that DAG will pass to each task</span>
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;owner&quot;</span><span class="p">:</span> <span class="s2">&quot;Airflow&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;start_date&quot;</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;depends_on_past&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s2">&quot;email_on_failure&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s2">&quot;email_on_retry&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;you@somewhere.com&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;retries&quot;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h5>Define the Python function the task will use</h5>
+<p>This gets run by our task in the DAG and manages the end to end transfer of the data from TM1 to S3.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">cube_view_to_s3</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">view</span><span class="p">,</span> <span class="n">bucket</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+    <span class="c1"># instantiate our TM1Hook using the &quot;tm1_default&quot; connection</span>
+    <span class="n">tm1_hook</span> <span class="o">=</span> <span class="n">TM1Hook</span><span class="p">(</span><span class="n">tm1_conn_id</span><span class="o">=</span><span class="s2">&quot;tm1_default&quot;</span><span class="p">)</span>
+    <span class="c1"># return an instance of the TM1Service from TM1py</span>
+    <span class="n">tm1</span> <span class="o">=</span> <span class="n">tm1_hook</span><span class="o">.</span><span class="n">get_conn</span><span class="p">()</span>
+
+    <span class="c1"># pull data in csv format from specified cube view</span>
+    <span class="n">view_data</span> <span class="o">=</span> <span class="n">tm1</span><span class="o">.</span><span class="n">cubes</span><span class="o">.</span><span class="n">cells</span><span class="o">.</span><span class="n">execute_view_csv</span><span class="p">(</span>
+        <span class="n">cube_name</span><span class="o">=</span><span class="n">cube</span><span class="p">,</span> <span class="n">view_name</span><span class="o">=</span><span class="n">view</span><span class="p">,</span> <span class="n">private</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="c1"># instantiate S3Hook using the &quot;s3_default&quot; connection</span>
+    <span class="n">s3_hook</span> <span class="o">=</span> <span class="n">S3Hook</span><span class="p">(</span><span class="n">aws_conn_id</span><span class="o">=</span><span class="s2">&quot;s3_default&quot;</span><span class="p">)</span>
+    <span class="c1"># write the data to a key in the bucket specified</span>
+    <span class="n">s3_hook</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="n">string_data</span><span class="o">=</span><span class="n">view_data</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">,</span>
+        <span class="n">bucket_name</span><span class="o">=</span><span class="n">bucket</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+
+
+<h5>Create the DAG and a single task</h5>
+<p>This DAG only has a single task <code>t1</code> but will usually contain several more and manage how they depend on one another.</p>
+<div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">DAG</span><span class="p">(</span><span class="n">dag_id</span><span class="o">=</span><span class="s2">&quot;example_tm1_to_s3&quot;</span><span class="p">,</span> <span class="n">schedule_interval</span><span class="o">=</span><span class="s2">&quot;@daily&quot;</span><span class="p">,</span> <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">PythonOperator</span><span class="p">(</span>
+        <span class="n">task_id</span><span class="o">=</span><span class="s2">&quot;view_to_S3&quot;</span><span class="p">,</span>
+        <span class="c1"># specifies the function we want to call</span>
+        <span class="n">python_callable</span><span class="o">=</span><span class="n">cube_view_to_s3</span><span class="p">,</span>
+        <span class="c1"># and the arguments to pass it</span>
+        <span class="n">op_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;cube&quot;</span><span class="p">:</span> <span class="s2">&quot;Income Statement Reporting&quot;</span><span class="p">,</span> <span class="s2">&quot;view&quot;</span><span class="p">:</span> <span class="s2">&quot;Income Statement - Management&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s1">&#39;airflow-test/{{ ds_nodash }}.csv&#39;</span><span class="p">,</span> <span class="s2">&quot;bucket&quot;</span><span class="p">:</span> <span class="s2">&quot;scrambldbucket&quot;</span><span class="p">},</span>
+        <span class="n">dag</span><span class="o">=</span><span class="n">dag</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">t1</span>
+</pre></div>
+
+
+<h5>Running the DAG</h5>
+<p>DAGS need to be saved in Airflow's DAG folder as <code>*.py</code> files. Airflow has a built in <a href="https://airflow.apache.org/docs/stable/ui.html">web UI</a> that can manage DAGs. They can also be managed from a <a href="https://airflow.apache.org/docs/stable/usage-cli.html">cli</a> which can be useful for testing purposes.</p>
+<div class="highlight"><pre><span></span>airflow trigger_dag example_tm1_to_s3
+</pre></div>
+
+
+<h5>Results</h5>
+<p>I tested on small views, running both TM1 and Airflow locally with an OK internet connection. I was able to transfer small datasets (&lt;10mb) relatively quickly but I've not done any serious testing and, obviously, scalability would be a concern. For pulling large volumes of data, a good understanding of TM1, and the model itself, would be required to develop a sensible strategy. That said, it should work for in some cases such as where summary data is required for a Tableau dashboard. Additionally, I'd expect exporting cube data via TI first would prove faster in many cases. </p>
+<h4>Custom Operators</h4>
+<p>The DAG above uses the <code>PythonOperator</code> to call a custom function. For tasks that are likely to be used repeatedly, it's possible to create custom operators than can provide a useful abstraction to tasks. There's no reason one couldn't create a custom operator that would replicate the function I used above, but I thought I'd start with something simpler. I created custom operators to trigger TI processes and Chores. </p>
+<h5>A DAG using a Custom Operator</h5>
+<p>Using the <a href="https://github.com/scrambldchannel/airflow-tm1/blob/master/airflow_tm1/operators/tm1_run_ti.py">TM1RunTIOperator</a> the task can be written in just a few lines of code specifying the process to run and their parameters. This specific task triggers a feeders refresh in a specific cube but could be used to run anything best handled by TI.</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span>
+<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="kn">from</span> <span class="nn">airflow_tm1.operators.tm1_run_ti</span> <span class="kn">import</span> <span class="n">TM1RunTIOperator</span>
+
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;owner&quot;</span><span class="p">:</span> <span class="s2">&quot;Airflow&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;start_date&quot;</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;depends_on_past&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s2">&quot;email_on_failure&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s2">&quot;email_on_retry&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;you@somewhere.com&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;retries&quot;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span><span class="n">dag_id</span><span class="o">=</span><span class="s2">&quot;example_run_ti&quot;</span><span class="p">,</span> <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">,</span> <span class="n">schedule_interval</span><span class="o">=</span><span class="s2">&quot;@daily&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">TM1RunTIOperator</span><span class="p">(</span>
+        <span class="n">task_id</span><span class="o">=</span><span class="s2">&quot;run_ti&quot;</span><span class="p">,</span>
+        <span class="n">process_name</span><span class="o">=</span><span class="s2">&quot;Refresh Feeders&quot;</span><span class="p">,</span>
+        <span class="n">parameters</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;pCube&quot;</span><span class="p">:</span> <span class="s2">&quot;Capital&quot;</span><span class="p">},</span>
+        <span class="n">dag</span><span class="o">=</span><span class="n">dag</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">t1</span>
+</pre></div>
+
+
+<h4>Custom Sensors</h4>
+<p>Sensors are used to control flow in a DAG. In this DAG, an instance of the <a href="https://github.com/scrambldchannel/airflow-tm1/blob/fef460219bca80203119dd794716ddef8e58fe20/airflow_tm1/sensors/tm1_cell_value.py#L10">TM1CellValueSensor</a> checks that a value in a control cube indicates that there is at least a draft submission available for OPEX for the entire company. In this DAG, it just triggers a dummy task but could be used to trigger an export of the OPEX data for example.</p>
+<h5>A DAG using a Custom Sensor</h5>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">eq</span><span class="p">,</span> <span class="n">ge</span><span class="p">,</span> <span class="n">gt</span><span class="p">,</span> <span class="n">le</span><span class="p">,</span> <span class="n">lt</span><span class="p">,</span> <span class="n">ne</span>
+
+<span class="kn">from</span> <span class="nn">airflow</span> <span class="kn">import</span> <span class="n">DAG</span>
+<span class="kn">from</span> <span class="nn">airflow.operators.dummy_operator</span> <span class="kn">import</span> <span class="n">DummyOperator</span>
+<span class="kn">from</span> <span class="nn">airflow.utils.dates</span> <span class="kn">import</span> <span class="n">days_ago</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="kn">from</span> <span class="nn">airflow_tm1.sensors.tm1_cell_value</span> <span class="kn">import</span> <span class="n">TM1CellValueSensor</span>
+
+<span class="n">default_args</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;owner&quot;</span><span class="p">:</span> <span class="s2">&quot;airflow&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;depends_on_past&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="s2">&quot;start_date&quot;</span><span class="p">:</span> <span class="n">days_ago</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+    <span class="s2">&quot;retries&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;retry_delay&quot;</span><span class="p">:</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="k">with</span> <span class="n">DAG</span><span class="p">(</span><span class="n">dag_id</span><span class="o">=</span><span class="s2">&quot;example_value_sensor&quot;</span><span class="p">,</span> <span class="n">default_args</span><span class="o">=</span><span class="n">default_args</span><span class="p">)</span> <span class="k">as</span> <span class="n">dag</span><span class="p">:</span>
+
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">TM1CellValueSensor</span><span class="p">(</span>
+        <span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;check_value&#39;</span><span class="p">,</span>
+        <span class="c1"># check every 15 minutes</span>
+        <span class="n">poke_interval</span><span class="o">=</span><span class="mi">60</span> <span class="o">*</span> <span class="mi">15</span><span class="p">,</span>
+        <span class="c1"># timeout in 12 hours</span>
+        <span class="n">timeout</span><span class="o">=</span><span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">12</span><span class="p">,</span>
+        <span class="n">tm1_conn_id</span><span class="o">=</span><span class="s2">&quot;tm1_default&quot;</span><span class="p">,</span>
+        <span class="n">cube</span><span class="o">=</span><span class="s2">&quot;Task Workflow&quot;</span><span class="p">,</span>
+        <span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">elements</span><span class="o">=</span><span class="s2">&quot;OPEX,Total Company,Complete&quot;</span><span class="p">,</span>
+        <span class="c1"># apply the greater than operator</span>
+        <span class="n">op</span><span class="o">=</span><span class="n">gt</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">t2</span> <span class="o">=</span> <span class="n">DummyOperator</span><span class="p">(</span><span class="n">task_id</span><span class="o">=</span><span class="s1">&#39;do_nothing&#39;</span><span class="p">)</span>
+
+    <span class="n">t1</span> <span class="o">&gt;&gt;</span> <span class="n">t2</span>
+</pre></div>
+
+
+<p>The <code>t1 &gt;&gt; t2</code> specifies that task <code>t1</code> will run before <code>t2</code>. That is, the second won't be triggered until the condition on the sensor task has returned a value of <code>true</code>.</p>
+<h3>Going further</h3>
+<p>This obviously just scratches at the surface of what could be done. I've started working on some <a href="https://github.com/scrambldchannel/airflow-tm1/tree/master/example_dags">example DAGS</a> and will try to come up with a more realistic example.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://scrambldchannel.github.io/tag/tm1.html">tm1</a>
+      <a href="https://scrambldchannel.github.io/tag/python.html">python</a>
+      <a href="https://scrambldchannel.github.io/tag/airflow.html">airflow</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://scrambldchannel.github.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Code and Cricket ",
+  "url" : "https://scrambldchannel.github.io",
+  "image": "https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg",
+  "description": ""
+}
+</script>
+
+
+</body>
+</html>

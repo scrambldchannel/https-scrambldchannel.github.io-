@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://scrambldchannel.github.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://scrambldchannel.github.io/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://scrambldchannel.github.io/theme/pygments/github.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/solid.css">
+
+
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-161901975-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333">
+
+<meta name="author" content="Alexander" />
+<meta name="description" content="I wanted an excuse to explore TM1py in more depth and had been thinking for a while about the possibilities offered by using a test framework like pytest to run automate tests of a TM1 model. This is really a quick proof of concept to gauge how feasible it might prove." />
+<meta name="keywords" content="tm1, python">
+
+
+<meta property="og:site_name" content="Code and Cricket"/>
+<meta property="og:title" content="Using pytest to test TM1 models"/>
+<meta property="og:description" content="I wanted an excuse to explore TM1py in more depth and had been thinking for a while about the possibilities offered by using a test framework like pytest to run automate tests of a TM1 model. This is really a quick proof of concept to gauge how feasible it might prove."/>
+<meta property="og:locale" content="en_GB"/>
+<meta property="og:url" content="https://scrambldchannel.github.io/pytest-tm1.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-03-24 11:56:00+01:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://scrambldchannel.github.io/author/alexander.html">
+<meta property="article:section" content="tm1"/>
+<meta property="article:tag" content="tm1"/>
+<meta property="article:tag" content="python"/>
+<meta property="og:image" content="https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg">
+
+  <title>Code and Cricket &ndash; Using pytest to test TM1 models</title>
+
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://scrambldchannel.github.io">
+        <img src="https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg" alt="Code and Cricket" title="Code and Cricket">
+      </a>
+
+      <h1>
+        <a href="https://scrambldchannel.github.io">Code and Cricket</a>
+      </h1>
+
+<p>Feverish scribblings on things like TM1, Python and cricket stats</p>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="/pages/about.html"
+                   href="/pages/about.html">
+                  About
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-github" href="https://github.com/scrambldchannel" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-linkedin" href="https://www.linkedin.com/in/alexander-sutcliffe-b56921166/" target="_blank">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/scrambldchannel" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://scrambldchannel.github.io">Home</a>
+
+      <a href="/pages/about.html">About</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="pytest-tm1">Using pytest to test TM1 models</h1>
+    <p>
+      Posted on Tue 24 March 2020 in <a href="https://scrambldchannel.github.io/category/tm1.html">tm1</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>I wanted an excuse to explore TM1py in more depth and had been thinking for a while about the possibilities offered by using a test framework like pytest to run automate tests of a TM1 model. This is really a quick proof of concept to gauge how feasible it might prove. </p>
+<h3>Environment setup</h3>
+<p>TM1py requires python 3.5 or greater and can be installed using pip, as can pytest. </p>
+<div class="highlight"><pre><span></span>$ pip install TM1py
+</pre></div>
+
+
+<div class="highlight"><pre><span></span>$ pip install pytest
+</pre></div>
+
+
+<h3>Create a PoC of a test in pytest</h3>
+<p>A pytest file is just a simple python script and tests can be straightforward easy to read functions and fixture management quite straightforward once you've gotten your head around it. I created a simple bit of boilerplate to manage the config and connection and a couple of trivial tests.</p>
+<h4>Setup the test</h4>
+<p>I created a file called <code>test_poc.py</code> added the following lines of code:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">TM1py.Services</span> <span class="kn">import</span> <span class="n">TM1Service</span>
+
+<span class="c1"># read in connection configuration</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;connection_settings.json&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+  <span class="n">config</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+<span class="c1"># create connection to TM1 as a fixture</span>
+<span class="nd">@pytest.fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;session&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">tm1_dev</span><span class="p">():</span>
+    <span class="k">with</span> <span class="n">TM1Service</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;tm1_dev&#39;</span><span class="p">])</span> <span class="k">as</span> <span class="n">tm1</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">tm1</span>
+</pre></div>
+
+
+<p>This imports a few things, reads a config file with connection details and then creates an instance of the TM1Service class from TM1py as a fixture called <code>tm1_dev</code>. This object manages our connections to the TM1 REST API and can be passed to each test as an argument.</p>
+<p>Here is an example of how the <code>connection_settings.json</code> might look:</p>
+<div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="nt">&quot;tm1_dev&quot;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;address&quot;</span> <span class="p">:</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;port&quot;</span> <span class="p">:</span> <span class="mi">12345</span><span class="p">,</span>
+        <span class="nt">&quot;user&quot;</span> <span class="p">:</span> <span class="s2">&quot;Admin&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;password&quot;</span> <span class="p">:</span> <span class="s2">&quot;anything_but_apple&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;ssl&quot;</span> <span class="p">:</span> <span class="kc">false</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<h4>Now for some actual tests</h4>
+<p>Tests essentially run a bit of code and then make sure the result is within the desired parameters based on the input. The tests themselves don't do anything particularly interesting but illustrate the idea. Note each of these take the the <code>tm1_dev</code> fixture as an argument so can access its methods for communicating with TM1 API.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_cube_exists</span><span class="p">(</span><span class="n">tm1_dev</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">tm1_dev</span><span class="o">.</span><span class="n">cubes</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;}ClientGroups&quot;</span><span class="p">)</span>    
+
+<span class="k">def</span> <span class="nf">test_dimension_exists</span><span class="p">(</span><span class="n">tm1_dev</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">tm1_dev</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;}Clients&quot;</span><span class="p">)</span>    
+
+<span class="k">def</span> <span class="nf">test_value</span><span class="p">(</span><span class="n">tm1_dev</span><span class="p">):</span>
+    <span class="n">cube_name</span> <span class="o">=</span> <span class="s2">&quot;}ClientGroups&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">tm1_dev</span><span class="o">.</span><span class="n">cubes</span><span class="o">.</span><span class="n">cells</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="n">cube_name</span><span class="p">,</span> <span class="s2">&quot;Admin,ADMIN&quot;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">data</span> <span class="o">==</span> <span class="s2">&quot;ADMIN&quot;</span>
+</pre></div>
+
+
+<p>The tests can now be run from the command line with:</p>
+<div class="highlight"><pre><span></span>$ pytest ./test_poc.py
+</pre></div>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://scrambldchannel.github.io/tag/tm1.html">tm1</a>
+      <a href="https://scrambldchannel.github.io/tag/python.html">python</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://scrambldchannel.github.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Code and Cricket ",
+  "url" : "https://scrambldchannel.github.io",
+  "image": "https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg",
+  "description": ""
+}
+</script>
+
+
+</body>
+</html>

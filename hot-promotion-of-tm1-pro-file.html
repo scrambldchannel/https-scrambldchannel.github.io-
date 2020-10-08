@@ -1,0 +1,537 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/stylesheet/style.min.css">
+
+    <link id="dark-theme-style" rel="stylesheet" type="text/css"
+          media="(prefers-color-scheme: dark)"
+    href="https://scrambldchannel.github.io/theme/stylesheet/dark-theme.min.css">
+
+    <link id="pygments-dark-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: dark)"
+          href="https://scrambldchannel.github.io/theme/pygments/monokai.min.css">
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+              media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)"
+          href="https://scrambldchannel.github.io/theme/pygments/github.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://scrambldchannel.github.io/theme/font-awesome/css/solid.css">
+
+
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-161901975-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#333">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#333">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#333">
+
+<meta name="author" content="Alexander" />
+<meta name="description" content="Ever wondered what&#39;s going on in your .pro files? I did so I tried to take one apart with Python and re-create it with TM1py..." />
+<meta name="keywords" content="tm1, cognos, ibm, ti">
+
+
+<meta property="og:site_name" content="Code and Cricket"/>
+<meta property="og:title" content="Creating a TI process from a .pro file using TM1py"/>
+<meta property="og:description" content="Ever wondered what&#39;s going on in your .pro files? I did so I tried to take one apart with Python and re-create it with TM1py..."/>
+<meta property="og:locale" content="en_GB"/>
+<meta property="og:url" content="https://scrambldchannel.github.io/hot-promotion-of-tm1-pro-file.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-10-04 11:01:00+02:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://scrambldchannel.github.io/author/alexander.html">
+<meta property="article:section" content="tm1"/>
+<meta property="article:tag" content="tm1"/>
+<meta property="article:tag" content="cognos"/>
+<meta property="article:tag" content="ibm"/>
+<meta property="article:tag" content="ti"/>
+<meta property="og:image" content="https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg">
+
+  <title>Code and Cricket &ndash; Creating a TI process from a .pro file using TM1py</title>
+
+</head>
+<body >
+  <aside>
+    <div>
+      <a href="https://scrambldchannel.github.io">
+        <img src="https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg" alt="Code and Cricket" title="Code and Cricket">
+      </a>
+
+      <h1>
+        <a href="https://scrambldchannel.github.io">Code and Cricket</a>
+      </h1>
+
+<p>Feverish scribblings on things like TM1, Python and cricket stats</p>
+
+      <nav>
+        <ul class="list">
+
+
+              <li>
+                <a target="/pages/about.html"
+                   href="/pages/about.html">
+                  About
+                </a>
+              </li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-github" href="https://github.com/scrambldchannel" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-linkedin" href="https://www.linkedin.com/in/alexander-sutcliffe-b56921166/" target="_blank">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/scrambldchannel" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+      </ul>
+    </div>
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://scrambldchannel.github.io">Home</a>
+
+      <a href="/pages/about.html">About</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="hot-promotion-of-tm1-pro-file">Creating a TI process from a .pro file using TM1py</h1>
+    <p>
+      Posted on Sun 04 October 2020 in <a href="https://scrambldchannel.github.io/category/tm1.html">tm1</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>An <a href="https://github.com/cubewise-code/tm1py/issues/383">issue</a> raised over at the TM1py project asked for a feature to add hot promotion of TM1 processes saved as pro files. The API allows creation of TI processes and TM1py provides some useful wrapper functions that can achieve this. However, the fiddly part was parsing a pro file to get the relevant information out to allow us to create an instance of the TM1py Process object.</p>
+<h3>Exploring the pro file format</h3>
+<p>Pro files are saved as text so are human readable. As well as containing the code defined in the different tabs (prolog, metadata, data and epilog) the file contains metadata providing additional details about the file. For this example, I'm taking apart the <a href="https://github.com/cubewise-code/bedrock/blob/master/main/%7Dbedrock.cube.rule.processfeeders.pro">process to refresh feeders</a> from the <a href="https://github.com/cubewise-code/bedrock">Bedrock project</a>.</p>
+<p>The process is pretty straightforward, it takes a cube, or list of cubes, and a few other general parameters and does what it says on the tin - i.e. each specified cube will have its feeders refreshed. This is what it looks like on file:</p>
+<div class="highlight"><pre><span></span>601,100
+602,&quot;}bedrock.cube.rule.processfeeders&quot;
+</pre></div>
+
+
+<p>These first couple of lines specify the version and the name of the process. How do I know this? Wim pointed me in the direction of the codes in the TM1 docs, notably the file at <code>tm1_64/TM1JavaApiDocs/constant-values.html</code> which contains a list of constants in the docs for the old Java API. It turns out that these correspond to the codes that start each line in the pro file. I've scraped the codes and saved them <a href="/pages/ti-process-codes.html">here</a>.</p>
+<p>As it goes on, you can see, each line is simply a code and either a numeric value or a string. I'm not sure why <code>C:\TM1Data\Bedrock3\Data\Excel.RUX</code> is there, it doesn't seem relevant in the context of what this process is doing. Looking at the codes, those are the settings for the <code>datasourcename</code> and <code>datasourcenameforserver</code>. So I reckon they can actually go. </p>
+<div class="highlight"><pre><span></span>562,&quot;NULL&quot;
+586,&quot;C:\TM1Data\Bedrock3\Data\Excel.RUX&quot;
+585,&quot;C:\TM1Data\Bedrock3\Data\Excel.RUX&quot;
+</pre></div>
+
+
+<p>A lot of these values are blank and a cursory read of the manual suggests they are used to specify the various different options for a processes datasource. <code>565</code> is the password, which again shouldn't be relevant for this process (but presumably doesn't stop the process from being loaded at startup). </p>
+<div class="highlight"><pre><span></span>564,
+565,&quot;iz13ydO3pyNWPxv;_ZDRUHNTdGmz=bnSCs8wD[SQouyR&gt;TbW4@&gt;Mfu&gt;4nKmG&gt;fk]idlFzBx3V]Jd`kG?5Ncaw\0&lt;`W6CO0JtwGA==1;Q[LnvggL/{Csa9f`RMzyLg[8`MRam[xNgATuF]cYz2cH:=PM4Mhf6qml[K?DwW7kl;Z2VGJjZfVw?FA}ZEnoQRgO$KQzB9@9F&quot;
+559,1
+928,0
+593,
+594,
+595,
+597,
+598,
+596,
+800,
+801,
+566,0
+567,&quot;,&quot;
+588,&quot;.&quot;
+589,&quot;,&quot;
+568,&quot;&quot;&quot;&quot;
+570,
+571,
+569,0
+592,0
+599,1000
+</pre></div>
+
+
+<h3>Multiline codes</h3>
+<p>This is a bit different though. For those familiar with TI processes, it's simple enough to work out what's going on. These are the names of the parameters of the process. The <code>4</code> after <code>560</code> indicates that there are four parameters specified.</p>
+<div class="highlight"><pre><span></span>560,4
+pLogOutput
+pStrictErrorHandling
+pCube
+pDelim
+</pre></div>
+
+
+<p>This is a bit more opaque but next come the parameter types. These define the type of the parameter, <code>1</code> indicates a number and <code>2</code> indicates a string. </p>
+<div class="highlight"><pre><span></span>561,4
+1
+1
+2
+2
+</pre></div>
+
+
+<h3>Multiline codes with key value pairs</h3>
+<p>We then see the default values and the hint the TI process editor provides. Note it gets a bit fiddly. Instead of just the value, the lines are prefixed by name of the parameter. So these lines need to be handled a bit differently when being parsed. The default values and prompts for a process are optional. The Bedrock processes are pretty thorough hence I think both prompts and default values are set for each process. I wasn't sure this would always be the case so I created a fresh process, with all the different permutations of parameter settings. I turned out there's always the full list of parameters and they're always in the same order. So the first field seems a bit redundant.</p>
+<div class="highlight"><pre><span></span>590,4
+pLogOutput,0
+pStrictErrorHandling,0
+pCube,&quot;&quot;
+pDelim,&quot;&amp;&quot;
+637,4
+pLogOutput,&quot;OPTIONAL: Write parameters and action summary to server message log (Boolean True = 1)&quot;
+pStrictErrorHandling,&quot;OPTIONAL: On encountering any error, exit with major error status by ProcessQuit after writing to the server message log (Boolean True = 1)&quot;
+pCube,&quot;REQUIRED: Process feeders for this cube (Separated by Delimiter, Accepts Wild card)&quot;
+pDelim,&quot;OPTIONAL: Delimiter (default value if blank = &#39;&amp;&#39;)&quot;
+</pre></div>
+
+
+<p>Next we get a whole lot of codes I haven't yet looked up that obviously don't have a great influence on this process. I suspect they pertain to the variable definitions for data coming from the data source. Since this process doesn't use a source, it makes sense that it would be blank.</p>
+<div class="highlight"><pre><span></span>577,0
+578,0
+579,0
+580,0
+581,0
+582,0
+603,0
+</pre></div>
+
+
+<h3>The actual TI code</h3>
+<p>Now we get into the TI code itself. It is defined like any other multiline option. This section defines the prolog. Most of it is just Bedrock boilerplate so I'm not showing the whole thing. You'll have to trust me when I tell you it's 133 lines in total.</p>
+<div class="highlight"><pre><span></span>572,133
+#Region CallThisProcess
+# A snippet of code provided as an example how to call this process should the developer be working on a system without access to an editor with auto-complete.
+If( 1 = 0 );
+    ExecuteProcess( &#39;}bedrock.cube.rule.processfeeders&#39;, &#39;pLogOutput&#39;, pLogOutput,
+      &#39;pStrictErrorHandling&#39;, pStrictErrorHandling,
+        &#39;pCube&#39;, &#39;&#39;, &#39;pDelim&#39;, &#39;&amp;&#39;
+    );
+EndIf;
+#EndRegion CallThisProcess
+
+#****Begin: Generated Statements***
+#****End: Generated Statements****
+
+################################################################################################# ####################
+##~~Join the bedrock TM1 community on GitHub https://github.com/cubewise-code/bedrock Ver 4.0~~##
+################################################################################################# 
+
+...
+</pre></div>
+
+
+<p>The metadata and data tabs are unsurprisingly empty, as again, there's no data source for this process.</p>
+<div class="highlight"><pre><span></span>573,3
+
+#****Begin: Generated Statements***
+#****End: Generated Statements****
+574,5
+
+#****Begin: Generated Statements***
+#****End: Generated Statements****
+</pre></div>
+
+
+<p>While the epilog is again mostly boilerplate.</p>
+<div class="highlight"><pre><span></span>575,24
+
+#****Begin: Generated Statements***
+#****End: Generated Statements****
+
+...
+
+### End Epilog ###
+</pre></div>
+
+
+<h3>Wait, there's more</h3>
+<p>There's still a bit at the end to cut through, but at least that's an overview of how it all works. Option <code>576</code> a bit more complicated but everything else seems pretty straightforward. Looking through the names of the codes, there are lots I think represent things that can't be created through the endpoint that allows a process to be created. For example, <code>900</code> to <code>927</code> all seem to pertain to settings for the SAP connector. </p>
+<div class="highlight"><pre><span></span>576,CubeAction=1511DataAction=1503CubeLogChanges=0
+930,0
+638,1
+804,0
+1217,1
+900,
+901,
+902,
+938,0
+937,
+936,
+935,
+934,
+932,0
+933,0
+903,
+906,
+929,
+907,
+908,
+904,0
+905,0
+909,0
+911,
+912,
+913,
+914,
+915,
+916,
+917,0
+918,1
+919,0
+920,50000
+921,&quot;&quot;
+922,&quot;&quot;
+923,0
+924,&quot;&quot;
+925,&quot;&quot;
+926,&quot;&quot;
+927,&quot;&quot;
+</pre></div>
+
+
+<h3>Parsing it in Python</h3>
+<p>I had a go at parsing a pro file. This is rough and a bit buggy but I got a PoC working. I tinkered around with this code and managed to identify all the multiline codes in all the Bedrock processes but there may be some more lurking, particularly in the codes that cover connection configurations which aren't covered in Bedrock.</p>
+<p>This first part reads the file and creates a dictionary of the codes and values:</p>
+<div class="highlight"><pre><span></span><span class="c1"># location of pro file to load</span>
+
+<span class="nb">file</span> <span class="o">=</span> <span class="s2">&quot;}bedrock.cube.rule.processfeeders.pro&quot;</span>
+
+<span class="c1"># codes to treat differently</span>
+<span class="n">multiline_codes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;560&#39;</span><span class="p">,</span> <span class="s1">&#39;561&#39;</span><span class="p">,</span> <span class="s1">&#39;572&#39;</span><span class="p">,</span> <span class="s1">&#39;573&#39;</span><span class="p">,</span> <span class="s1">&#39;574&#39;</span><span class="p">,</span> <span class="s1">&#39;575&#39;</span><span class="p">,</span> <span class="s1">&#39;577&#39;</span><span class="p">,</span> <span class="s1">&#39;578&#39;</span><span class="p">,</span> <span class="s1">&#39;579&#39;</span><span class="p">,</span> <span class="s1">&#39;580&#39;</span><span class="p">,</span> <span class="s1">&#39;581&#39;</span><span class="p">,</span> <span class="s1">&#39;582&#39;</span><span class="p">,</span> <span class="s1">&#39;566&#39;</span><span class="p">]</span>
+<span class="n">multiline_codes_with_key</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;590&#39;</span><span class="p">,</span><span class="s1">&#39;637&#39;</span><span class="p">]</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8-sig&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+
+    <span class="n">process_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">in_multiline</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">in_multiline_with_key</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">in_multiline</span><span class="p">:</span>
+            <span class="n">process_dict</span><span class="p">[</span><span class="n">code</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">lines</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">lines</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">in_multiline</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">elif</span> <span class="n">in_multiline_with_key</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="n">process_dict</span><span class="p">[</span><span class="n">code</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">lines</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">lines</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">in_multiline_with_key</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">multiline_codes</span><span class="p">:</span>
+                <span class="n">lines</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">lines</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">in_multiline</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">process_dict</span><span class="p">[</span><span class="n">code</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">elif</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">multiline_codes_with_key</span><span class="p">:</span>
+                <span class="n">lines</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">lines</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">in_multiline_with_key</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">process_dict</span><span class="p">[</span><span class="n">code</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">process_dict</span><span class="p">[</span><span class="n">code</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+</pre></div>
+
+
+<h3>Create an instance of the Process class</h3>
+<p>From there, it's possible to create an instance of a TM1py <code>Process</code> object from the information grabbed for each process. I found it easier to use the built-in methods to create the parameters and variables. </p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">TM1py</span>
+
+<span class="n">my_new_process</span> <span class="o">=</span> <span class="n">TM1py</span><span class="o">.</span><span class="n">Objects</span><span class="o">.</span><span class="n">Process</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;602&#39;</span><span class="p">],</span>
+    <span class="n">has_security_access</span><span class="o">=</span><span class="p">(</span><span class="bp">True</span> <span class="k">if</span> <span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;1217&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;True&#39;</span> <span class="k">else</span> <span class="bp">False</span><span class="p">),</span>
+    <span class="n">ui_data</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;576&#39;</span><span class="p">],</span>
+    <span class="n">prolog_procedure</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;572&#39;</span><span class="p">]),</span>
+    <span class="n">metadata_procedure</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;573&#39;</span><span class="p">]),</span>
+    <span class="n">data_procedure</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;574&#39;</span><span class="p">]),</span>
+    <span class="n">epilog_procedure</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;575&#39;</span><span class="p">]),</span>
+    <span class="n">datasource_type</span><span class="o">=</span><span class="s1">&#39;None&#39;</span><span class="p">,</span>
+    <span class="n">datasource_ascii_decimal_separator</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;588&#39;</span><span class="p">],</span>
+    <span class="n">datasource_ascii_delimiter_char</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;567&#39;</span><span class="p">],</span>
+    <span class="n">datasource_ascii_delimiter_type</span><span class="o">=</span><span class="s1">&#39;Character&#39;</span><span class="p">,</span> <span class="c1"># doesn&#39;t seem to have a corresponding code</span>
+    <span class="n">datasource_ascii_header_records</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;569&#39;</span><span class="p">],</span>
+    <span class="n">datasource_ascii_quote_character</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;568&#39;</span><span class="p">],</span>
+    <span class="n">datasource_ascii_thousand_separator</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;589&#39;</span><span class="p">],</span>
+    <span class="n">datasource_data_source_name_for_client</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;585&#39;</span><span class="p">],</span>
+    <span class="n">datasource_data_source_name_for_server</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;586&#39;</span><span class="p">],</span>
+    <span class="n">datasource_password</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;565&#39;</span><span class="p">],</span>
+    <span class="n">datasource_user_name</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;564&#39;</span><span class="p">],</span>
+    <span class="n">datasource_query</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;566&#39;</span><span class="p">],</span>
+    <span class="n">datasource_uses_unicode</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;559&#39;</span><span class="p">],</span>
+    <span class="n">datasource_view</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;570&#39;</span><span class="p">],</span>
+    <span class="n">datasource_subset</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;571&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># now add parameters and variables</span>
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;560&#39;</span><span class="p">]):</span>
+
+    <span class="k">if</span> <span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;561&#39;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>
+        <span class="n">parameter_type</span> <span class="o">=</span> <span class="s2">&quot;String&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;590&#39;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">parameter_type</span> <span class="o">=</span> <span class="s2">&quot;Numeric&quot;</span>
+        <span class="k">if</span> <span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;590&#39;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;590&#39;</span><span class="p">][</span><span class="n">index</span><span class="p">])</span>
+
+    <span class="n">my_new_process</span><span class="o">.</span><span class="n">add_parameter</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">item</span><span class="p">,</span>
+        <span class="n">prompt</span><span class="o">=</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;637&#39;</span><span class="p">][</span><span class="n">index</span><span class="p">],</span>
+        <span class="n">value</span><span class="o">=</span><span class="n">value</span><span class="p">,</span>
+        <span class="n">parameter_type</span><span class="o">=</span><span class="n">parameter_type</span>
+    <span class="p">)</span>
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;577&#39;</span><span class="p">]):</span>
+
+    <span class="n">variable_type</span> <span class="o">=</span> <span class="s2">&quot;String&quot;</span> <span class="k">if</span> <span class="n">process_dict</span><span class="p">[</span><span class="s1">&#39;578&#39;</span><span class="p">][</span><span class="n">index</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span> <span class="k">else</span> <span class="s2">&quot;Numeric&quot;</span>        
+
+    <span class="n">my_new_process</span><span class="o">.</span><span class="n">add_variable</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">item</span><span class="p">,</span>
+        <span class="n">variable_type</span><span class="o">=</span><span class="n">variable_type</span>
+    <span class="p">)</span>    
+</pre></div>
+
+
+<h3>Add to server</h3>
+<p>With a valid process object we should be able to create the process on the server:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">configparser</span>
+
+<span class="c1"># establish connection / how you </span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+<span class="n">config</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s1">&#39;config.ini&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">TM1py</span><span class="o">.</span><span class="n">Services</span><span class="o">.</span><span class="n">TM1Service</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;tm1srv01&#39;</span><span class="p">])</span> <span class="k">as</span> <span class="n">tm1</span><span class="p">:</span>
+
+    <span class="k">if</span> <span class="n">tm1</span><span class="o">.</span><span class="n">processes</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">my_new_process</span><span class="o">.</span><span class="n">name</span><span class="p">):</span>
+        <span class="n">tm1</span><span class="o">.</span><span class="n">processes</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">my_new_process</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="n">response</span> <span class="o">=</span> <span class="n">tm1</span><span class="o">.</span><span class="n">processes</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">my_new_process</span><span class="p">)</span>
+
+    <span class="c1"># check status of response</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+</pre></div>
+
+
+<p>This works smoothly and the process can now be found on the server:</p>
+<p><img style="padding-top: 10px; padding-bottom: 10px;" src="/images/process_now_appears_on_server.png"></p>
+<p>The parameters are intact and seem to have the right types and defaults:</p>
+<p><img style="padding-top: 10px; padding-bottom: 10px;" src="/images/process_seems_intact.png"></p>
+<h3>Testing and known issues</h3>
+<p>I did notice a couple of issues once I'd done a diff of the source file and the pro file created afterwards. A few differences were down to whitespace being stripped in the new version of the file. There were a couple of bugs though... </p>
+<p>Multiline parameters containing commas get truncated:</p>
+<p><img style="padding-top: 10px; padding-bottom: 10px;" src="/images/pro_diff_comma_issue.png"></p>
+<p>More seriously, in this code block, my pretty naive parsing hasn't handled nested quotes. A robust solution would probably require using regular expressions for parsing:</p>
+<p><img style="padding-top: 10px; padding-bottom: 10px;" src="/images/pro_diff_quote_issue.png"></p>
+<p>Note, the process ran successfully for a single cube but does fail when trying to use wildcards with the following showing up in the logs indicating the MDX isn't parsing (which makes sense):</p>
+<div class="highlight"><pre><span></span>7292   [2]   ERROR   2020-10-04 16:05:58.936   TM1.Mdx.Interface   Syntax error at or near: &#39;)}&#39;, character position 50
+</pre></div>
+
+
+<p>So far, as a PoC, it shows that it can be done but needs some tweaking. Not every detail in the file is used to construct the new process so it's very likely that some legacy processes can't be created this way such as those created with the wizard or using the SAP connector. There are probably better solutions though, such as using TM1py to grab a process on a development server and push it to production. </p>
+<p>I was able to import all the latest Bedrock pro files and create them on the server but haven't actually tested them in depth. I also haven't tested it on with processes with ODBC data sources and think they might be problematic as I'm assuming there might be some more multiline options I haven't handled properly. So I wouldn't necessrily recommend it, but it's possible.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://scrambldchannel.github.io/tag/tm1.html">tm1</a>
+      <a href="https://scrambldchannel.github.io/tag/cognos.html">cognos</a>
+      <a href="https://scrambldchannel.github.io/tag/ibm.html">ibm</a>
+      <a href="https://scrambldchannel.github.io/tag/ti.html">ti</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>
+  &copy;  2020 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+  <span class="footer-separator">|</span>
+  Switch to the <a href="javascript:void(0)" onclick="theme.switch(`dark`)">dark</a> | <a href="javascript:void(0)" onclick="theme.switch(`light`)">light</a> | <a href="javascript:void(0)" onclick="theme.switch(`browser`)">browser</a> theme
+  <script id="dark-theme-script"
+          src="https://scrambldchannel.github.io/theme/dark-theme/dark-theme.min.js"
+          data-enable-auto-detect-theme="True"
+          data-default-theme="light"
+          type="text/javascript">
+  </script>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Code and Cricket ",
+  "url" : "https://scrambldchannel.github.io",
+  "image": "https://scrambldchannel.github.io/images/me_staring_into_the_trees.jpg",
+  "description": ""
+}
+</script>
+
+
+</body>
+</html>
