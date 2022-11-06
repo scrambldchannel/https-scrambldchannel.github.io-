@@ -20,7 +20,7 @@ The process is pretty straightforward, it takes a cube, or list of cubes, and a 
 602,"}bedrock.cube.rule.processfeeders"
 ```
 
-These first couple of lines specify the version and the name of the process. How do I know this? Wim pointed me in the direction of the codes in the TM1 docs, notably the file at ```tm1_64/TM1JavaApiDocs/constant-values.html``` which contains a list of constants in the docs for the old Java API. It turns out that these correspond to the codes that start each line in the pro file. I've scraped the codes and saved them [here](/pages/ti-process-codes.html).
+These first couple of lines specify the version and the name of the process. How do I know this? Wim pointed me in the direction of the codes in the TM1 docs, notably the file at ```tm1_64/TM1JavaApiDocs/constant-values.html``` which contains a list of constants in the docs for the old Java API. It turns out that these correspond to the codes that start each line in the pro file. I've scraped the codes and saved them [here](https://gist.github.com/scrambldchannel/9955cb731f80616c706f2d5a81b82c2a).
 
 As it goes on, you can see, each line is simply a code and either a numeric value or a string. I'm not sure why ```C:\TM1Data\Bedrock3\Data\Excel.RUX``` is there, it doesn't seem relevant in the context of what this process is doing. Looking at the codes, those are the settings for the ```datasourcename``` and ```datasourcenameforserver```. So I reckon they can actually go. 
 
